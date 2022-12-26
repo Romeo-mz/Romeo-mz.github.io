@@ -11,54 +11,32 @@ section:
 # Your experiences
 experiences:
 - company:
-    name: Example Co.
-    url: "https://www.example.com"
-    location: Dhaka Branch
+    name: Centre Hospitalier Louis Raffalli
+    url: "https://www.ch-manosque.fr/"
+    location: Manosque, France
     # company overview
-    overview: Example Co. is a widely recognized company for cloud-native development. It builds tools for Kubernetes.
+    overview: The Centre Hospitalier Louis Raffalli is a health establishment located in Manosque, France. 
   positions:
-  - designation: Senior Software Engineer
-    start: Nov 2019
+  - designation: multi-skilled worker
+    start: Jul 2022
     # don't provide end date if you are currently working there. It will be replaced by "Present"
-    # end: Dec 2020
+    end: Jul 2022
     # give some points about what was your responsibilities at the company.
     responsibilities:
-    - Design and develop XYZ tool for ABC task
-    - Design, develop and manage disaster recovery tool [Xtool](https://www.example.com) that backup Kubernetes volumes, databases, and cluster's resource definition.
-    - Lead backend team.
-
-  - designation: Junior Software Engineer
-    start: Nov 2017
-    end: Oct 2019
-    responsibilities:
-    - Implement and test xyz feature for abc tool.
-    - Support client for abc tool.
-    - Learn k,d,w technology for xyz.
+    - Directiong the wash station
+    - In charge of the chain
+    - Alert of hygenic mesure
 
 - company:
-    name: PreExample Co.
-    url: "https://www.example.com"
-    location: Nowhere
-    overview: PreExample Co. is a gateway company to enter into Example co. So, nothing special here.
+    name: Lek
+    url: 
+    location: Forcalquier, France
+    overview: Lek is a thai restaurant locate in Forcalquier.
   positions:
-  - designation: Software Engineer
-    start: March 2016
-    end: May 2017
+  - designation: Waiter
+    start: Jul 2021
+    end: Jul 2021
     responsibilities:
-    - Write lots of example codes.
-    - Read lots of examples.
-    - See lots of example videos.
-
-- company:
-    name: Intern Counting Company (ICC).
-    url: "https://www.example.com"
-    location: Intern Land
-    overview: Intern counting Company (ICC) is responsible for counting worldwide intern Engineers.
-  positions:
-  - designation: Intern
-    start: Jun 2015
-    end: Jan 2016
-    responsibilities:
-    - Count lost of interns.
-    - Count more interns.
-    - Count me as an intern.
+    - Deal with customers and in charge of 20+ tables.
+    - Managing stress during rush hours
+    - Checking with customers to ensure that they are enjoying their meals and take action to correct any problems.
