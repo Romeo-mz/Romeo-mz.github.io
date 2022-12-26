@@ -7,13 +7,12 @@ image: "images/author/profile.jpg"
 # give your some contact information. they will be used in the footer
 contactInfo:
   email: "romeo.martinez@orange.fr"
-  phone: "+0123456789"
   github: Romeo-Mz
   linkedin: Romeo Martinez
 
 # some summary about what you do
 summary:
-  - I am a Engineer students in computer science
+  - I am an Engineer students in computer science
   - I love IA
   - I work on open-source projects
   - I love to work with some fun projects
