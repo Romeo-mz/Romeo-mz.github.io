@@ -17,7 +17,7 @@ experiences:
     # company overview
     overview: The Centre Hospitalier Louis Raffalli is a health establishment located in Manosque, France. 
   positions:
-  - designation: multi-skilled worker
+  - designation: Multi-skilled worker
     start: Jul 2022
     # don't provide end date if you are currently working there. It will be replaced by "Present"
     end: Jul 2022

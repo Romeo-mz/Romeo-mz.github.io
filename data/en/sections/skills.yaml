@@ -13,7 +13,7 @@ section:
 skills:
 - name: Python
   logo: /images/sections/skills/python.png
-  summary: "Capable to setup a program for data visualisation. Also, experienced in solving complex problem"
+  summary: "Capable to setup a program for data visualisation. Also, experienced in solving complex problem."
   url: "https://www.python.org/"
 
 - name: Linux
