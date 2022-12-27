@@ -2,9 +2,9 @@
 section:
   name: সাম্প্রতিক-পোস্ট
   id: recent-posts
-  enable: true
+  enable: false
   weight: 5
-  showOnNavbar: true
+  showOnNavbar: false
   template: sections/recent-posts.html
   # Can optionally hide the title in sections
   # hideTitle: true

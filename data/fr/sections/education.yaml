@@ -1,8 +1,8 @@
 # section information
 section:
-  name: Education
+  name: Études
   id: education
-  template: sections/education.html # Use "sections/education-alt.html for alternate template.
+  template: sections/education.html
   enable: true
   weight: 4
   showOnNavbar: true
@@ -10,7 +10,7 @@ section:
   # hideTitle: true
 
 degrees:
-- name: Degree in comptuer Science
+- name: Diplôme d'ingénieur informatique
   icon: fa-microscope
   timeframe: 2022-2025
   institution:
@@ -24,7 +24,7 @@ degrees:
  # - title: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   #  url: "#"
 
-- name: Preparatory class for the Grandes écoles
+- name: Classe preparatoire aux grandes ecoles
   icon: fa-graduation-cap
   timeframe: 2020-2022
   institution:
@@ -51,10 +51,10 @@ degrees:
       outOf: 4
 
   extracurricularActivities: #(optional)
-  - Every week did sports with friends.
-  - Manage my time to play sometimes music like piano.
+  - Pratique du sports chaque semaine avec des amis.
+  - Gestion de mon temps libre pour pouvoir jouer du piano.
 
-- name: Baccalaureate 
+- name: Baccalauréat 
   icon: fa-university
   timeframe: 2017-2020
   institution:
@@ -63,12 +63,11 @@ degrees:
   grade: #(optional)
 
   extracurricularActivities: #(optional)
-  - Did montain climbing every week in a club
-  - Join a Fablab and go there every two weeks
+  - Pratique de l'escalade en club chaque semaine.
+  - Rejoins une association (Fablab) et y aller toutes les deux semaines.
 
 - name: Brevet
   icon: fa-school
   timeframe: 2013-2017
   institution:
     name: Collège le Mont d'Or
-

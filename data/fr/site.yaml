@@ -1,0 +1,25 @@
+# Copyright Notice
+copyright: © 2022 Copyright.
+
+# A disclaimer notice for the footer. Make sure you have set "params.footer.disclaimer.enable: true" in your `config.yaml` file.
+disclaimer: "Ce thème est sous licence MIT. Vous pouvez donc l'utiliser à des fins non commerciales, commerciales ou privées.
+Vous pouvez modifier ou distribuer le thème sans avoir besoin de l'autorisation de l'auteur du thème.
+Cependant, l'auteur du thème ne fournit aucune garantie et ne prend aucune responsabilité pour tout problème lié au thème."
+
+# Meta description for your site.  This will help the search engines to find your site.
+description: Portfolio et CV de Roméo Martinez.
+
+# specify the list of custom menus that you want to show in the top navbar.
+# they will be separated by a divider from the main menus.
+customMenus:
+- name: Docs
+  url: https://toha-guides.netlify.app/posts/
+
+# Specify OpenGraph Headers
+openGraph:
+  title: CV de Roméo
+  type: website
+  description: Portfolio et CV de Roméo Martinez.
+  image: images/author/john.png
+  url: https://Romeo-mz.github.io
+

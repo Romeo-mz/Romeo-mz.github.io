@@ -5,6 +5,7 @@ section:
   enable: true
   weight: 3
   showOnNavbar: true
+  template: sections/experiences.html
   # Can optionally hide the title in sections
   # hideTitle: true 
 
@@ -15,28 +16,28 @@ experiences:
     url: "https://www.ch-manosque.fr/"
     location: Manosque, France
     # company overview
-    overview: The Hospital Center Louis Raffalli is a health establishment located in Manosque, France. 
+    overview: Le centre Hospitalier Louis Raffali est un centre hôspitalier localisé en France à Manosque. 
   positions:
-  - designation: Multi-skilled worker
-    start: Jul 2022
+  - designation: Travailleur polyvalent
+    start: Juillet 2022
     # don't provide end date if you are currently working there. It will be replaced by "Present"
-    end: Aug 2022
+    end: Août 2022
     # give some points about what was your responsibilities at the company.
     responsibilities:
-    - Directioning the wash station.
-    - In charge of the chain.
-    - Alert of hygenic mesure.
+    - Diriger la station de lavage.
+    - En charge de la chaîne.
+    - Alerte à propos des règles sanitaires.
 
 - company:
     name: Lek
     url: 
     location: Forcalquier, France
-    overview: Lek is a thai restaurant locate in Forcalquier.
+    overview: Lek est un restaurant Thai situé à Forcalquier en France
   positions:
-  - designation: Waiter
+  - designation: Serveur
     start: Jul 2021
     end: Aug 2021
     responsibilities:
-    - Deal with customers and in charge of 20+ tables.
-    - Managing stress during rush hours
-    - Checking with customers to ensure that they are enjoying their meals and take action to correct any problems.
+    - Traiter avec les clients et en charge d'une vingtaine de tables.
+    - Gestion du stress durant les heures de rush.
+    - Prise en compte de l'avis des clients durant leur repas pour s'assurer qu'ils apprécier leur repas et prise d'action en cas de problèmes.

@@ -1,0 +1,39 @@
+# section information
+section:
+  name: Projets
+  id: projects
+  enable: true
+  weight: 4
+  showOnNavbar: true
+  template: sections/projects.html
+  # Can optionally hide the title in sections
+  # hideTitle: true
+
+# filter buttons
+buttons:
+- name: All
+  filter: "all"
+- name: Professionnel
+  filter: "professionnel"
+- name: Universitaire
+  filter: "universitaire"
+- name: Loisir
+  filter: "loisir"
+
+# your projects
+projects:
+- name: Sutom Solver
+  logo: /images/sections/projects/sutom.jpg
+  timeline: "Oct - Maintenant"
+  #repo:  # If your project is a public repo on GitHub, then provide this link. it will show star count.
+  #url: ""  # If your project is not a public repo but it has a website or any external details url then provide it here. don't provide "repo" and "url" simultaneously.
+  summary: Un programme qui résout le jeu en ligne sutom qui reprend le principe de motus.
+  tags: ["loisir", "python", "programme"]
+
+- name: Bibliotheque
+  role: Developer
+  timeline: "Nov 2022 - Dec 2022"
+  repo: https://github.com/Romeo-mz/TP1_bibliotheque
+  #url: ""
+  summary: Un programme qui simule le fonctionnement d'une bibliothèque et ses actions.
+  tags: ["universitaire", "C++"]

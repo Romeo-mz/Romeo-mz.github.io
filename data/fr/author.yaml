@@ -1,0 +1,18 @@
+# some information about you
+name: "Martinez Roméo"
+nickname: "Roméo"
+# greeting message before your name. it will default to "Hi! I am" if not provided
+greeting: "Bonjour, je suis"
+image: "images/author/profile.jpg"
+# give your some contact information. they will be used in the footer
+contactInfo:
+  email: "romeo.martinez@orange.fr"
+  github: Romeo-Mz
+  linkedin: Romeo Martinez
+
+# some summary about what you do
+summary:
+  - Je suis un étudiant en ingénierie informatique
+  - J'aime les IA
+  - Je travaille sur des projets open-source
+  - J'adore travailler sur des projets hors du commun
