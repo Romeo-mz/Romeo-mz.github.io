@@ -16,7 +16,11 @@ degrees:
   institution:
     name: École supérieure d'ingénieurs de recherche en matériaux et en infotronique
     url: "https://esirem.u-bourgogne.fr/"
-     
+
+  extracurricularActivities:
+  - Pratique du sports plusieurs fois par semaine.
+  - Rejoins plusieurs associations pour animer la vie de l'école.
+  
   grade: #(optional)
     #scale: CGPA
     #achieved: 3.6

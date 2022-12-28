@@ -23,9 +23,9 @@ skills:
 
 - name: Git
   logo: /images/sections/skills/git.png
-  summary: "Utilisation des outils de versionning de Github et a expérimenté le developpement via Git."
+  summary: "Utilisation des outils de versionning de Github et expérimentatio du développement via Git."
   url: "https://git-scm.com/"
 
 - name: C++
   logo: /images/sections/skills/c++.png
-  summary: "Connais le C/C++ basique. Utilisation de ce language pour résoudre des problèmes."
+  summary: "Connais le C/C++ basique. Utilisation de ce language pour résoudre différents problèmes."
