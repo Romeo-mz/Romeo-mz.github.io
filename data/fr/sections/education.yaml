@@ -16,6 +16,7 @@ degrees:
   institution:
     name: École supérieure d'ingénieurs de recherche en matériaux et en infotronique
     url: "https://esirem.u-bourgogne.fr/"
+     
   grade: #(optional)
     #scale: CGPA
     #achieved: 3.6
@@ -37,16 +38,16 @@ degrees:
     showGrades: false
     collapseAfter: 3
     courses:
-    - name: Data Structures and Algorithm
+    - name: Mathématiques
       achieved: 3.75
       outOf: 4
-    - name: Network Security
+    - name: Physique - Chimie
       achieved: 3.80
       outOf: 4
-    - name: Operating System
+    - name: Sciences de l'ingénieur
       achieved: 3.5
       outOf: 4
-    - name: Artificial Intelligent
+    - name: Informatique
       achieved: 3.75
       outOf: 4
 

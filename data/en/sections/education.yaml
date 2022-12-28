@@ -37,16 +37,16 @@ degrees:
     showGrades: false
     collapseAfter: 3
     courses:
-    - name: Data Structures and Algorithm
+    - name: Mathematics
       achieved: 3.75
       outOf: 4
-    - name: Network Security
+    - name: Physics and Chemistry
       achieved: 3.80
       outOf: 4
-    - name: Operating System
+    - name: Engineering Sciences
       achieved: 3.5
       outOf: 4
-    - name: Artificial Intelligent
+    - name: Computer Science
       achieved: 3.75
       outOf: 4
 
