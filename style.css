@@ -30,11 +30,11 @@ h2 {
                 rgba(0, 163, 108, 0.05) 25px 25px;
     color: #fff;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    transform: translateY(0); /* Position de base */
+    transform: translateY(0);
 }
 
 .app:hover {
-    transform: translateY(-10px); /* Légère élévation au survol */
+    transform: translateY(-10px);
     box-shadow: rgba(0, 163, 108, 0.5) 8px 8px, 
                 rgba(0, 163, 108, 0.4) 16px 16px, 
                 rgba(0, 163, 108, 0.3) 24px 24px, 
@@ -80,11 +80,10 @@ header {
 
 strong {
     position: relative;
-  }
-  
+}
+
 strong::before {
     background-color: #fdc3c6;
-  
     content: "";
     position: absolute;
     width: calc(100% + 4px);
@@ -101,6 +100,7 @@ a {
     font-weight: bold;
     transition: color 0.3s;
 }
+
 .mailme a {
     background: linear-gradient(45deg, #fdc3c6, #feb47b);
     padding: 15px 30px;
@@ -117,15 +117,16 @@ a {
     background: linear-gradient(45deg, #feb47b, #fdc3c6);
 }
 
-.story:hover{
-    background-color:rgba(255, 255, 255, 0.4);
-}
-.left, .right {
+.story-left, .story-right {
     background-color: rgba(255, 255, 255, 0.2);
     padding: 20px;
     border-radius: 10px;
+    transition: background-color 0.3s;
 }
 
+.story-left:hover, .story-right:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
 
 .footer {
     margin-top: 40px;
@@ -152,11 +153,60 @@ a {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.footer {
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.mailme {
+    grid-column: 3 / span 1;
+    margin-top: 20px;
+}
+
 @media (max-width: 768px) {
-    .main {
-        grid-template-columns: 1fr;
+    body {
+        padding: 0;
     }
-    .title, .story-left, .story-right {
+    .app {
+        width: 80%;
+        padding: 1.5em;
+        transform: none; 
+        box-shadow: none; 
+    }
+    .app:hover {
+        transform: none; 
+        box-shadow: none; 
+    }
+    .main {
+        grid-template-columns: 1fr 2fr;
+        gap: 1em;
+    }
+    .title, .left {
         grid-column: 1 / span 1;
+        
+    }
+    .right {
+        grid-column: 2 / span 2;
+        margin: 20px 0;
+    }
+    .title h1 {
+        font-size: 2em;
+    }
+    .title h2 {
+        font-size: 1.2em;
+    }
+    .footer {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .mailme, .colophon {
+        margin-top: 0;
+        text-align: center;
+    }
+
+    .mailme a {
+        padding: 10px 20px;
     }
 }
