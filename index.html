@@ -1,47 +1,456 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RMMZ | Computer Science student | CEO of Devminds | Looking for an internship</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="images/logo-2.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roméo Martinez | DevOps Engineer | Founder of Devminds</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    body, h1, h2, p, a {
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto Mono', monospace;
+      color: #333;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #fdc3c6;
+      perspective: 1500px;
+      padding: 20px;
+    }
+    h2 {
+      font-weight: 300;
+    }
+
+    /* ====== CARD CONTAINER ====== */
+    .card {
+      width: 80%;
+      max-width: 1000px;
+      height: auto;
+      min-height: 650px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease;
+      cursor: pointer;
+    }
+
+    .card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    /* ====== CARD SIDES ====== */
+    .card__side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      overflow: visible;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+
+    .app {
+      background: linear-gradient(135deg, rgba(0, 163, 108, 0.7) 50%, #88C5A7 50%);
+      border-radius: 2em;
+      padding: 2.5em;
+      width: 100%;
+      min-height: 650px;
+      box-shadow: rgba(0, 163, 108, 0.4) 5px 5px,
+        rgba(0, 163, 108, 0.3) 10px 10px,
+        rgba(0, 163, 108, 0.2) 15px 15px,
+        rgba(0, 163, 108, 0.1) 20px 20px,
+        rgba(0, 163, 108, 0.05) 25px 25px;
+      color: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      will-change: transform, box-shadow;
+    }
+
+    .card__front:hover .app {
+      transform: translateY(-10px);
+      box-shadow: rgba(0, 163, 108, 0.5) 8px 8px,
+        rgba(0, 163, 108, 0.4) 16px 16px,
+        rgba(0, 163, 108, 0.3) 24px 24px,
+        rgba(0, 163, 108, 0.2) 32px 32px,
+        rgba(0, 163, 108, 0.1) 40px 40px;
+    }
+
+    .card__back:hover .app {
+      transform: translateY(-10px);
+      box-shadow: rgba(0, 163, 108, 0.5) 8px 8px,
+        rgba(0, 163, 108, 0.4) 16px 16px,
+        rgba(0, 163, 108, 0.3) 24px 24px,
+        rgba(0, 163, 108, 0.2) 32px 32px,
+        rgba(0, 163, 108, 0.1) 40px 40px;
+    }
+
+    .card__back {
+      transform: rotateY(180deg);
+    }
+
+    header {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 30px;
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #00a36c;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .main {
+      display: grid;
+      grid-template-columns: 2fr 4fr 1fr;
+      gap: 2em;
+      align-items: start;
+      justify-content: center;
+      padding: 0.2em;
+      flex: 1;
+    }
+    
+    .title {
+      grid-column: 1 / span 2;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    
+    .title h1 {
+      font-size: 3em;
+      color: #333;
+    }
+    
+    .title h2 {
+      font-size: 1.5em;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .title p {
+      color: #333;
+      margin-top: 15px;
+      line-height: 1.6;
+    }
+    
+    .mailme {
+      grid-column: 3 / span 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+    
+    strong {
+      position: relative;
+    }
+    
+    strong::before {
+      background-color: #fdc3c6;
+      content: "";
+      position: absolute;
+      width: calc(100% + 4px);
+      height: 60%;
+      left: -2px;
+      bottom: 0;
+      z-index: -1;
+      transform: rotate(-2deg);
+    }
+    
+    a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+    
+    .mailme a {
+      background: linear-gradient(45deg, #fdc3c6, #feb47b);
+      padding: 15px 30px;
+      border-radius: 8px;
+      border-color: #333;
+      color: white;
+      font-weight: bold;
+      display: inline-block;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .mailme a:hover {
+      background: linear-gradient(45deg, #feb47b, #fdc3c6);
+      transform: translateY(-2px);
+    }
+    
+    .story-left, .story-right {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 25px;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+    
+    .story-left:hover, .story-right:hover {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .story-left h3, .story-right h3 {
+      color: #333;
+      margin-bottom: 12px;
+      font-size: 1.3em;
+    }
+
+    .story-left p, .story-right p {
+      color: #333;
+      line-height: 1.7;
+    }
+
+    .footer {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .colophon {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .colophon a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      padding: 10px 15px;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    
+    .colophon a:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .flip-hint {
+      text-align: right;
+      color: #333;
+      font-size: 0.9em;
+      opacity: 0.8;
+      font-style: italic;
+    }
+
+    /* ====== BACK SIDE CONTENT ====== */
+    .skills-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      padding: 20px 0;
+    }
+
+    .skills h3 {
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      color: #333;
+      text-align: center;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .skill-tag {
+      background-color: rgba(0, 163, 108, 0.15);
+      border-left: 4px solid #00a36c;
+      padding: 20px 25px;
+      border-radius: 10px;
+      font-size: 1em;
+      color: #333;
+      font-weight: 600;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .skill-tag:hover {
+      background-color: rgba(0, 163, 108, 0.3);
+      transform: translateX(5px);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .card {
+        width: 95%;
+        min-height: 550px;
+      }
+
+      .app {
+        padding: 1.5em;
+        min-height: 550px;
+      }
+      
+      .main {
+        grid-template-columns: 1fr;
+        gap: 1.2em;
+      }
+      
+      .title {
+        grid-column: 1;
+        margin-bottom: 15px;
+      }
+      
+      .title h1 {
+        font-size: 2em;
+      }
+      
+      .title h2 {
+        font-size: 1.2em;
+      }
+
+      .mailme {
+        grid-column: 1;
+        justify-content: center;
+      }
+
+      .mailme a {
+        padding: 12px 25px;
+      }
+
+      .story-left, .story-right {
+        grid-column: 1;
+        padding: 20px;
+      }
+
+      .footer {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .colophon {
+        justify-content: center;
+      }
+
+      .flip-hint {
+        text-align: center;
+      }
+
+      .skills h3 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .skill-tag {
+        padding: 15px 20px;
+        font-size: 0.9em;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="app">
+  <div class="card" id="card">
+    <!-- Front Side -->
+    <div class="card__side card__front">
+      <div class="app">
         <header>
-            <a class="logo" href="/">
-                <img src="images/logo-2.png" alt="The logo of Romeo a computer science student" width="100" height="100">
-            </a>
+          <div class="logo">RM</div>
         </header>
-        <div class="title">
-            <h1>Hello, I'm Roméo</h1>
-            <h2>Currently in internship at Viseo and also founder of <strong><a href="https://devminds.fr">Devminds</a></strong></h2>
-        </div>
+
         <div class="main">
-            
-            <div class="mailme">
-                <a href="mailto: romeo.martinez@orange.fr">Mail me</a>
-            </div>
-            <div class="story left">
-                <p>
-                    Full focus on learning DevOps and CLoud technologies. 
-                </p>
-            </div>
-            <div class="story right">
-                <p>
-                    I like computer science because it allows me to give free rein to my creativity.
-                    Also I love automating tasks and making life easier for people.
-                </p>
-            </div>
+          <div class="title">
+            <h1>Roméo Martinez</h1>
+            <h2>DevOps Engineer @ Viseo</h2>
+            <p>Founder of <strong><a href="https://devminds.fr" target="_blank">Devminds</a></strong>. Passionate about automation, cloud infrastructure, and building scalable solutions.</p>
+          </div>
+
+          <div class="mailme">
+            <a href="mailto:romeo.martinez@orange.fr">Contact Me</a>
+          </div>
+
+          <div class="story-left">
+            <h3>About Me</h3>
+            <p>DevOps engineer specializing in cloud infrastructure and automation. I help teams deliver software faster and more reliably through modern DevOps practices and cutting-edge technologies.</p>
+          </div>
+
+          <div class="story-right">
+            <h3>Experience</h3>
+            <p>Working with cutting-edge technologies to build robust CI/CD pipelines and cloud-native solutions. Passionate about infrastructure as code and container orchestration.</p>
+          </div>
         </div>
-        <footer class="footer">
-            <div class="colophon">
-                <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank">LinkedIn</a>
-                <a href="https://github.com/Romeo-mz" target="_blank">GitHub</a>
-            </div>
-        </footer>
+
+        <div class="footer">
+          <div class="colophon">
+            <a href="https://github.com/Romeo-mz" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank">LinkedIn</a>
+            <a href="https://devminds.fr" target="_blank">Devminds</a>
+          </div>
+          <div class="flip-hint">Click to see tech stack →</div>
+        </div>
+      </div>
     </div>
-    
+
+    <!-- Back Side -->
+    <div class="card__side card__back">
+      <div class="app">
+        <div class="skills-container">
+          <div class="skills">
+            <h3>Tech Stack & Tools</h3>
+            <div class="skills-grid">
+              <div class="skill-tag">Docker</div>
+              <div class="skill-tag">Kubernetes</div>
+              <div class="skill-tag">GitLab CI</div>
+              <div class="skill-tag">Azure DevOps</div>
+              <div class="skill-tag">Ansible</div>
+              <div class="skill-tag">AWS & CDK</div>
+              <div class="skill-tag">.NET</div>
+              <div class="skill-tag">Python</div>
+              <div class="skill-tag">Terraform</div>
+              <div class="skill-tag">Linux & Bash</div>
+              <div class="skill-tag">CI/CD</div>
+              <div class="skill-tag">Cloud Native</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <div class="colophon">
+            <a href="https://github.com/Romeo-mz" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank">LinkedIn</a>
+            <a href="https://devminds.fr" target="_blank">Devminds</a>
+          </div>
+          <div class="flip-hint">← Click to flip back</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const card = document.getElementById('card');
+    card.addEventListener('click', () => {
+      card.classList.toggle('is-flipped');
+    });
+  </script>
 </body>
 </html>
