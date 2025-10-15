@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roméo Martinez | DevOps Engineer | Founder of Devminds</title>
+  <title>Roméo Martinez | DevOps Engineer</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
   <style>
-    body, h1, h2, p, a {
+    /* ========== RESET & BASE ========== */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Roboto Mono', monospace;
       color: #333;
-    }
-    body {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -21,19 +24,35 @@
       perspective: 1500px;
       padding: 20px;
     }
+
+    h1, h2, h3 {
+      color: #333;
+    }
+
     h2 {
       font-weight: 300;
     }
 
-    /* ====== CARD CONTAINER ====== */
+    p {
+      line-height: 1.5;
+      color: #333;
+    }
+
+    a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    /* ========== CARD 3D FLIP ========== */
     .card {
-      width: 80%;
-      max-width: 1000px;
-      height: auto;
-      min-height: 650px;
+      width: 90%;
+      max-width: 850px;
+      aspect-ratio: 1.586;
       position: relative;
       transform-style: preserve-3d;
-      transition: transform 0.8s ease;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
     }
 
@@ -41,368 +60,430 @@
       transform: rotateY(180deg);
     }
 
-    /* ====== CARD SIDES ====== */
     .card__side {
       position: absolute;
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      overflow: visible;
       -webkit-backface-visibility: hidden;
       transform: translateZ(0);
-    }
-
-    .app {
-      background: linear-gradient(135deg, rgba(0, 163, 108, 0.7) 50%, #88C5A7 50%);
-      border-radius: 2em;
-      padding: 2.5em;
-      width: 100%;
-      min-height: 650px;
-      box-shadow: rgba(0, 163, 108, 0.4) 5px 5px,
-        rgba(0, 163, 108, 0.3) 10px 10px,
-        rgba(0, 163, 108, 0.2) 15px 15px,
-        rgba(0, 163, 108, 0.1) 20px 20px,
-        rgba(0, 163, 108, 0.05) 25px 25px;
-      color: #fff;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      will-change: transform, box-shadow;
-    }
-
-    .card__front:hover .app {
-      transform: translateY(-10px);
-      box-shadow: rgba(0, 163, 108, 0.5) 8px 8px,
-        rgba(0, 163, 108, 0.4) 16px 16px,
-        rgba(0, 163, 108, 0.3) 24px 24px,
-        rgba(0, 163, 108, 0.2) 32px 32px,
-        rgba(0, 163, 108, 0.1) 40px 40px;
-    }
-
-    .card__back:hover .app {
-      transform: translateY(-10px);
-      box-shadow: rgba(0, 163, 108, 0.5) 8px 8px,
-        rgba(0, 163, 108, 0.4) 16px 16px,
-        rgba(0, 163, 108, 0.3) 24px 24px,
-        rgba(0, 163, 108, 0.2) 32px 32px,
-        rgba(0, 163, 108, 0.1) 40px 40px;
+      overflow: hidden;
     }
 
     .card__back {
       transform: rotateY(180deg);
     }
 
-    header {
+    /* ========== CARD STYLING ========== */
+    .card-content {
+      background: linear-gradient(135deg, rgba(0, 163, 108, 0.7) 50%, #88C5A7 50%);
+      border-radius: 1.5em;
+      padding: 2em;
+      width: 100%;
+      height: 100%;
+      box-shadow: 
+        rgba(0, 163, 108, 0.4) 5px 5px,
+        rgba(0, 163, 108, 0.3) 10px 10px,
+        rgba(0, 163, 108, 0.2) 15px 15px,
+        rgba(0, 163, 108, 0.1) 20px 20px,
+        rgba(0, 163, 108, 0.05) 25px 25px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       display: flex;
-      justify-content: flex-start;
-      margin-bottom: 30px;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    
+
+    .card__front:hover .card-content,
+    .card__back:hover .card-content {
+      transform: translateY(-8px);
+      box-shadow: 
+        rgba(0, 163, 108, 0.5) 7px 7px,
+        rgba(0, 163, 108, 0.4) 14px 14px,
+        rgba(0, 163, 108, 0.3) 21px 21px,
+        rgba(0, 163, 108, 0.2) 28px 28px,
+        rgba(0, 163, 108, 0.1) 35px 35px;
+    }
+
+    /* ========== HEADER ========== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5em;
+    }
+
     .logo {
-      width: 80px;
-      height: 80px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2em;
+      font-size: 1.6em;
       font-weight: bold;
       color: #00a36c;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
     }
 
-    .main {
-      display: grid;
-      grid-template-columns: 2fr 4fr 1fr;
-      gap: 2em;
-      align-items: start;
-      justify-content: center;
-      padding: 0.2em;
+    .contact-btn {
+      background: linear-gradient(45deg, #fdc3c6, #feb47b);
+      padding: 10px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      font-size: 0.9em;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .contact-btn:hover {
+      background: linear-gradient(45deg, #feb47b, #fdc3c6);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .content {
       flex: 1;
-    }
-    
-    .title {
-      grid-column: 1 / span 2;
-      text-align: left;
-      margin-bottom: 20px;
-    }
-    
-    .title h1 {
-      font-size: 3em;
-      color: #333;
-    }
-    
-    .title h2 {
-      font-size: 1.5em;
-      color: #333;
-      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.2em;
     }
 
-    .title p {
-      color: #333;
-      margin-top: 15px;
-      line-height: 1.6;
+    .intro h1 {
+      font-size: 2.2em;
+      margin-bottom: 0.2em;
     }
-    
-    .mailme {
-      grid-column: 3 / span 1;
-      display: flex;
-      justify-content: flex-end;
-      align-items: flex-start;
+
+    .intro h2 {
+      font-size: 1.1em;
+      margin-bottom: 0.6em;
     }
-    
-    strong {
+
+    .intro p {
+      font-size: 0.95em;
+    }
+
+    .highlight {
       position: relative;
+      display: inline;
     }
-    
-    strong::before {
-      background-color: #fdc3c6;
+
+    .highlight::before {
       content: "";
       position: absolute;
       width: calc(100% + 4px);
       height: 60%;
       left: -2px;
       bottom: 0;
+      background-color: #fdc3c6;
       z-index: -1;
       transform: rotate(-2deg);
     }
-    
-    a {
-      color: #333;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
     }
-    
-    .mailme a {
-      background: linear-gradient(45deg, #fdc3c6, #feb47b);
-      padding: 15px 30px;
-      border-radius: 8px;
-      border-color: #333;
-      color: white;
-      font-weight: bold;
-      display: inline-block;
-      transition: background 0.3s, transform 0.3s;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-    }
-    
-    .mailme a:hover {
-      background: linear-gradient(45deg, #feb47b, #fdc3c6);
-      transform: translateY(-2px);
-    }
-    
-    .story-left, .story-right {
+
+    .info-box {
       background-color: rgba(255, 255, 255, 0.2);
-      padding: 25px;
+      padding: 1em;
       border-radius: 10px;
-      transition: background-color 0.3s;
-    }
-    
-    .story-left:hover, .story-right:hover {
-      background-color: rgba(255, 255, 255, 0.4);
+      transition: background-color 0.3s ease;
     }
 
-    .story-left h3, .story-right h3 {
-      color: #333;
-      margin-bottom: 12px;
-      font-size: 1.3em;
+    .info-box:hover {
+      background-color: rgba(255, 255, 255, 0.35);
     }
 
-    .story-left p, .story-right p {
-      color: #333;
-      line-height: 1.7;
+    .info-box h3 {
+      font-size: 1em;
+      margin-bottom: 0.5em;
     }
 
+    .info-box p {
+      font-size: 0.85em;
+    }
+
+    /* ========== FOOTER ========== */
     .footer {
-      margin-top: 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1em;
     }
-    
-    .colophon {
+
+    .social-links {
       display: flex;
-      gap: 15px;
+      gap: 10px;
       flex-wrap: wrap;
     }
-    
-    .colophon a {
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-      padding: 10px 15px;
+
+    .social-links a {
+      padding: 8px 12px;
       background-color: rgba(0, 0, 0, 0.3);
       border-radius: 5px;
-      transition: background-color 0.3s;
+      color: white;
+      font-size: 0.85em;
+      transition: background-color 0.3s ease;
+      white-space: nowrap;
     }
-    
-    .colophon a:hover {
+
+    .social-links a:hover {
       background-color: rgba(0, 0, 0, 0.5);
     }
 
     .flip-hint {
-      text-align: right;
       color: #333;
-      font-size: 0.9em;
+      font-size: 0.8em;
       opacity: 0.8;
       font-style: italic;
+      white-space: nowrap;
     }
 
-    /* ====== BACK SIDE CONTENT ====== */
-    .skills-container {
+    /* ========== BACK SIDE - SKILLS ========== */
+    .skills-wrapper {
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex: 1;
-      padding: 20px 0;
+      gap: 1.5em;
     }
 
-    .skills h3 {
-      font-size: 2.5em;
-      margin-bottom: 30px;
-      color: #333;
+    .skills-title {
+      font-size: 1.8em;
       text-align: center;
     }
 
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8em;
       width: 100%;
-      max-width: 800px;
     }
 
-    .skill-tag {
+    .skill-item {
       background-color: rgba(0, 163, 108, 0.15);
       border-left: 4px solid #00a36c;
-      padding: 20px 25px;
-      border-radius: 10px;
-      font-size: 1em;
-      color: #333;
+      padding: 0.8em;
+      border-radius: 8px;
+      font-size: 0.85em;
       font-weight: 600;
-      transition: all 0.3s;
       text-align: center;
+      transition: all 0.3s ease;
     }
 
-    .skill-tag:hover {
+    .skill-item:hover {
       background-color: rgba(0, 163, 108, 0.3);
       transform: translateX(5px);
     }
 
+    /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
       body {
-        padding: 10px;
+        padding: 15px;
       }
-      
+
       .card {
         width: 95%;
-        min-height: 550px;
       }
 
-      .app {
+      .card-content {
         padding: 1.5em;
-        min-height: 550px;
       }
-      
-      .main {
+
+      .header {
+        margin-bottom: 1.2em;
+      }
+
+      .logo {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4em;
+      }
+
+      .contact-btn {
+        padding: 8px 16px;
+        font-size: 0.8em;
+      }
+
+      .intro h1 {
+        font-size: 1.6em;
+      }
+
+      .intro h2 {
+        font-size: 0.95em;
+      }
+
+      .intro p {
+        font-size: 0.85em;
+      }
+
+      .info-grid {
         grid-template-columns: 1fr;
-        gap: 1.2em;
-      }
-      
-      .title {
-        grid-column: 1;
-        margin-bottom: 15px;
-      }
-      
-      .title h1 {
-        font-size: 2em;
-      }
-      
-      .title h2 {
-        font-size: 1.2em;
+        gap: 0.8em;
       }
 
-      .mailme {
-        grid-column: 1;
-        justify-content: center;
+      .info-box {
+        padding: 0.9em;
       }
 
-      .mailme a {
-        padding: 12px 25px;
+      .info-box h3 {
+        font-size: 0.9em;
       }
 
-      .story-left, .story-right {
-        grid-column: 1;
-        padding: 20px;
+      .info-box p {
+        font-size: 0.8em;
       }
 
       .footer {
         flex-direction: column;
-        gap: 15px;
-        align-items: center;
+        gap: 0.8em;
+        align-items: stretch;
       }
 
-      .colophon {
+      .social-links {
         justify-content: center;
+        gap: 8px;
+      }
+
+      .social-links a {
+        font-size: 0.8em;
+        padding: 6px 10px;
       }
 
       .flip-hint {
         text-align: center;
+        font-size: 0.75em;
       }
 
-      .skills h3 {
-        font-size: 1.8em;
-        margin-bottom: 20px;
+      .skills-title {
+        font-size: 1.4em;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6em;
+      }
+
+      .skill-item {
+        padding: 0.7em;
+        font-size: 0.75em;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .card {
+        width: 100%;
+      }
+
+      .card-content {
+        padding: 1.2em;
+      }
+
+      .header {
+        margin-bottom: 1em;
+      }
+
+      .logo {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2em;
+      }
+
+      .contact-btn {
+        padding: 7px 14px;
+        font-size: 0.75em;
+      }
+
+      .intro h1 {
+        font-size: 1.4em;
+      }
+
+      .intro h2 {
+        font-size: 0.85em;
+      }
+
+      .intro p {
+        font-size: 0.8em;
+      }
+
+      .info-box {
+        padding: 0.8em;
+      }
+
+      .info-box h3 {
+        font-size: 0.85em;
+      }
+
+      .info-box p {
+        font-size: 0.75em;
+      }
+
+      .social-links a {
+        font-size: 0.75em;
+        padding: 5px 8px;
+      }
+
+      .skills-title {
+        font-size: 1.2em;
       }
 
       .skills-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        gap: 0.5em;
       }
 
-      .skill-tag {
-        padding: 15px 20px;
-        font-size: 0.9em;
+      .skill-item {
+        padding: 0.6em;
+        font-size: 0.7em;
       }
     }
   </style>
 </head>
 <body>
-  <div class="card" id="card">
-    <!-- Front Side -->
+  <div class="card" id="businessCard">
+    <!-- FRONT SIDE -->
     <div class="card__side card__front">
-      <div class="app">
-        <header>
+      <div class="card-content">
+        <div class="header">
           <div class="logo">RM</div>
-        </header>
+          <a href="mailto:romeo.martinez@orange.fr" class="contact-btn">Contact Me</a>
+        </div>
 
-        <div class="main">
-          <div class="title">
+        <div class="content">
+          <div class="intro">
             <h1>Roméo Martinez</h1>
             <h2>DevOps Engineer @ Viseo</h2>
-            <p>Founder of <strong><a href="https://devminds.fr" target="_blank">Devminds</a></strong>. Passionate about automation, cloud infrastructure, and building scalable solutions.</p>
+            <p>Founder of <span class="highlight"><a href="https://devminds.fr" target="_blank">Devminds</a></span></p>
           </div>
 
-          <div class="mailme">
-            <a href="mailto:romeo.martinez@orange.fr">Contact Me</a>
-          </div>
+          <div class="info-grid">
+            <div class="info-box">
+              <h3>What I Do</h3>
+              <p>Building cloud infrastructure and automating deployment pipelines for faster, reliable software delivery.</p>
+            </div>
 
-          <div class="story-left">
-            <h3>About Me</h3>
-            <p>DevOps engineer specializing in cloud infrastructure and automation. I help teams deliver software faster and more reliably through modern DevOps practices and cutting-edge technologies.</p>
-          </div>
-
-          <div class="story-right">
-            <h3>Experience</h3>
-            <p>Working with cutting-edge technologies to build robust CI/CD pipelines and cloud-native solutions. Passionate about infrastructure as code and container orchestration.</p>
+            <div class="info-box">
+              <h3>My Focus</h3>
+              <p>Infrastructure as code, container orchestration, and creating scalable cloud-native solutions.</p>
+            </div>
           </div>
         </div>
 
         <div class="footer">
-          <div class="colophon">
+          <div class="social-links">
             <a href="https://github.com/Romeo-mz" target="_blank">GitHub</a>
             <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank">LinkedIn</a>
             <a href="https://devminds.fr" target="_blank">Devminds</a>
@@ -412,30 +493,30 @@
       </div>
     </div>
 
-    <!-- Back Side -->
+    <!-- BACK SIDE -->
     <div class="card__side card__back">
-      <div class="app">
-        <div class="skills-container">
-          <div class="skills">
-            <h3>Tech Stack & Tools</h3>
-            <div class="skills-grid">
-              <div class="skill-tag">Docker</div>
-              <div class="skill-tag">Kubernetes</div>
-              <div class="skill-tag">GitLab CI</div>
-              <div class="skill-tag">Azure DevOps</div>
-              <div class="skill-tag">Ansible</div>
-              <div class="skill-tag">AWS & CDK</div>
-              <div class="skill-tag">.NET</div>
-              <div class="skill-tag">Python</div>
-              <div class="skill-tag">Terraform</div>
-              <div class="skill-tag">Linux & Bash</div>
-              <div class="skill-tag">CI/CD</div>
-              <div class="skill-tag">Cloud Native</div>
-            </div>
+      <div class="card-content">
+        <div class="skills-wrapper">
+          <h3 class="skills-title">Tech Stack</h3>
+          
+          <div class="skills-grid">
+            <div class="skill-item">Docker</div>
+            <div class="skill-item">Kubernetes</div>
+            <div class="skill-item">GitLab CI</div>
+            <div class="skill-item">Azure DevOps</div>
+            <div class="skill-item">Ansible</div>
+            <div class="skill-item">AWS & CDK</div>
+            <div class="skill-item">.NET</div>
+            <div class="skill-item">Python</div>
+            <div class="skill-item">Terraform</div>
+            <div class="skill-item">Linux</div>
+            <div class="skill-item">CI/CD</div>
+            <div class="skill-item">Bash</div>
           </div>
         </div>
+
         <div class="footer">
-          <div class="colophon">
+          <div class="social-links">
             <a href="https://github.com/Romeo-mz" target="_blank">GitHub</a>
             <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank">LinkedIn</a>
             <a href="https://devminds.fr" target="_blank">Devminds</a>
@@ -447,9 +528,10 @@
   </div>
 
   <script>
-    const card = document.getElementById('card');
-    card.addEventListener('click', () => {
-      card.classList.toggle('is-flipped');
+    const card = document.getElementById('businessCard');
+    
+    card.addEventListener('click', function() {
+      this.classList.toggle('is-flipped');
     });
   </script>
 </body>
