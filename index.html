@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <main class="page-container">
   <div class="card" id="businessCard">
     <!-- FRONT SIDE -->
     <div class="card__side card__front">
@@ -21,7 +22,7 @@
           <div class="intro">
             <h1>Roméo Martinez</h1>
             <h2>DevOps Engineer @ Viseo</h2>
-            <p>Founder of <span class="highlight"><a href="https://devminds.fr" target="_blank">Devminds</a></span></p>
+            <p>Founder of <span class="highlight"><a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a></span></p>
           </div>
 
           <div class="info-grid">
@@ -39,9 +40,9 @@
 
         <div class="footer">
           <div class="social-links">
-            <a href="https://github.com/Romeo-mz" target="_blank">GitHub</a>
-            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank">LinkedIn</a>
-            <a href="https://devminds.fr" target="_blank">Devminds</a>
+            <a href="https://github.com/Romeo-mz" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a>
           </div>
           <div class="flip-hint">Click to see tech stack →</div>
         </div>
@@ -72,15 +73,80 @@
 
         <div class="footer">
           <div class="social-links">
-            <a href="https://github.com/Romeo-mz" target="_blank">GitHub</a>
-            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank">LinkedIn</a>
-            <a href="https://devminds.fr" target="_blank">Devminds</a>
+            <a href="https://github.com/Romeo-mz" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a>
           </div>
           <div class="flip-hint">← Click to flip back</div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- BLOG SECTION -->
+  <section class="blog-section">
+    <div class="blog-container">
+      <div class="blog-header">
+        <h2 class="blog-title">DevOps Notes</h2>
+        <p class="blog-subtitle">Sharing insights from the trenches</p>
+      </div>
+
+      <div class="blog-grid">
+      <!-- Article Card 1 -->
+      <article class="blog-card">
+        <div class="blog-card-content">
+          <div class="blog-meta">
+            <span class="blog-tag">DevOps</span>
+            <span class="blog-date">Jan 2026</span>
+          </div>
+          <h3 class="blog-card-title">Shipping faster with trunk-based delivery</h3>
+          <p class="blog-excerpt">Notes on keeping main green with small, reversible changes and automated quality gates.</p>
+          <div class="blog-footer">
+            <span class="read-time">4 min read</span>
+            <a href="#" class="read-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Article Card 2 -->
+      <article class="blog-card">
+        <div class="blog-card-content">
+          <div class="blog-meta">
+            <span class="blog-tag">Cloud</span>
+            <span class="blog-date">Dec 2025</span>
+          </div>
+          <h3 class="blog-card-title">Cost-aware Kubernetes on a quiet weekend</h3>
+          <p class="blog-excerpt">Right-size nodes, autoscale workloads, and keep observability tight without surprising bills.</p>
+          <div class="blog-footer">
+            <span class="read-time">5 min read</span>
+            <a href="#" class="read-link">Read →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Article Card 3 -->
+      <article class="blog-card blog-card-draft">
+        <div class="blog-card-content">
+          <div class="blog-meta">
+            <span class="blog-tag">Infra as Code</span>
+            <span class="blog-date">Coming Soon</span>
+          </div>
+          <h3 class="blog-card-title">From terraform plan to safe rollout</h3>
+          <p class="blog-excerpt">Guardrails for teams: change visibility, policy as code, and rollout patterns you can reuse.</p>
+          <div class="blog-footer">
+            <span class="read-time">In progress</span>
+            <a href="#" class="read-link">Preview →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="blog-cta">
+      <p>💡 <strong>Add new articles:</strong> Duplicate any blog-card above, update the content, and you're done!</p>
+    </div>
+    </div>
+  </section>
+  </main>
 
   <script>
     const card = document.getElementById('businessCard');
