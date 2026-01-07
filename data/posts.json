@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Shipping faster with trunk-based delivery",
+    "excerpt": "Notes on keeping main green with small, reversible changes and automated quality gates.",
+    "date": "2026-01-07",
+    "tags": ["DevOps"],
+    "readTime": "4 min read",
+    "href": "/posts/2026-01-07-shipping-faster.html"
+  }
+]
