@@ -50,7 +50,7 @@
             <div class="blog-article-header">
               <div class="blog-article-meta">
                 <span class="blog-tag">${(p.tags && p.tags[0]) || ''}</span>
-                <time class="blog-date">${p.date || ''}</time>
+                <time class="blog-date" datetime="${p.date || ''}">${p.date || ''}</time>
               </div>
               <h2 class="blog-article-title">${p.title || ''}</h2>
               <p class="blog-article-excerpt">${p.excerpt || ''}</p>
