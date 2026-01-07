@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Roméo Martinez | DevOps Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page-container">
+    <header class="page-header">
+      <div class="header-content">
+        <div class="logo">RM</div>
+        <nav class="nav-links">
+          <a href="/">Portfolio</a>
+          <a href="/blog/" class="active">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="blog-hub">
+      <div class="blog-hub-header">
+        <h1>DevOps Notes</h1>
+        <p class="subtitle">Sharing insights from the trenches</p>
+      </div>
+
+      <div class="blog-articles" id="blogArticles">
+        <!-- Blog cards will be injected here by JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Load posts from data/posts.json and render as full-width cards
+    async function loadBlogArticles() {
+      try {
+        const resp = await fetch('/data/posts.json');
+        if (!resp.ok) return;
+        const posts = await resp.json();
+        if (!Array.isArray(posts)) return;
+
+        const container = document.getElementById('blogArticles');
+        container.innerHTML = '';
+
+        posts.forEach(p => {
+          const article = document.createElement('article');
+          article.className = 'blog-article-card';
+          article.innerHTML = `
+            <div class="blog-article-header">
+              <div class="blog-article-meta">
+                <span class="blog-tag">${(p.tags && p.tags[0]) || ''}</span>
+                <time class="blog-date">${p.date || ''}</time>
+              </div>
+              <h2 class="blog-article-title">${p.title || ''}</h2>
+              <p class="blog-article-excerpt">${p.excerpt || ''}</p>
+            </div>
+            <footer class="blog-article-footer">
+              <span class="read-time">${p.readTime || ''}</span>
+              <a href="${p.href || '#'}" class="read-more">Read full article →</a>
+            </footer>
+          `;
+          container.appendChild(article);
+
+          // Make card clickable
+          article.addEventListener('click', (e) => {
+            if (e.target.closest('a')) return;
+            window.location = p.href;
+          });
+          article.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') window.location = p.href;
+          });
+          article.setAttribute('tabindex', '0');
+        });
+      } catch (err) {
+        console.error('Failed to load blog articles:', err);
+      }
+    }
+
+    // Load on page load
+    loadBlogArticles();
+  </script>
+</body>
+</html>

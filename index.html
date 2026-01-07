@@ -9,6 +9,15 @@
 </head>
 <body>
   <main class="page-container">
+    <header class="page-header">
+      <div class="header-content">
+        <div class="logo">RM</div>
+        <nav class="nav-links">
+          <a href="/" class="active">Portfolio</a>
+          <a href="/blog/">Blog</a>
+        </nav>
+      </div>
+    </header>
   <div class="card" id="businessCard">
     <!-- FRONT SIDE -->
     <div class="card__side card__front">
@@ -83,64 +92,7 @@
     </div>
   </div>
 
-  <!-- BLOG SECTION -->
-  <section class="blog-section">
-    <div class="blog-container">
-      <div class="blog-header">
-        <h2 class="blog-title">DevOps Notes</h2>
-        <p class="blog-subtitle">Sharing insights from the trenches</p>
-      </div>
 
-      <div class="blog-grid">
-      <!-- Article Card 1 -->
-      <article class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-meta">
-            <span class="blog-tag">DevOps</span>
-            <span class="blog-date">Jan 2026</span>
-          </div>
-          <h3 class="blog-card-title">Shipping faster with trunk-based delivery</h3>
-          <p class="blog-excerpt">Notes on keeping main green with small, reversible changes and automated quality gates.</p>
-          <div class="blog-footer">
-            <span class="read-time">4 min read</span>
-            <a href="#" class="read-link">Read →</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- Article Card 2 -->
-      <article class="blog-card">
-        <div class="blog-card-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Cloud</span>
-            <span class="blog-date">Dec 2025</span>
-          </div>
-          <h3 class="blog-card-title">Cost-aware Kubernetes on a quiet weekend</h3>
-          <p class="blog-excerpt">Right-size nodes, autoscale workloads, and keep observability tight without surprising bills.</p>
-          <div class="blog-footer">
-            <span class="read-time">5 min read</span>
-            <a href="#" class="read-link">Read →</a>
-          </div>
-        </div>
-      </article>
-
-      <!-- Article Card 3 -->
-      <article class="blog-card blog-card-draft">
-        <div class="blog-card-content">
-          <div class="blog-meta">
-            <span class="blog-tag">Infra as Code</span>
-            <span class="blog-date">Coming Soon</span>
-          </div>
-          <h3 class="blog-card-title">From terraform plan to safe rollout</h3>
-          <p class="blog-excerpt">Guardrails for teams: change visibility, policy as code, and rollout patterns you can reuse.</p>
-          <div class="blog-footer">
-            <span class="read-time">In progress</span>
-            <a href="#" class="read-link">Preview →</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </section>
   </main>
 
   <script>
@@ -173,64 +125,42 @@
       }
     });
 
-    // Make blog cards keyboard-accessible and clickable as a whole
-    document.querySelectorAll('.blog-card').forEach(card => {
-      const readLink = card.querySelector('.read-link');
-      const isDraft = card.classList.contains('blog-card-draft');
+    // Initialize blog-card interactions (call after new cards are added too)
+    function initBlogCards() {
+      document.querySelectorAll('.blog-card').forEach(card => {
+        const readLink = card.querySelector('.read-link');
+        const isDraft = card.classList.contains('blog-card-draft');
 
-      // make focusable
-      if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+        // make focusable
+        if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
 
-      // click -> go to the read link (unless draft or href is '#')
-      card.addEventListener('click', (e) => {
-        if (e.target.closest('a')) return; // let links handle themselves
-        if (isDraft) return; // drafts not navigable
-        if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
-          window.location = readLink.href;
-        }
-      });
-
-      // keyboard: Enter opens the post
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          if (isDraft) return;
+        // click -> go to the read link (unless draft or href is '#')
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return; // let links handle themselves
+          if (isDraft) return; // drafts not navigable
           if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
             window.location = readLink.href;
           }
-        }
-      });
-    });
-
-    // Context7 integration stub — replace with your server-side proxy or client call as needed.
-    // NOTE: Calling Context7 directly from the browser requires a secure setup for API keys.
-    async function loadContext7Posts() {
-      // Example: fetch('/api/context7/posts') // server should call Context7 with secret
-      try {
-        const resp = await fetch('/api/context7/posts');
-        if (!resp.ok) return;
-        const posts = await resp.json();
-        // posts should be an array of {title, excerpt, tags, date, href}
-        const grid = document.querySelector('.blog-grid');
-        posts.forEach(p => {
-          const a = document.createElement('article');
-          a.className = 'blog-card';
-          a.innerHTML = `
-            <div class="blog-card-content">
-              <div class="blog-meta"><span class="blog-tag">${p.tags?.[0] || ''}</span><span class="blog-date">${p.date || ''}</span></div>
-              <h3 class="blog-card-title">${p.title}</h3>
-              <p class="blog-excerpt">${p.excerpt}</p>
-              <div class="blog-footer"><span class="read-time">${p.readTime || ''}</span><a class="read-link" href="${p.href}">Read →</a></div>
-            </div>
-          `;
-          grid.appendChild(a);
         });
-      } catch (err) {
-        /* no-op; server not configured */
-      }
+
+        // keyboard: Enter opens the post
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            if (isDraft) return;
+            if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
+              window.location = readLink.href;
+            }
+          }
+        });
+      });
     }
 
-    // Optionally call loadContext7Posts() if you have a server endpoint set up.
-    // loadContext7Posts();
+    // Call once for existing static/cards
+    initBlogCards();
+
+    // Blog post loading now uses the static `data/posts.json` file only. If you want
+    // dynamic updates, add or update `data/posts.json` and static files under `/posts/`.
+    // (Context7 integration removed — site is fully static HTML.)
   </script>
 </body>
 </html>
