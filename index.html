@@ -140,20 +140,97 @@
         </div>
       </article>
     </div>
-
-    <div class="blog-cta">
-      <p>💡 <strong>Add new articles:</strong> Duplicate any blog-card above, update the content, and you're done!</p>
-    </div>
-    </div>
   </section>
   </main>
 
   <script>
     const card = document.getElementById('businessCard');
-    
-    card.addEventListener('click', function() {
+    const front = card.querySelector('.card__front');
+    const back = card.querySelector('.card__back');
+
+    // Initialize accessibility attrs
+    front.setAttribute('aria-hidden', 'false');
+    back.setAttribute('aria-hidden', 'true');
+
+    // Click: toggle flip but ignore clicks on links
+    card.addEventListener('click', function(e) {
+      if (e.target.closest('a')) return; // don't flip when clicking links
       this.classList.toggle('is-flipped');
+      const flipped = this.classList.contains('is-flipped');
+      front.setAttribute('aria-hidden', flipped);
+      back.setAttribute('aria-hidden', !flipped);
     });
+
+    // Keyboard accessibility
+    card.setAttribute('tabindex', '0');
+    card.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.classList.toggle('is-flipped');
+        const flipped = this.classList.contains('is-flipped');
+        front.setAttribute('aria-hidden', flipped);
+        back.setAttribute('aria-hidden', !flipped);
+      }
+    });
+
+    // Make blog cards keyboard-accessible and clickable as a whole
+    document.querySelectorAll('.blog-card').forEach(card => {
+      const readLink = card.querySelector('.read-link');
+      const isDraft = card.classList.contains('blog-card-draft');
+
+      // make focusable
+      if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
+
+      // click -> go to the read link (unless draft or href is '#')
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return; // let links handle themselves
+        if (isDraft) return; // drafts not navigable
+        if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
+          window.location = readLink.href;
+        }
+      });
+
+      // keyboard: Enter opens the post
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          if (isDraft) return;
+          if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
+            window.location = readLink.href;
+          }
+        }
+      });
+    });
+
+    // Context7 integration stub — replace with your server-side proxy or client call as needed.
+    // NOTE: Calling Context7 directly from the browser requires a secure setup for API keys.
+    async function loadContext7Posts() {
+      // Example: fetch('/api/context7/posts') // server should call Context7 with secret
+      try {
+        const resp = await fetch('/api/context7/posts');
+        if (!resp.ok) return;
+        const posts = await resp.json();
+        // posts should be an array of {title, excerpt, tags, date, href}
+        const grid = document.querySelector('.blog-grid');
+        posts.forEach(p => {
+          const a = document.createElement('article');
+          a.className = 'blog-card';
+          a.innerHTML = `
+            <div class="blog-card-content">
+              <div class="blog-meta"><span class="blog-tag">${p.tags?.[0] || ''}</span><span class="blog-date">${p.date || ''}</span></div>
+              <h3 class="blog-card-title">${p.title}</h3>
+              <p class="blog-excerpt">${p.excerpt}</p>
+              <div class="blog-footer"><span class="read-time">${p.readTime || ''}</span><a class="read-link" href="${p.href}">Read →</a></div>
+            </div>
+          `;
+          grid.appendChild(a);
+        });
+      } catch (err) {
+        /* no-op; server not configured */
+      }
+    }
+
+    // Optionally call loadContext7Posts() if you have a server endpoint set up.
+    // loadContext7Posts();
   </script>
 </body>
 </html>

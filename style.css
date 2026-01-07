@@ -50,7 +50,8 @@
 
     /* ========== CARD 3D FLIP ========== */
     .card {
-      width: 90%;
+      width: 80%;
+      margin-top: 2rem;
       max-width: 850px;
       aspect-ratio: 1.586;
       position: relative;
@@ -64,6 +65,23 @@
       transform: rotateY(180deg);
     }
 
+    /* lift the whole card on hover/focus — keeps flip rotation when flipped */
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card:focus-visible {
+      transform: translateY(-8px);
+    }
+
+    .card.is-flipped:hover {
+      transform: translateY(-8px) rotateY(180deg);
+    }
+
+    .card.is-flipped:focus-visible {
+      transform: translateY(-8px) rotateY(180deg);
+    }
+
     .card__side {
       position: absolute;
       width: 100%;
@@ -72,6 +90,21 @@
       backface-visibility: hidden;
       transform: translateZ(0);
       overflow: hidden;
+      pointer-events: none; /* default: ignore interactions when not visible */
+      z-index: 1;
+      transition: z-index 0.12s ease;
+    }
+
+    /* Enable interaction only for the side currently facing the user */
+    .card:not(.is-flipped) .card__front,
+    .card.is-flipped .card__back {
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    /* Elevate the hovered side so its translated content sits above siblings */
+    .card__side:hover {
+      z-index: 4;
     }
 
     .card__back {
@@ -95,11 +128,14 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      will-change: transform; /* hint to the browser */
+      transform: translateZ(0);
     }
 
+    /* lift the hovered side in 3D so it stacks above the other side */
     .card__front:hover .card-content,
     .card__back:hover .card-content {
-      transform: translateY(-8px);
+      transform: translateZ(30px);
       box-shadow: 
         rgba(0, 163, 108, 0.5) 7px 7px,
         rgba(0, 163, 108, 0.4) 14px 14px,
@@ -589,7 +625,7 @@
     .blog-card {
       background: white;
       border-radius: 1.2em;
-      overflow: hidden;
+      overflow: visible; /* allow inner Z-pop to escape */
       box-shadow: 
         rgba(0, 163, 108, 0.3) 3px 3px,
         rgba(0, 163, 108, 0.2) 6px 6px,
@@ -597,15 +633,25 @@
         rgba(0, 163, 108, 0.05) 12px 12px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      position: relative;
+      z-index: 1;
+      will-change: transform;
     }
 
-    .blog-card:hover {
+    .blog-card:hover,
+    .blog-card:focus-visible {
       transform: translateY(-8px);
+      z-index: 3; /* bring hovered card above neighbors */
       box-shadow: 
         rgba(0, 163, 108, 0.4) 5px 5px,
         rgba(0, 163, 108, 0.3) 10px 10px,
         rgba(0, 163, 108, 0.2) 15px 15px,
         rgba(0, 163, 108, 0.1) 20px 20px;
+    }
+
+    .blog-card:focus-visible {
+      outline: 3px solid rgba(0, 163, 108, 0.8);
+      outline-offset: 6px;
     }
 
     .blog-card-draft {
@@ -619,6 +665,34 @@
       flex-direction: column;
       gap: 1em;
       height: 100%;
+      transform: translateZ(0);
+      will-change: transform;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      border-radius: 1.0em;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.98));
+      box-shadow: none;
+      position: relative;
+    }
+
+    /* subtle accent ribbon to tie into portfolio cards */
+    .blog-card-content::before {
+      content: "";
+      position: absolute;
+      left: 0.8em;
+      top: -10px;
+      width: 40px;
+      height: 6px;
+      background: linear-gradient(90deg, rgba(0,163,108,0.9), #88C5A7);
+      border-radius: 6px;
+      opacity: 0.95;
+    }
+
+    .blog-card:hover .blog-card-content,
+    .blog-card:focus-visible .blog-card-content {
+      transform: translateZ(30px);
+      box-shadow: 
+        rgba(0, 163, 108, 0.06) 7px 7px,
+        rgba(0, 163, 108, 0.04) 14px 14px;
     }
 
     .blog-meta {
