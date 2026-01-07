@@ -143,9 +143,10 @@
           }
         });
 
-        // keyboard: Enter opens the post
+        // keyboard: Enter or Space opens the post
         card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
             if (isDraft) return;
             if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
               window.location = readLink.href;
