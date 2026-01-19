@@ -8,6 +8,11 @@
 			],
 			"gallery": "https://api.mcp.github.com",
 			"version": "0.0.1-seed"
+		},
+		"prompts.chat": {
+			"type": "http",
+			"url": "https://prompts.chat/api/mcp"
 		}
+
 	}
 }

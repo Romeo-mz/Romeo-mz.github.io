@@ -1,10 +1,26 @@
 [
   {
-    "title": "Shipping faster with trunk-based delivery",
-    "excerpt": "Notes on keeping main green with small, reversible changes and automated quality gates.",
+    "title": "Monitoring Kubernetes Clusters with k9s",
+    "excerpt": "How I use k9s, the terminal-based UI for Kubernetes, to efficiently monitor and manage my clusters.",
     "date": "2026-01-07",
-    "tags": ["DevOps"],
+    "tags": ["Kubernetes", "DevOps"],
     "readTime": "4 min read",
-    "href": "/posts/2026-01-07-shipping-faster.html"
+    "href": "/posts/2026-01-07-monitoring-k9s.html"
+  },
+  {
+    "title": "Upgrading Kubernetes Clusters with Ansible",
+    "excerpt": "Automating K8s cluster upgrades using Ansible playbooks for reliable, repeatable deployments.",
+    "date": "2025-12-05",
+    "tags": ["Ansible", "Kubernetes", "DevOps"],
+    "readTime": "5 min read",
+    "href": "/posts/2026-01-19-upgrading-k8s-ansible.html"
+  },
+  {
+    "title": "Contributing to S3Ninja: Adding Presigned POST Support",
+    "excerpt": "My open source contribution to S3Ninja, implementing presigned POST operations for better AWS S3 compatibility.",
+    "date": "2026-01-19",
+    "tags": ["Open Source", "AWS", "DevOps"],
+    "readTime": "4 min read",
+    "href": "/posts/2026-01-19-contributing-s3ninja.html"
   }
 ]

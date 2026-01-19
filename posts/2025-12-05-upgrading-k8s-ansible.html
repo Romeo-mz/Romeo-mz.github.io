@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Upgrading Kubernetes Clusters with Ansible — Romeo M.</title>
+  <meta name="description" content="Automating K8s cluster upgrades using Ansible playbooks for reliable, repeatable deployments.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page-container">
+    <header class="page-header">
+      <div class="header-content">
+        <div class="logo">RM</div>
+        <nav class="nav-links">
+          <a href="/">Portfolio</a>
+          <a href="/blog/" class="active">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <article class="post">
+      <h1>Upgrading Kubernetes Clusters with Ansible</h1>
+      <p class="post-meta">Jan 19, 2026 · Ansible · Kubernetes · DevOps · 5 min read</p>
+
+      <section class="post-content">
+        <p>Let's be real: Kubernetes cluster upgrades can feel like defusing a bomb while riding a unicycle. One wrong move, and your entire deployment goes poof. As someone who's navigated this minefield multiple times, I've discovered that Ansible doesn't just automate the process—it makes it downright manageable. Here's how I use it to upgrade MicroK8s clusters without losing sleep.</p>
+
+        <p>Ansible's secret sauce is its declarative nature and idempotency. Unlike bash scripts that might leave you hanging mid-upgrade, Ansible playbooks define the end state and handle the chaos safely. This is non-negotiable when dealing with production clusters where downtime equals angry stakeholders.</p>
+
+        <h2>The Upgrade Workflow</h2>
+        <p>My approach follows a battle-tested routine that prioritizes safety over speed. It kicks off with rigorous pre-flight checks to catch issues before they escalate.</p>
+
+        <p>First, playbooks validate cluster health, scan for deprecated APIs, and audit resource usage. Then comes the backup phase—automated etcd snapshots and config exports that serve as my safety net for rollbacks.</p>
+
+        <p>The upgrade itself targets control plane nodes first. For MicroK8s clusters, I leverage snapd commands within Ansible to orchestrate the refresh process. Each node gets upgraded sequentially, with validation gates ensuring stability before proceeding. Worker nodes follow, carefully drained and cordoned to minimize service disruption.</p>
+
+        <p>Throughout, I interact with the cluster using kubectl commands executed by Ansible. This provides real-time visibility into cluster state, configuration changes, and upgrade progress.</p>
+
+        <p>Post-upgrade validation seals the deal. Automated tests confirm API functionality, pod health, and integration points, giving me confidence that the cluster is production-ready.</p>
+
+        <h2>Key Ansible Patterns</h2>
+        <p>I structure my upgrade playbooks around reusable roles. A core upgrade role manages the snapd interactions, while dedicated roles handle backups, validations, and emergency rollbacks.</p>
+
+        <p>Flexibility comes from parameterization—target versions, upgrade strategies, and node groupings are all configurable. This lets the same playbooks adapt to different environments without rewriting.</p>
+
+        <p>Error handling is baked in with Ansible's failure strategies. Failed steps can trigger pauses for intervention or automatic rollback sequences, preventing catastrophic failures.</p>
+
+        <h2>Challenges and Solutions</h2>
+        <p>One hurdle is navigating version-specific upgrade paths in MicroK8s. Ansible's conditionals and inventories help manage these variations seamlessly.</p>
+
+        <p>Network policies and security contexts sometimes complicate upgrades. My playbooks include temporary adjustments during the upgrade window, restoring security postures afterward.</p>
+
+        <p>Rollback scenarios are always prepared. If validation fails, Ansible can revert control plane changes or restore from backups with minimal downtime.</p>
+
+        <p>Ansible has transformed Kubernetes upgrades from stressful ordeals into predictable operations. What used to require all-hands-on-deck now runs as version-controlled automation. If you're still upgrading clusters manually, give Ansible a shot—it might just restore your sanity.</p>
+
+        <p><em>Sources: Based on experiences with MicroK8s official documentation and Ansible best practices for infrastructure automation.</em></p>
+      </section>
+
+      <footer class="post-footer">
+        <a href="/" class="read-link">← Back to home</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

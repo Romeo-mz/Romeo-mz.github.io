@@ -40,6 +40,9 @@
         const posts = await resp.json();
         if (!Array.isArray(posts)) return;
 
+        // Sort posts in reverse chronological order (newest first)
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
         const container = document.getElementById('blogArticles');
         container.innerHTML = '';
 

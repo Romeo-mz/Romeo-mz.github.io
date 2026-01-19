@@ -43,7 +43,6 @@
     .nav-links a {
       color: #333;
       font-weight: 600;
-      text-decoration: none;
       padding: 0.5rem 1rem;
       border-radius: 6px;
       transition: all 0.3s ease;
@@ -83,8 +82,7 @@
     }
 
     a {
-      color: #333;
-      text-decoration: none;
+      color: #00a36c;
       font-weight: bold;
       transition: all 0.3s ease;
     }
@@ -909,16 +907,6 @@
       transform: translateX(4px);
     }
 
-    .blog-link {
-      color: #00a36c;
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .blog-link:hover {
-      text-decoration: underline;
-    }
-
     .blog-preview-section {
       margin-top: 3rem;
       padding-top: 2rem;
@@ -970,13 +958,20 @@
     .post-content pre,
     .post-content code {
       background: #f6f8f7;
-      padding: 0.6em 0.8em;
+      padding: 0.1em 0.8em;
       border-radius: 6px;
       overflow: auto;
       font-family: 'Source Code Pro', monospace;
       font-size: 0.95rem;
     }
 
+    .post-content a:hover {
+      background: rgba(0, 163, 108, 0.1);
+      color: #00a36c;
+    }
+    .post-content a{
+      text-decoration: dotted;
+    }
     .post-content img {
       max-width: 100%;
       height: auto;

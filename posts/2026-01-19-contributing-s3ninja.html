@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contributing to S3Ninja: Adding Presigned POST Support — Romeo M.</title>
+  <meta name="description" content="My open source contribution to S3Ninja, implementing presigned POST operations for better AWS S3 compatibility.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page-container">
+    <header class="page-header">
+      <div class="header-content">
+        <div class="logo">RM</div>
+        <nav class="nav-links">
+          <a href="/">Portfolio</a>
+          <a href="/blog/" class="active">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <article class="post">
+      <h1>Contributing to S3Ninja: Adding Presigned POST Support</h1>
+      <p class="post-meta">Jan 19, 2026 · Open Source · AWS · DevOps · 4 min read</p>
+
+      <section class="post-content">
+        <p>In the fast-paced world of DevOps, open source contributions can make the difference between a smooth development workflow and constant workarounds. As someone who builds and maintains cloud-native applications, I recently contributed to S3Ninja by adding support for presigned POST operations. This wasn't just a feature addition—it was about enabling more secure and efficient file uploads for our entire team.</p>
+
+        <h2>What is S3 Ninja?</h2>
+        <p>S3 Ninja is an open-source lightweight Docker container that emulates the Amazon S3 API for development and testing purposes. It supports only object methods such as GET, PUT, HEAD, DELETE. ACLs are also ignored but for non-public buckets.</p>
+
+        <p>It also has support for authorization for private buckets and provides a verified authorization hash that can be used to demonstrate "real" user credentials.</p>
+
+        <h2>The Challenge</h2>
+        <p>Our team was using S3Ninja extensively for local development and testing of S3 integrations. However, a critical gap existed: the lack of presigned POST support. In AWS S3, presigned POST allows clients to upload files directly to S3 without routing them through our backend servers. This is crucial for performance and security, but S3Ninja didn't support it, forcing us to either mock the functionality or use workarounds that compromised our testing accuracy.</p>
+
+        <h2>Why Presigned POST Matters</h2>
+        <p>Presigned POST operations are a game-changer for modern web applications. Instead of files passing through our backend—consuming bandwidth, processing power, and introducing potential security risks—they go directly from the client to S3. This approach:</p>
+
+        <ul>
+          <li>Reduces server load and improves application performance</li>
+          <li>Enhances security by minimizing data exposure to backend systems</li>
+          <li>Enables larger file uploads without backend timeouts</li>
+          <li>Supports better user experiences with progress tracking</li>
+        </ul>
+
+        <p>For our team, this meant more realistic testing environments and the ability to develop features that rely on direct S3 uploads without production compromises.</p>
+
+        <h2>The Implementation</h2>
+        <p>I implemented presigned POST support by studying AWS S3's specification and integrating the necessary components into S3Ninja. The key aspects included:</p>
+
+        <ul>
+          <li>Policy document parsing and validation</li>
+          <li>Signature verification against access keys</li>
+          <li>Form field handling and condition enforcement</li>
+          <li>Seamless integration with existing upload mechanisms</li>
+        </ul>
+
+        <p>The changes were designed to be backward-compatible, ensuring existing S3Ninja users wouldn't face disruptions while gaining new capabilities.</p>
+
+        <h2>The Impact</h2>
+        <p>This contribution has bridged a significant gap in S3Ninja's AWS S3 compatibility. For our team, it means more accurate local testing and the ability to develop direct upload features without architectural compromises. In the broader open source community, it provides developers with a more complete S3 emulation tool, reducing the friction of cloud-native development.</p>
+
+        <p>Contributing to S3Ninja wasn't just about adding a feature—it was about improving the tools that power countless development workflows. In DevOps, these small enhancements compound into significant productivity gains.</p>
+
+        <p><em>Source: Contribution details available at <a href="https://github.com/scireum/s3ninja" target="_blank">github.com/scireum/s3ninja</a>. Inspired by AWS S3 documentation on presigned POST operations.</em></p>
+      </section>
+
+      <footer class="post-footer">
+        <a href="/" class="read-link">← Back to home</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
