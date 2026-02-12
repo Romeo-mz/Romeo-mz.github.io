@@ -18,7 +18,7 @@
         </nav>
       </div>
     </header>
-  <div class="card" id="businessCard">
+  <div class="card noselect" id="businessCard">
     <!-- FRONT SIDE -->
     <div class="card__side card__front">
       <div class="card-content">
@@ -61,50 +61,52 @@
     <!-- BACK SIDE -->
     <div class="card__side card__back">
       <div class="card-content">
-        <div class="skills-wrapper">
-          <h3 class="skills-title">Tech Stack</h3>
-          
-          <div class="skills-grid">
-            <div class="skill-item">Docker</div>
-            <div class="skill-item">Kubernetes</div>
-            <div class="skill-item">GitLab CI</div>
-            <div class="skill-item">Azure DevOps</div>
-            <div class="skill-item">Ansible</div>
-            <div class="skill-item">AWS & CDK</div>
-            <div class="skill-item">.NET</div>
-            <div class="skill-item">Python</div>
-            <div class="skill-item">Terraform</div>
-            <div class="skill-item">Linux</div>
-            <div class="skill-item">CI/CD</div>
-            <div class="skill-item">Bash</div>
+        <div class="back-slider-viewport" id="skillsSlider">
+          <div class="back-slider-track">
+            <section class="skills-wrapper skills-panel" aria-label="Tech stack">
+              <h3 class="skills-title">Tech Stack</h3>
+
+              <div class="skills-grid">
+                <div class="skill-item">Docker</div>
+                <div class="skill-item">Kubernetes</div>
+                <div class="skill-item">GitLab CI</div>
+                <div class="skill-item">Azure DevOps</div>
+                <div class="skill-item">Ansible</div>
+                <div class="skill-item">AWS & CDK</div>
+                <div class="skill-item">.NET</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">Terraform</div>
+                <div class="skill-item">Linux</div>
+                <div class="skill-item">CI/CD</div>
+                <div class="skill-item">Bash</div>
+              </div>
+            </section>
+
+            <section class="skills-wrapper skills-panel" aria-label="Soft skills">
+              <h3 class="skills-title">Soft Skills</h3>
+
+              <div class="skills-grid">
+                <div class="skill-item">Adaptability</div>
+                <div class="skill-item">Communication</div>
+                <div class="skill-item">Emotional Intelligence</div>
+                <div class="skill-item">Curiosity</div>
+                <div class="skill-item">Problem-Solving</div>
+                <div class="skill-item">Collaboration</div>
+                <div class="skill-item">Time Management</div>
+                <div class="skill-item">Resilience</div>
+                <div class="skill-item">Creativity</div>
+                <div class="skill-item">Growth Mindset</div>
+              </div>
+            </section>
           </div>
         </div>
-      <!-- SLIDE SIDE -->
-      <div class="card__side card__slide">
-        <div class="skills-wrapper">
-          <h3 class="skills-title">Soft Skills</h3>
-          
-          <div class="skills-grid">
-            <div class="skill-item">Adaptability</div>
-            <div class="skill-item">Communication</div>
-            <div class="skill-item">Emotional Intelligence</div>
-            <div class="skill-item">Curiosity</div>
-            <div class="skill-item">Problem-Solving</div>
-            <div class="skill-item">Collaboration</div>
-            <div class="skill-item">Time Management</div>
-            <div class="skill-item">Resilience</div>
-            <div class="skill-item">Creativity</div>
-            <div class="skill-item">Growth Mindset</div>
-          </div>
-        </div>
-      </div>
         <div class="footer">
           <div class="social-links">
             <a href="https://github.com/Romeo-mz" target="_blank" rel="noopener">GitHub</a>
             <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank" rel="noopener">LinkedIn</a>
             <a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a>
           </div>
-          <div class="flip-hint">← Click to flip back</div>
+          <div class="flip-hint back-hint slide-toggle" role="button" tabindex="0" aria-label="Show soft skills">Swipe left to see soft skills ←</div>
         </div>
       </div>
     </div>
@@ -117,31 +119,111 @@
     const card = document.getElementById('businessCard');
     const front = card.querySelector('.card__front');
     const back = card.querySelector('.card__back');
+    const skillsSlider = document.getElementById('skillsSlider');
+    const backHint = card.querySelector('.back-hint');
+    const slideToggle = card.querySelector('.slide-toggle');
+
+    function setSoftSkillsVisible(visible) {
+      card.classList.toggle('show-soft-skills', visible);
+      if (!backHint) return;
+      if (visible) {
+        backHint.textContent = 'Swipe right to see tech stack →';
+        backHint.setAttribute('aria-label', 'Show tech stack');
+      } else {
+        backHint.textContent = 'Swipe left to see soft skills ←';
+        backHint.setAttribute('aria-label', 'Show soft skills');
+      }
+    }
+
+    function toggleFlip() {
+      card.classList.toggle('is-flipped');
+      const flipped = card.classList.contains('is-flipped');
+      front.setAttribute('aria-hidden', flipped);
+      back.setAttribute('aria-hidden', !flipped);
+      if (flipped) setSoftSkillsVisible(false);
+    }
 
     // Initialize accessibility attrs
     front.setAttribute('aria-hidden', 'false');
     back.setAttribute('aria-hidden', 'true');
+    setSoftSkillsVisible(false);
 
     // Click: toggle flip but ignore clicks on links
     card.addEventListener('click', function(e) {
       if (e.target.closest('a')) return; // don't flip when clicking links
-      this.classList.toggle('is-flipped');
-      const flipped = this.classList.contains('is-flipped');
-      front.setAttribute('aria-hidden', flipped);
-      back.setAttribute('aria-hidden', !flipped);
+
+      if (e.target.closest('.slide-toggle')) {
+        const isSoftVisible = this.classList.contains('show-soft-skills');
+        setSoftSkillsVisible(!isSoftVisible);
+        return;
+      }
+
+      if (this.classList.contains('is-flipped') && e.target.closest('.back-slider-viewport')) {
+        return;
+      }
+
+      toggleFlip();
     });
 
     // Keyboard accessibility
     card.setAttribute('tabindex', '0');
     card.addEventListener('keydown', function(e) {
+      if (e.target.closest('a')) return;
+
+      if (this.classList.contains('is-flipped') && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setSoftSkillsVisible(false);
+        return;
+      }
+
+      if (this.classList.contains('is-flipped') && e.key === 'ArrowRight') {
+        e.preventDefault();
+        setSoftSkillsVisible(true);
+        return;
+      }
+
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        this.classList.toggle('is-flipped');
-        const flipped = this.classList.contains('is-flipped');
-        front.setAttribute('aria-hidden', flipped);
-        back.setAttribute('aria-hidden', !flipped);
+        if (e.target.closest('.slide-toggle') && this.classList.contains('is-flipped')) {
+          const isSoftVisible = this.classList.contains('show-soft-skills');
+          setSoftSkillsVisible(!isSoftVisible);
+          return;
+        }
+        toggleFlip();
       }
     });
+
+    if (skillsSlider) {
+      let pointerStartX = null;
+
+      skillsSlider.addEventListener('pointerdown', (e) => {
+        if (!card.classList.contains('is-flipped')) return;
+        pointerStartX = e.clientX;
+      });
+
+      skillsSlider.addEventListener('pointerup', (e) => {
+        if (pointerStartX === null || !card.classList.contains('is-flipped')) return;
+        const deltaX = e.clientX - pointerStartX;
+        pointerStartX = null;
+
+        if (deltaX < -40) setSoftSkillsVisible(true);
+        if (deltaX > 40) setSoftSkillsVisible(false);
+      });
+
+      skillsSlider.addEventListener('pointercancel', () => {
+        pointerStartX = null;
+      });
+    }
+
+    if (slideToggle) {
+      slideToggle.addEventListener('keydown', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && card.classList.contains('is-flipped')) {
+          e.preventDefault();
+          const isSoftVisible = card.classList.contains('show-soft-skills');
+          setSoftSkillsVisible(!isSoftVisible);
+        }
+      });
+    }
 
     // Initialize blog-card interactions (call after new cards are added too)
     function initBlogCards() {
