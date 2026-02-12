@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>A Safer Container Ecosystem with Docker: Free Docker Hardened Images — Romeo M.</title>
+  <meta name="description" content="A practical take on Docker Hardened Images: what is great, what is not plug-and-play yet, and how to adopt DHI in custom Dockerfiles.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page-container">
+    <header class="page-header">
+      <div class="header-content">
+        <div class="logo">RM</div>
+        <nav class="nav-links">
+          <a href="/">Portfolio</a>
+          <a href="/blog/" class="active">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <article class="post">
+      <header>
+        <h1>A Safer Container Ecosystem with Docker: Free Docker Hardened Images</h1>
+        <p class="post-meta">Jan 10, 2026 · Docker · Security · DevOps · 6 min read</p>
+      </header>
+
+      <section class="post-content">
+        <p>Docker Hardened Images (DHI) are one of the most interesting moves I have seen lately for safer-by-default container bases. Cleaner attack surface, tighter posture, and a stronger answer to what teams are looking for in modern supply chain security.</p>
+
+        <p>My first reaction was simple: I can’t wait to open a <code>feat: getting hard</code> PR.</p>
+
+        <h2>Why this is an excellent initiative</h2>
+        <p>I genuinely see this as a strong response to both community pressure and the momentum of security-first image providers like Chainguard. The best part is that DHI is practical for day-to-day engineering teams, not only for enterprise audit checklists.</p>
+
+        <p>From Docker documentation, DHI is designed to be publicly usable from <code>dhi.io</code> after authentication, and the quickstart positions it as a free offering for standard usage.</p>
+
+        <h2>Real-world caveats I hit quickly</h2>
+
+        <h3>1) Version availability can feel “latest-first”</h3>
+        <p>In practice, catalog availability can bias toward newer majors. For example, if your stack is still tied to older major versions, migration may not be straightforward:</p>
+        <ul>
+          <li>.NET: you may find current major tracks first (for example .NET 8), while older expectations can be missing.</li>
+          <li>Node.js: same story when teams are pinned below newer majors (for example below Node 20).</li>
+        </ul>
+        <p>So the migration path is not always “switch image tag and done.”</p>
+
+        <h3>2) Pull behavior and limits depend on where you pull from</h3>
+        <p>Docker docs state DHI on <code>dhi.io</code> is free to use. But if your workflow mirrors or pulls heavily through Docker Hub, Hub pull limits and subscription tiers can still become relevant for high-volume CI usage.</p>
+
+        <h3>3) Non-root defaults can break assumptions</h3>
+        <p>Some hardened images are intentionally opinionated around safer runtime users. That is good security practice, but it can break Dockerfiles that assume root at build or runtime. In short: not always plug-and-play.</p>
+
+        <p>Typical friction points:</p>
+        <ul>
+          <li>Install steps that require privileged package operations</li>
+          <li>Write paths and file ownership assumptions</li>
+          <li>Entrypoints expecting root-owned directories</li>
+        </ul>
+
+        <h2>How I plan to adopt DHI</h2>
+        <p>I will use DHI as much as possible in custom Dockerfiles, with explicit user/permission handling and version pinning where needed. For teams already investing in secure baselines, DHI is a strong candidate.</p>
+
+        <p>My practical approach:</p>
+        <ol>
+          <li>Start with services already on supported major versions.</li>
+          <li>Audit Dockerfile assumptions about root and filesystem writes.</li>
+          <li>Add CI checks for image availability and pull reliability.</li>
+          <li>Keep a fallback base image strategy during rollout.</li>
+        </ol>
+
+        <h2>Conclusion</h2>
+        <p>DHI is a very positive direction for the ecosystem: safer defaults, good developer ergonomics, and real community value. It is not magic, and some migrations require careful refactors, but it is absolutely worth adopting where it fits.</p>
+
+        <p><em>Reference note: article informed by Docker documentation, including DHI get-started/how-to pages and Docker Hub pull usage docs.</em></p>
+      </section>
+
+      <footer class="post-footer">
+        <a href="/blog/" class="read-link">← Back to home</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>

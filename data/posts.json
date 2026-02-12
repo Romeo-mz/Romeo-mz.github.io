@@ -1,5 +1,21 @@
 [
   {
+    "title": "Cyber Resilience Act, SBOM, and Why DevOps Becomes Mandatory",
+    "excerpt": "A practical guide to CRA obligations, SBOM expectations, and why DevOps automation is now essential for compliance.",
+    "date": "2026-02-18",
+    "tags": ["Cybersecurity", "CRA", "DevOps"],
+    "readTime": "10 min read",
+    "href": "/posts/2026-02-18-cyber-resilience-act-sbom-devops.html"
+  },
+  {
+    "title": "A Safer Container Ecosystem with Docker: Free Docker Hardened Images",
+    "excerpt": "Why Docker Hardened Images are a strong security initiative, plus practical caveats around versions, pull behavior, and non-root defaults.",
+    "date": "2026-01-10",
+    "tags": ["Docker", "Security", "DevOps"],
+    "readTime": "3 min read",
+    "href": "/posts/2026-02-12-safer-container-ecosystem-docker-hardened-images.html"
+  },
+  {
     "title": "Why HTML Formatting Matters for Blog Posts",
     "excerpt": "How semantic HTML structure improves readability, visual flow, and SEO—plus clean humor techniques that keep technical writing human.",
     "date": "2026-02-12",
