@@ -20,19 +20,21 @@
     </header>
 
     <article class="post">
-      <h1>Monitoring Kubernetes Clusters with k9s</h1>
-      <p class="post-meta">Jan 7, 2026 · Kubernetes · 4 min read</p>
+      <header>
+        <h1>Monitoring Kubernetes Clusters with k9s</h1>
+        <p class="post-meta">Jan 7, 2026 · Kubernetes · 4 min read</p>
+      </header>
 
       <section class="post-content">
-        <p>As a DevOps engineer who's recently incorporated <a href="https://k9scli.io/" target="_blank">k9s</a> into my workflow, I've found it to be a game-changer for Kubernetes cluster monitoring. This terminal-based UI transforms the often cumbersome <a href="https://kubernetes.io/docs/reference/kubectl/" target="_blank">kubectl</a> commands into an intuitive, real-time interface that makes overseeing complex deployments feel almost effortless. In this post, I'll walk you through how I use k9s daily to keep my clusters running smoothly.</p>
+        <p>As a DevOps engineer who's recently incorporated <a href="https://k9scli.io/" target="_blank" rel="noopener noreferrer">k9s</a> into my workflow, I've found it to be a game-changer for Kubernetes cluster monitoring. This terminal-based UI transforms the often cumbersome <a href="https://kubernetes.io/docs/reference/kubectl/" target="_blank" rel="noopener noreferrer">kubectl</a> commands into an intuitive, real-time interface that makes overseeing complex deployments feel almost effortless. In this post, I'll walk you through how I use k9s daily to keep my clusters running smoothly.</p>
 
         <h2>1. Getting started with k9s</h2>
-        <p>Before diving in, ensure you have kubectl configured and access to your Kubernetes cluster. Installing k9s is straightforward: use your package manager like <code>brew install k9s</code> on macOS or <code>choco install k9s</code> on Windows, or grab the latest release from <b>GitHub</b>. Once installed, simply type <code>k9s</code> in your terminal. It automatically picks up your kubeconfig and connects to the current context, presenting you with a sleek, curses-based interface that feels right at home in the terminal.</p>
+        <p>Before diving in, ensure you have kubectl configured and access to your Kubernetes cluster. Installing k9s is straightforward: use your package manager like <code>brew install k9s</code> on macOS or <code>choco install k9s</code> on Windows, or grab the latest release from <strong>GitHub</strong>. Once installed, simply type <code>k9s</code> in your terminal. It automatically picks up your kubeconfig and connects to the current context, presenting you with a sleek, curses-based interface that feels right at home in the terminal.</p>
 
         <h2>2. Key monitoring features that shine</h2>
-        <p>k9s excels in providing live, interactive views of your cluster's resources. The main dashboard shows a <b>pulse</b> of your cluster's health, with color-coded statuses for quick visual assessment. Navigate between resource types using single-key shortcuts: p for pods, d for deployments, s for services, n for nodes. Each view updates in real-time, allowing you to spot issues instantly.</p>
+        <p>k9s excels in providing live, interactive views of your cluster's resources. The main dashboard shows a <strong>pulse</strong> of your cluster's health, with color-coded statuses for quick visual assessment. Navigate between resource types using single-key shortcuts: p for pods, d for deployments, s for services, n for nodes. Each view updates in real-time, allowing you to spot issues instantly.</p>
 
-        <p>For deeper inspection, press l to view logs, d again to describe a resource, or e to exec into a container. The interface even supports fuzzy searching and filtering, making it easy to zero in on specific resources amidst a sea of microservices. Check out the <a href="https://k9scli.io/topics/commands/" target="_blank">full command reference</a> for more shortcuts.</p>
+        <p>For deeper inspection, press l to view logs, d again to describe a resource, or e to exec into a container. The interface even supports fuzzy searching and filtering, making it easy to zero in on specific resources amidst a sea of microservices. Check out the <a href="https://k9scli.io/topics/commands/" target="_blank" rel="noopener noreferrer">full command reference</a> for more shortcuts.</p>
 
         <h2>3. A typical monitoring session</h2>
         <p>My day usually starts with firing up k9s to get a bird's-eye view of cluster health. I begin by checking the pulse view for any immediate red flags—failing pods or high resource usage.</p>
