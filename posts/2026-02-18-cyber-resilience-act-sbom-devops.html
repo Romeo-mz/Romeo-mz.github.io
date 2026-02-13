@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cyber Resilience Act, SBOM, and Why DevOps Becomes Mandatory — Romeo M.</title>
+  <meta name="description" content="What the EU Cyber Resilience Act changes for product teams, why SBOM matters, and why DevOps becomes mandatory to stay compliant.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="page-container">
+    <header class="page-header">
+      <div class="header-content">
+        <div class="logo">RM</div>
+        <nav class="nav-links">
+          <a href="/">Portfolio</a>
+          <a href="/blog/" class="active">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <article class="post">
+      <header>
+        <h1>Cyber Resilience Act, SBOM, and Why DevOps Becomes Mandatory</h1>
+        <p class="post-meta">Feb 18, 2026 · Cybersecurity · CRA · DevOps · 10 min read</p>
+      </header>
+
+      <section class="post-content">
+        <p>The Cyber Resilience Act (CRA) is a turning point for software and connected products in Europe. For years, teams could treat cybersecurity as “important but negotiable.” With CRA, that changes: cybersecurity becomes a baseline legal requirement for products with digital elements sold on the EU market.</p>
+
+        <p>This article explains what the CRA changes, where SBOM fits in, and why this is not only a security topic anymore. It is now a delivery topic, a lifecycle topic, and a DevOps topic.</p>
+
+        <h2>Infographic: CRA and SBOM workflow</h2>
+        <p>The Excalidraw below summarizes the CRA scope, timelines, and an end-to-end SBOM-oriented workflow (generate, scan, distribute, react).</p>
+        <p><em>Use alt + R to switch to read-only mode</em></p>
+        <iframe
+          src="https://excalidraw.com/#json=IngAALGvzt8MGFzyJYuL1,6j_XBE2krx-d_JRzZtQOYw"
+          title="Cyber Resilience Act infographic"
+          loading="lazy"
+          style="width:100%; height:520px; border:1px solid rgba(0,163,108,0.2); border-radius:8px; background:#fff;">
+        </iframe>
+        <p><a href="../images/infographie.png" target="_blank" rel="noopener noreferrer">Open the infographic in full resolution ↗</a></p>
+
+        <h2>What the CRA is, in practical terms</h2>
+        <p>The CRA is the first EU-wide regulation that sets a minimum cybersecurity level for connected products. It applies across all Member States and is phased in over time. The objective is straightforward: improve cybersecurity for products entering and operating in the EU market.</p>
+
+        <p>One key idea is broad product scope. If a product contains digital elements and can connect directly or indirectly to a device or a network, it is likely in scope. This includes:</p>
+        <ul>
+          <li>Consumer devices (phones, wearables, smart home products, connected toys)</li>
+          <li>Industrial and B2B systems (gateways, metering components, firewalls, embedded processors)</li>
+          <li>Software products (mobile apps, games, accounting software, desktop software)</li>
+        </ul>
+
+        <p>Non-commercial open-source software is generally exempt, but once software is commercialized and part of a marketed product, organizations need to evaluate obligations carefully.</p>
+
+        <h2>Timeline: why teams must start now</h2>
+        <p>The CRA enters into force shortly after publication in the Official Journal, with staged implementation. A practical planning assumption for engineering organizations is that products newly placed on the market must comply by the end of 2027.</p>
+
+        <p>If your roadmap still treats compliance work as “later,” that is risky. Security lifecycle work (architecture, SBOM quality, vulnerability handling, release governance) cannot be done in one quarter at the end.</p>
+
+        <h2>What manufacturers must do</h2>
+
+        <h3>1) Build with security by design and secure by default</h3>
+        <p>CRA pushes security left into product development. Teams are expected to perform risk assessment, reduce attack surface, protect data in transit and at rest, and avoid insecure defaults (for example weak default credentials). Automatic update capability and vulnerability handling are also central expectations.</p>
+
+        <h3>2) Prove conformity</h3>
+        <p>A declaration of conformity is required. Depending on product category, conformity can be self-assessed or require a notified third party (CAB). Teams already familiar with CE-style verification processes have a structural advantage.</p>
+
+        <h3>3) Disclose vulnerabilities</h3>
+        <p>CRA introduces stronger reporting obligations for actively exploited vulnerabilities and severe incidents, with ENISA-centered reporting workflows. This means incident processes must be operational, not theoretical.</p>
+
+        <h3>4) Maintain security through support life</h3>
+        <p>Security updates and vulnerability remediation are expected throughout the support period (often around 5 years). This is critical: compliance is not a launch-day event, it is a lifecycle commitment.</p>
+
+        <h2>Why SBOM is central to CRA execution</h2>
+        <p>The CRA explicitly raises the need for software component transparency. In operational terms, that means you need a trustworthy SBOM process.</p>
+
+        <p>Think of SBOM as the ingredient list for software. Without it, you cannot reliably answer questions that regulators, customers, and incident responders will ask:</p>
+        <ul>
+          <li>Which components are inside this product version?</li>
+          <li>Which licenses apply?</li>
+          <li>Which known vulnerabilities are associated with specific components?</li>
+          <li>Which shipped artifacts are impacted by a newly disclosed CVE?</li>
+        </ul>
+
+        <p>From the SPDX specification perspective, an SBOM captures package composition and can include provenance, licensing, and security-related information/relationships. That is exactly the traceability foundation compliance programs need.</p>
+
+        <h2>How this impacts developers day to day</h2>
+
+        <h3>Dependencies are now compliance objects</h3>
+        <p>Choosing a package version is no longer only a feature delivery decision. It also affects legal exposure, vulnerability posture, and response time during incidents.</p>
+
+        <h3>Definition of done gets stricter</h3>
+        <p>A feature is not truly done if its artifact cannot be traced, scanned, and maintained securely. Teams need repeatable proof attached to releases, not ad-hoc manual exports.</p>
+
+        <h3>Security debt becomes visible debt</h3>
+        <p>Unknown components, outdated images, or unowned transitive dependencies become measurable gaps that will surface during audits, procurement reviews, and incident response.</p>
+
+        <h2>Why DevOps is mandatory (not optional)</h2>
+        <p>CRA obligations map directly to DevOps capabilities. Without CI/CD automation, artifact metadata, and operational feedback loops, sustained compliance is unrealistic.</p>
+
+        <p>At minimum, organizations need a pipeline that can:</p>
+        <ol>
+          <li><strong>Generate</strong> an SBOM for every build artifact (containers, binaries, packages).</li>
+          <li><strong>Scan</strong> continuously for known vulnerabilities and policy violations.</li>
+          <li><strong>Distribute</strong> artifacts and SBOMs together (or with stable references/attestations).</li>
+          <li><strong>React</strong> quickly when new CVEs affect shipped versions.</li>
+        </ol>
+
+        <p>Tools like Syft make this workflow practical in CI by producing SPDX/CycloneDX formats and enabling machine-readable handoff into security and governance tooling.</p>
+
+        <h2>A practical rollout strategy</h2>
+        <ul>
+          <li>Start with one product line and one pipeline template.</li>
+          <li>Standardize SBOM format and naming conventions early.</li>
+          <li>Attach SBOM metadata to release artifacts in your registry.</li>
+          <li>Define owners for vulnerability triage and remediation SLAs.</li>
+          <li>Track “time to identify impacted artifacts” as a KPI.</li>
+        </ul>
+
+        <p>The target state is simple to describe: any time a vulnerability is published, you can identify impact, decide action, and ship remediation quickly with proof.</p>
+
+        <h2>Final take</h2>
+        <p>The CRA is not just another regulation document to archive in a compliance folder. It is a forcing function that aligns legal requirements with engineering reality: secure design, transparent supply chain, fast response, long-term maintenance.</p>
+
+        <p>And that is why SBOM and DevOps are now joined at the hip. If your delivery system can produce evidence continuously, CRA becomes manageable. If it cannot, every release increases organizational risk.</p>
+
+        <p><em>References:</em></p>
+        <ul>
+          <li><a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj#art_13" target="_blank" rel="noopener noreferrer">EU CRA regulation text (EUR-Lex)</a></li>
+          <li><a href="https://csirtsnetwork.eu/homepage?tab=cvd" target="_blank" rel="noopener noreferrer">CSIRTs network / coordinated vulnerability disclosure</a></li>
+          <li><a href="https://blog.stephane-robert.info/docs/securiser/supply-chain/sbom/" target="_blank" rel="noopener noreferrer">SBOM practical guide (Stephane Robert)</a></li>
+        </ul>
+
+        <p><em>Context note:</em> SBOM definition and structure references were validated with sources from SPDX and Syft documentation.</p>
+      </section>
+
+      <footer class="post-footer">
+        <a href="/blog/" class="read-link">← Back to home</a>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
