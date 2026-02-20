@@ -106,15 +106,13 @@ Plans:
 - RequestAnimationFrame for smooth 60fps animations
 - Intersection Observer for scroll-triggered effects
 
-**Plans**: TBD (to be planned)
+**Plans**: 4 plans
 
-Potential features:
-- 3D skill cards with tilt.js-like mouse tracking
-- Particle constellation background (canvas)
-- Layered parallax sections (foreground/midground/background)
-- Enhanced business card with 3D depth and shadow effects
-- Floating navigation with depth
-- Scroll-triggered 3D reveals
+Plans:
+- [ ] 3.5-01-PLAN.md — Particle constellation background with cursor interaction (60 particles, Canvas API, requestAnimationFrame)
+- [ ] 3.5-02-PLAN.md — 3D floating skill cards with mouse-tracking tilt (12 cards, hover-triggered 15-20deg rotation)
+- [ ] 3.5-03-PLAN.md — Enhanced business card 3D tracking + 3-layer parallax scrolling (card tilt, scroll-based depth)
+- [ ] 3.5-04-PLAN.md — Mobile optimization & performance (reduced particles, disabled tracking, prefers-reduced-motion)
 
 ---
 
