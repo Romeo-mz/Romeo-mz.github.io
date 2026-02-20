@@ -51,7 +51,10 @@ Plans:
 3. Card layout adapts responsively from mobile to desktop screens
 4. Flip interaction feels polished with refined visual treatment
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 02-01-PLAN.md — Refine card with transparent background, green border, and smooth flip animation
 
 ---
 
