@@ -29,7 +29,12 @@
 4. All design tokens (colors, fonts, spacing) are defined as reusable CSS variables
 5. Code blocks integrate aesthetically with overall typography system
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Design token foundation with CSS custom properties and Google Fonts
+- [ ] 01-02-PLAN.md — Typography system with fluid scales, links, and lists
+- [ ] 01-03-PLAN.md — Code syntax highlighting and responsive refinements
 
 ---
 
