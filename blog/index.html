@@ -102,6 +102,33 @@
         align-items: flex-start;
       }
     }
+    
+    /* Tag pills styling for blog cards */
+    .blog-tags {
+      display: flex;
+      gap: 0.6em;
+      flex-wrap: wrap;
+    }
+    
+    .blog-tag {
+      display: inline-block;
+      padding: 0.3em 0.8em;
+      border-radius: 1em;
+      background: rgba(0, 163, 108, 0.15);
+      color: var(--color-interactive);
+      font-family: var(--text-ui);
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+    
+    .blog-article-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.8em;
+      margin-bottom: 1em;
+    }
   </style>
 </head>
 <body>
@@ -159,6 +186,16 @@
     // Module-level state for search and filtering
     let allPosts = [];
     let fuse = null;
+    
+    // Format date to human-readable style
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
     
     const state = {
       activeTags: [],
@@ -284,8 +321,10 @@
         <article class="blog-article-card" tabindex="0" data-href="${p.href || '#'}">
           <div class="blog-article-header">
             <div class="blog-article-meta">
-              <span class="blog-tag">${(p.tags && p.tags[0]) || ''}</span>
-              <time class="blog-date" datetime="${p.date || ''}">${p.date || ''}</time>
+              <div class="blog-tags">
+                ${(p.tags && Array.isArray(p.tags)) ? p.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('') : ''}
+              </div>
+              <time class="blog-date" datetime="${p.date || ''}">${p.date ? formatDate(p.date) : ''}</time>
             </div>
             <h2 class="blog-article-title">${p.title || ''}</h2>
             <p class="blog-article-excerpt">${p.excerpt || ''}</p>
