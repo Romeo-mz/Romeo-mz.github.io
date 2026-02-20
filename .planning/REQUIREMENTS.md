@@ -25,7 +25,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Blog Index
 
 - [ ] **BLOG-01**: Visually distinctive blog index with strong personality (inspired by references)
-- [ ] **BLOG-02**: Search functionality to find posts by title or content
+- [x] **BLOG-02**: Search functionality to find posts by title or content
 - [ ] **BLOG-03**: Tag/category filtering system
 - [ ] **BLOG-04**: Sorting options (date, read time)
 - [ ] **BLOG-05**: Blog post cards with improved visual hierarchy and metadata display
@@ -125,7 +125,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PORT-03 | Phase 2 | Complete |
 | PORT-04 | Phase 2 | Complete |
 | BLOG-01 | Phase 3 | Pending |
-| BLOG-02 | Phase 3 | Pending |
+| BLOG-02 | Phase 3 | Complete |
 | BLOG-03 | Phase 3 | Pending |
 | BLOG-04 | Phase 3 | Pending |
 | BLOG-05 | Phase 3 | Pending |
