@@ -25,6 +25,14 @@
         </nav>
       </div>
     </header>
+
+    <!-- Background parallax layer (slowest) -->
+    <div class="parallax-layer" data-depth="-1">
+      <div class="parallax-bg-decoration"></div>
+    </div>
+
+    <!-- Midground parallax layer (medium speed) -->
+    <div class="parallax-layer" data-depth="0">
   <div class="card noselect" id="businessCard">
     <!-- FRONT SIDE -->
     <div class="card__side card__front">
@@ -118,7 +126,10 @@
       </div>
     </div>
   </div>
+    </div><!-- End midground parallax layer -->
 
+    <!-- Foreground parallax layer (fastest) -->
+    <div class="parallax-layer" data-depth="1">
   <!-- 3D Floating Skill Cards Section -->
   <section class="skills-section-3d">
     <h2>Tech Stack</h2>
@@ -161,6 +172,7 @@
       </div>
     </div>
   </section>
+    </div><!-- End foreground parallax layer -->
 
   </main>
 
@@ -197,38 +209,9 @@
     back.setAttribute('aria-hidden', 'true');
     setSoftSkillsVisible(false);
 
-    // Card 3D tilt tracking (hover only, disabled on mobile)
-    let cardHovering = false;
-    const supportsHover = window.matchMedia('(hover: hover)').matches;
-
-    if (supportsHover) {
-      card.addEventListener('mouseenter', () => {
-        cardHovering = true;
-      });
-
-      card.addEventListener('mouseleave', () => {
-        cardHovering = false;
-        card.style.setProperty('--card-tilt-x', '0deg');
-        card.style.setProperty('--card-tilt-y', '0deg');
-      });
-
-      card.addEventListener('mousemove', (e) => {
-        if (!cardHovering) return;
-
-        requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width;
-          const y = (e.clientY - rect.top) / rect.height;
-
-          // Moderate rotation: -17.5 to +17.5 degrees
-          const rotateY = (x - 0.5) * 35;
-          const rotateX = (0.5 - y) * 35;
-
-          card.style.setProperty('--card-tilt-x', `${rotateX}deg`);
-          card.style.setProperty('--card-tilt-y', `${rotateY}deg`);
-        });
-      });
-    }
+    // Card now has STATIC 3D depth (no mouse tracking tilt animation)
+    // The card is positioned in 3D space with translateZ(40px) in CSS
+    // and has a 3D shadow effect via filter: drop-shadow layers
 
     // Click: toggle flip but ignore clicks on links
     card.addEventListener('click', function(e) {
@@ -419,9 +402,9 @@
       }
     }
     
-    // Create 60 particles (desktop default per user decision)
+    // Create 450 particles for ASCII art density effect (user feedback)
     const particles = [];
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 450; i++) {
       particles.push(new Particle());
     }
     

@@ -1,7 +1,7 @@
 /* ========== DESIGN TOKENS ========== */
 :root {
   /* Base Colors */
-  --color-pink-base: #fdc3c6;
+  --color-pink-base: #c98a8e;
   --color-green-base: #00a36c;
   --color-green-light: #00b57a;
   --color-green-dark: #006b49;
@@ -161,7 +161,93 @@
       flex-direction: column;
       gap: var(--space-content-xl);
       align-items: center;
+      /* Parallax perspective container */
+      perspective: 1px;
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      transform-style: preserve-3d;
     }
+
+    /* Parallax layers - CSS-only implementation */
+    .parallax-layer {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform-style: preserve-3d;
+    }
+
+    /* Background layer - slowest (moves at ~33% speed) */
+    .parallax-layer[data-depth="-1"] {
+      transform: translateZ(-2px) scale(3);
+      z-index: -1;
+    }
+
+    /* Midground layer - medium speed (moves at ~50% speed) */
+    .parallax-layer[data-depth="0"] {
+      transform: translateZ(-1px) scale(2);
+      z-index: 1;
+    }
+
+    /* Foreground layer - normal speed (reference, 100% speed) */
+    .parallax-layer[data-depth="1"] {
+      transform: translateZ(0);
+      z-index: 2;
+    }
+
+    /* Background decoration - subtle gradient orbs */
+    .parallax-bg-decoration {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0, 163, 108, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .parallax-bg-decoration::before {
+      content: '';
+      position: absolute;
+      top: 40%;
+      left: -20%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(0, 163, 108, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .parallax-bg-decoration::after {
+      content: '';
+      position: absolute;
+      top: 60%;
+      right: -30%;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(0, 163, 108, 0.06) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* Mobile: disable parallax for performance and usability */
+    @media (max-width: 768px) {
+      .page-container {
+        perspective: none;
+        height: auto;
+      }
+      
+      .parallax-layer {
+        transform: none !important;
+      }
+      
+      .parallax-bg-decoration {
+        display: none;
+      }
+    }
+
 
     h1 {
       font-family: var(--font-heading);
@@ -352,30 +438,36 @@
       aspect-ratio: 1.586;
       position: relative;
       transform-style: preserve-3d;
+      /* Static 3D depth positioning */
+      transform: translateZ(40px);
       transition: transform 0.6s ease-out;
       cursor: pointer;
       touch-action: manipulation;
+      /* 3D shadow effect with multiple layers */
+      filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.15))
+              drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1))
+              drop-shadow(0 30px 45px rgba(0, 0, 0, 0.08));
     }
 
     .card.is-flipped {
-      transform: rotateY(180deg);
+      transform: translateZ(40px) rotateY(180deg);
     }
 
     /* lift the whole card on hover/focus — keeps flip rotation when flipped */
     .card:hover {
-      transform: translateY(-8px);
+      transform: translateZ(40px) translateY(-8px);
     }
 
     .card:focus-visible {
-      transform: translateY(-8px);
+      transform: translateZ(40px) translateY(-8px);
     }
 
     .card.is-flipped:hover {
-      transform: translateY(-8px) rotateY(180deg);
+      transform: translateZ(40px) translateY(-8px) rotateY(180deg);
     }
 
     .card.is-flipped:focus-visible {
-      transform: translateY(-8px) rotateY(180deg);
+      transform: translateZ(40px) translateY(-8px) rotateY(180deg);
     }
 
     .card__side {
