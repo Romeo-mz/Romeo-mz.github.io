@@ -37,6 +37,71 @@
     .blog-search input::placeholder {
       color: rgba(0, 0, 0, 0.4);
     }
+    
+    /* Filter controls - scoped to blog page */
+    .blog-filters {
+      display: flex;
+      gap: 2em;
+      margin-bottom: 2.5em;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .filter-section {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+    
+    .filter-label {
+      font-family: var(--text-ui);
+      font-weight: 600;
+      color: var(--color-text-muted);
+    }
+    
+    .tag-filters {
+      display: flex;
+      gap: 0.8em;
+      flex-wrap: wrap;
+    }
+    
+    .tag-filter-btn {
+      padding: 0.5em 1.2em;
+      border-radius: 1.5em;
+      border: 2px solid var(--color-interactive);
+      background: white;
+      font-family: var(--text-ui);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .tag-filter-btn:hover {
+      background: rgba(0, 163, 108, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .tag-filter-btn.active {
+      background: var(--color-interactive);
+      color: white;
+      font-weight: 600;
+    }
+    
+    .sort-select {
+      padding: 0.6em 1em;
+      border-radius: 0.5em;
+      border: 2px solid var(--color-interactive);
+      font-family: var(--text-ui);
+      cursor: pointer;
+      background: white;
+    }
+    
+    /* Responsive: stack filters vertically on mobile */
+    @media (max-width: 768px) {
+      .blog-filters {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
@@ -62,6 +127,25 @@
             placeholder="Search posts..." 
             aria-label="Search blog posts"
           />
+        </div>
+        
+        <div class="blog-filters">
+          <div class="filter-section">
+            <label class="filter-label">Filter by tag:</label>
+            <div id="tagFilters" class="tag-filters" role="group" aria-label="Filter posts by tag">
+              <!-- Tag buttons will be dynamically inserted here -->
+            </div>
+          </div>
+          
+          <div class="filter-section">
+            <label for="sortBy" class="filter-label">Sort by:</label>
+            <select id="sortBy" class="sort-select">
+              <option value="date-desc">Newest First</option>
+              <option value="date-asc">Oldest First</option>
+              <option value="readTime-asc">Quick Reads First</option>
+              <option value="readTime-desc">Long Reads First</option>
+            </select>
+          </div>
         </div>
       </div>
 
