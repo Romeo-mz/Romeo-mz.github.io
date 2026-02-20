@@ -9,33 +9,42 @@
 The blog reading experience must feel immersive and narrative-driven — each post should guide readers through content with visual chapter breaks, refined typography, and deliberate pacing that makes technical DevOps content engaging and memorable.
 
 **Current Focus:**
-Phase 3.5 Plan 02 complete. Phase 3.5 (Artistic 3D Portfolio Experience) execution in progress.
+Phase 3.5 Plan 03 complete. Phase 3.5 (Artistic 3D Portfolio Experience) complete - all 3 plans executed.
 
 ## Current Position
 
 **Phase:** Phase 3.5: Artistic 3D Portfolio Experience
-**Plan:** 3.5-02 Complete
-**Status:** Execution in progress
-**Progress:** [████████░░] 82%
+**Plan:** 3.5-03 Complete
+**Status:** Phase complete
+**Progress:** [█████████░] 91%
 
 ## Performance Metrics
 
 | Metric | Value | Notes |
 |--------|-------|-------|
 | Phases Complete | 2/6 | Phases 1-2 complete |
-| Plans Complete | 6/? (across Phases 1-3.5) | 01-01, 01-03, 02-01, 03-01, 03-02, 03-03, 3.5-01, 3.5-02 complete |
+| Plans Complete | 7/? (across Phases 1-3.5) | 01-01, 01-03, 02-01, 03-01, 03-02, 03-03, 3.5-01, 3.5-02, 3.5-03 complete |
 | Current Velocity | ~8 min/plan | Based on recent executions |
 | Blockers | 0 | - |
-| Latest Execution | 2026-02-20 | Plan 3.5-02 (~25 min) |
+| Latest Execution | 2026-02-20 | Plan 3.5-03 (~1 min) |
 | Phase 03-blog-index-experience P01 | 1 min | 2 tasks | 1 files |
 | Phase 03-blog-index-experience P02 | 1 min | 2 tasks | 1 files |
 | Phase 03-blog-index-experience P03 | 12 min | 2 tasks | 2 files |
 | Phase 3.5-artistic-3d-portfolio-experience P01 | 2 min | 2 tasks | 2 files |
 | Phase 3.5-artistic-3d-portfolio-experience P02 | 25 min | 2 tasks | 2 files |
+| Phase 3.5 P03 | 1 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
 ### Key Decisions Made
+
+**2026-02-20: Plan 3.5-03 Execution**
+- STATIC 3D depth instead of animated mouse tracking: User verification feedback indicated tilt animation was "fully bugged" - requirement was for static depth positioning with shadow, not interactive animation
+- Darker pink background (#c98a8e): User feedback indicated bright salmon (#fdc3c6) too bright, needed darker shade while keeping pink tone
+- 450 particles for ASCII art density: User feedback indicated 60 particles insufficient, needed 400-500 for ASCII art constellation density effect
+- Static translateZ(40px) with 3-layer drop-shadow for card depth perception
+- CSS-only parallax with 3 layers (perspective: 1px, translateZ values: -2px, -1px, 0)
+- Mobile parallax disabled for performance (transform: none at ≤768px)
 
 **2026-02-20: Plan 3.5-02 Execution**
 - Used 20-degree rotation range (-20 to +20) for noticeable but not excessive 3D tilt effect
@@ -94,9 +103,15 @@ Phase 3.5 Plan 02 complete. Phase 3.5 (Artistic 3D Portfolio Experience) executi
 
 ### Active Context
 
-**Next Action:** Phase 3 Plan 01 (Blog Search) complete. Ready to continue Phase 3 (Blog Index Experience) with Plan 02 (Tag filtering and sort controls).
+**Next Action:** Phase 3.5 complete (all 3 plans executed). Ready to plan next phase or verify Phase 3.5 implementation.
 
 **Recent Completion:**
+- Plan 3.5-03: Static 3D business card depth with multi-layer drop-shadow + 3-layer CSS parallax scrolling + darker pink background + 450 particles
+- Applied user feedback fixes: converted animated tilt to static 3D depth, darkened background color, increased particle density
+- Static translateZ(40px) positioning with 3-layer drop-shadow for depth effect
+- CSS-only parallax with perspective: 1px and 3 depth layers (-2px, -1px, 0)
+- Duration: 1 minute (checkpoint continuation with fixes)
+- Commits: 0691473 (combined tasks 1-2 with user feedback corrections)
 - Plan 03-01: Client-side fuzzy search with Fuse.js v7.1.0, weighted keys, 300ms debounce
 - Added search input UI with Phase 1 design tokens (green border, focus states)
 - Configured fuzzy matching with 0.4 threshold for typo tolerance
@@ -160,22 +175,23 @@ None currently identified.
 
 **Last session:**
 
-2026-02-20T15:49:16.465Z
-- Completed Plan 3.5-02: 3D Floating Skill Cards with mouse-tracking tilt
-- Implemented mouse tracking script with requestAnimationFrame optimization
-- Created 12 skill cards with 3D depth layers (30px, 60px, 90px translateZ)
-- CSS custom properties pattern (--tilt-x, --tilt-y) for dynamic JavaScript updates
-- Duration: ~25 minutes
-- Commits: f311d26 (Task 1 - HTML + CSS, mislabeled as 3.5-01), 1f8a6a4 (Task 2 - mouse tracking)
+2026-02-20T16:02:44Z
+- Completed Plan 3.5-03: Enhanced Card 3D & Parallax with user feedback fixes
+- Applied STATIC 3D depth (translateZ 40px + drop-shadow) instead of animated tilt per user feedback
+- Implemented 3-layer CSS parallax (background -2px, midground -1px, foreground 0)
+- Changed background color from #fdc3c6 to #c98a8e (darker pink per user feedback)
+- Increased particle count from 60 to 450 for ASCII art density effect
+- Duration: 1 minute (checkpoint continuation)
+- Commits: 0691473 (combined tasks 1-2 with fixes)
 
 **For next session:**
 
-1. **Resume point**: Phase 3.5 Plan 02 complete
-2. **Context to load**: STATE.md, ROADMAP.md, 3.5-CONTEXT.md, 3.5-02-SUMMARY.md
-3. **Next plans**: Continue Phase 3.5 Plan 03 (parallax layers - already WIP in working directory)
-4. **Command to run**: `/gsd-execute-phase 3.5` (continue Phase 3.5 execution)
+1. **Resume point**: Phase 3.5 complete (all plans executed)
+2. **Context to load**: STATE.md, ROADMAP.md, 3.5-03-SUMMARY.md
+3. **Next actions**: Plan next phase OR verify Phase 3.5 implementation
+4. **Command to run**: `/gsd-plan-phase 4` OR `/gsd-verify-work 3.5`
 
-**Stopped at:** Completed 3.5-02-PLAN.md
+**Stopped at:** Completed 3.5-03-PLAN.md with user feedback fixes
 
 ---
 
