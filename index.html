@@ -344,6 +344,11 @@
     const ctx = canvas.getContext('2d');
     const dpr = window.devicePixelRatio || 1;
     
+    // Mobile detection and feature reduction
+    const isTouchDevice = window.matchMedia('(hover: none)').matches;
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const particleCount = isMobile ? 25 : 450; // Reduced from 450 to 25 on mobile
+    
     // Mouse tracking
     const mouse = { x: 0, y: 0 };
     
@@ -402,18 +407,20 @@
       }
     }
     
-    // Create 450 particles for ASCII art density effect (user feedback)
+    // Create particles dynamically based on device (25 mobile, 450 desktop)
     const particles = [];
-    for (let i = 0; i < 450; i++) {
+    for (let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
     
-    // Mouse tracking on canvas
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - rect.left;
-      mouse.y = e.clientY - rect.top;
-    });
+    // Mouse tracking on canvas (disabled on touch devices)
+    if (!isTouchDevice) {
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+      });
+    }
     
     // Animation loop with delta time
     let lastTime = 0;
@@ -428,7 +435,10 @@
       particles.forEach(particle => {
         particle.update(deltaTime);
         particle.draw();
-        particle.connectToMouse();
+        // Only connect to mouse on non-touch devices
+        if (!isTouchDevice) {
+          particle.connectToMouse();
+        }
       });
       
       requestAnimationFrame(animate);
@@ -442,41 +452,47 @@
     // Mouse tracking for 3D skill card tilt
     const skillCards = document.querySelectorAll('.skill-card-3d');
     
-    skillCards.forEach(card => {
-      let isHovering = false;
-      
-      card.addEventListener('mouseenter', () => {
-        isHovering = true;
-      });
-      
-      card.addEventListener('mouseleave', () => {
-        isHovering = false;
-        // Reset tilt to flat position
-        card.style.setProperty('--tilt-x', '0deg');
-        card.style.setProperty('--tilt-y', '0deg');
-      });
-      
-      card.addEventListener('mousemove', (e) => {
-        if (!isHovering) return;
+    // Detect touch device and disable mouse tracking per user decision
+    const isTouchDevice = window.matchMedia('(hover: none)').matches;
+    
+    // Only enable mouse tracking on non-touch devices
+    if (!isTouchDevice) {
+      skillCards.forEach(card => {
+        let isHovering = false;
         
-        // Wrap calculation in requestAnimationFrame for performance
-        requestAnimationFrame(() => {
-          const rect = card.getBoundingClientRect();
+        card.addEventListener('mouseenter', () => {
+          isHovering = true;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          isHovering = false;
+          // Reset tilt to flat position
+          card.style.setProperty('--tilt-x', '0deg');
+          card.style.setProperty('--tilt-y', '0deg');
+        });
+        
+        card.addEventListener('mousemove', (e) => {
+          if (!isHovering) return;
           
-          // Calculate relative mouse position (0 to 1)
-          const x = (e.clientX - rect.left) / rect.width;
-          const y = (e.clientY - rect.top) / rect.height;
-          
-          // Convert to rotation angles (-20 to +20 degrees)
-          const rotateY = (x - 0.5) * 40;
-          const rotateX = (0.5 - y) * 40; // Inverted for natural tilt
-          
-          // Set CSS custom properties
-          card.style.setProperty('--tilt-x', `${rotateX}deg`);
-          card.style.setProperty('--tilt-y', `${rotateY}deg`);
+          // Wrap calculation in requestAnimationFrame for performance
+          requestAnimationFrame(() => {
+            const rect = card.getBoundingClientRect();
+            
+            // Calculate relative mouse position (0 to 1)
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            
+            // Convert to rotation angles (-20 to +20 degrees)
+            const rotateY = (x - 0.5) * 40;
+            const rotateX = (0.5 - y) * 40; // Inverted for natural tilt
+            
+            // Set CSS custom properties
+            card.style.setProperty('--tilt-x', `${rotateX}deg`);
+            card.style.setProperty('--tilt-y', `${rotateY}deg`);
+          });
         });
       });
-    });
+    }
   </script>
 </body>
 </html>
