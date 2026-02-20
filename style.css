@@ -430,8 +430,9 @@
 
     /* ========== CARD STYLING ========== */
     .card-content {
-      background: linear-gradient(135deg, rgba(0, 163, 108, 0.7) 50%, #88C5A7 50%);
-      border-radius: 1.5em;
+      background: transparent;
+      border: 2px solid var(--color-interactive);
+      border-radius: 0;
       padding: 2em;
       width: 100%;
       height: 100%;
