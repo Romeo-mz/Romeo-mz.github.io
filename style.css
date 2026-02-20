@@ -418,6 +418,9 @@
     .skills-panel {
       width: 50%;
       min-width: 50%;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
     }
 
     .card.show-soft-skills .back-slider-track {
@@ -430,7 +433,7 @@
 
     /* ========== CARD STYLING ========== */
     .card-content {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.08);
       border: 2px solid var(--color-interactive);
       border-radius: 0;
       padding: 2em;
@@ -609,6 +612,7 @@
       justify-content: center;
       align-items: center;
       gap: 1.5em;
+      min-height: 100%;
     }
 
     .skills-title {
@@ -618,10 +622,12 @@
     }
 
     .skills-grid {
+      flex: 1;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 0.8em;
       width: 100%;
+      align-content: start;
     }
 
     .skill-item {
