@@ -156,9 +156,14 @@
   </main>
 
   <script>
-    // Module-level state for search
+    // Module-level state for search and filtering
     let allPosts = [];
     let fuse = null;
+    
+    const state = {
+      activeTags: [],
+      sortBy: 'date-desc' // matches default select value
+    };
 
     // Debounce utility function
     function debounce(func, wait) {
@@ -171,6 +176,97 @@
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
       };
+    }
+    
+    // Extract unique tags from all posts
+    function getAllTags(posts) {
+      const tagSet = new Set();
+      posts.forEach(post => {
+        if (post.tags && Array.isArray(post.tags)) {
+          post.tags.forEach(tag => tagSet.add(tag));
+        }
+      });
+      return Array.from(tagSet).sort();
+    }
+    
+    // Toggle tag selection
+    function toggleTag(tag, button) {
+      const index = state.activeTags.indexOf(tag);
+      if (index > -1) {
+        state.activeTags.splice(index, 1);
+        button.classList.remove('active');
+        button.setAttribute('aria-pressed', 'false');
+      } else {
+        state.activeTags.push(tag);
+        button.classList.add('active');
+        button.setAttribute('aria-pressed', 'true');
+      }
+    }
+    
+    // Setup tag filter buttons
+    function setupTagFilters(posts) {
+      const allTags = getAllTags(posts);
+      const container = document.getElementById('tagFilters');
+      container.innerHTML = '';
+      
+      allTags.forEach(tag => {
+        const button = document.createElement('button');
+        button.textContent = tag;
+        button.className = 'tag-filter-btn';
+        button.dataset.tag = tag;
+        button.setAttribute('aria-pressed', 'false');
+        
+        button.addEventListener('click', () => {
+          toggleTag(tag, button);
+          applyFiltersAndSort();
+        });
+        
+        container.appendChild(button);
+      });
+    }
+    
+    // Setup sort dropdown listener
+    function setupSortControl() {
+      const sortSelect = document.getElementById('sortBy');
+      sortSelect.addEventListener('change', (e) => {
+        state.sortBy = e.target.value;
+        applyFiltersAndSort();
+      });
+    }
+    
+    // Combined filter and sort pipeline
+    function applyFiltersAndSort() {
+      let filtered = [...allPosts]; // Start with all posts
+      
+      // Apply search first (from Plan 01)
+      const searchInput = document.getElementById('blogSearch');
+      if (searchInput && searchInput.value.trim().length >= 2 && fuse) {
+        const results = fuse.search(searchInput.value.trim());
+        filtered = results.map(r => r.item);
+      }
+      
+      // Apply tag filter (OR logic: match ANY selected tag)
+      if (state.activeTags.length > 0) {
+        filtered = filtered.filter(post => 
+          state.activeTags.some(tag => post.tags.includes(tag))
+        );
+      }
+      
+      // Apply sorting
+      const [sortBy, sortOrder] = state.sortBy.split('-');
+      filtered.sort((a, b) => {
+        let comparison = 0;
+        if (sortBy === 'date') {
+          comparison = new Date(b.date) - new Date(a.date);
+        } else if (sortBy === 'readTime') {
+          const aTime = parseInt(/(\d+)/.exec(a.readTime)?.[1] || '0');
+          const bTime = parseInt(/(\d+)/.exec(b.readTime)?.[1] || '0');
+          comparison = bTime - aTime;
+        }
+        return sortOrder === 'desc' ? comparison : -comparison;
+      });
+      
+      renderPosts(filtered);
     }
 
     // Render posts to DOM
@@ -242,22 +338,20 @@
           minMatchCharLength: 2
         });
 
-        // Initial render
-        renderPosts(posts);
+        // Setup tag filters and sort controls
+        setupTagFilters(allPosts);
+        setupSortControl();
+        
+        // Initial render with all posts
+        applyFiltersAndSort();
 
         // Setup search input listener
         const searchInput = document.getElementById('blogSearch');
-        const debouncedSearch = debounce((query) => {
-          const trimmed = query.trim();
-          if (trimmed.length >= 2) {
-            const results = fuse.search(trimmed);
-            renderPosts(results.map(r => r.item));
-          } else {
-            renderPosts(allPosts); // Show all if search cleared
-          }
+        const debouncedSearch = debounce(() => {
+          applyFiltersAndSort();
         }, 300);
         
-        searchInput.addEventListener('input', (e) => debouncedSearch(e.target.value));
+        searchInput.addEventListener('input', (e) => debouncedSearch());
       } catch (err) {
         console.error('Failed to load blog articles:', err);
       }
