@@ -1181,7 +1181,7 @@
         rgba(0, 163, 108, 0.2) 6px 6px,
         rgba(0, 163, 108, 0.1) 9px 9px,
         rgba(0, 163, 108, 0.05) 12px 12px;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       position: relative;
       outline: none;
@@ -1189,11 +1189,12 @@
 
     .blog-article-card:hover,
     .blog-article-card:focus-visible {
-      transform: translateY(-6px);
+      transform: translateY(-8px) scale(1.01);
       box-shadow: 
         rgba(0, 163, 108, 0.4) 5px 5px,
         rgba(0, 163, 108, 0.3) 10px 10px,
-        rgba(0, 163, 108, 0.2) 15px 15px;
+        rgba(0, 163, 108, 0.2) 15px 15px,
+        rgba(0, 163, 108, 0.1) 20px 20px;
     }
 
     .blog-article-card:focus-visible {
@@ -1379,4 +1380,24 @@
 
     .post-footer {
       margin-top: 2rem;
+    }
+    
+    /* Mobile hover state handling for blog cards */
+    @media (hover: hover) {
+      /* Enhanced hover effect on devices with true hover capability */
+      .blog-article-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 
+          rgba(0, 163, 108, 0.4) 5px 5px,
+          rgba(0, 163, 108, 0.3) 10px 10px,
+          rgba(0, 163, 108, 0.2) 15px 15px,
+          rgba(0, 163, 108, 0.1) 20px 20px;
+      }
+    }
+    
+    @media (hover: none) {
+      /* Reduced effect for touch devices */
+      .blog-article-card:active {
+        transform: translateY(-4px) scale(1.005);
+      }
     }
