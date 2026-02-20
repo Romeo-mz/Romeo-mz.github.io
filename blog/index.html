@@ -396,8 +396,6 @@
       }
     }
 
-    // Load on page load
-    loadBlogArticles();
   </script>
 
   <!-- PrismJS core and languages -->
@@ -408,7 +406,17 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
   
-  <!-- Fuse.js for fuzzy search -->
+  <!-- Fuse.js for fuzzy search - load before using it -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.1.0/dist/fuse.min.js"></script>
+  
+  <!-- Initialize blog after all dependencies loaded -->
+  <script>
+    // Load blog articles after Fuse.js is available
+    if (typeof Fuse !== 'undefined') {
+      loadBlogArticles();
+    } else {
+      console.error('Fuse.js failed to load');
+    }
+  </script>
 </body>
 </html>
