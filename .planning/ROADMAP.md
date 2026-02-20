@@ -73,7 +73,12 @@ Plans:
 5. Post cards show clear hierarchy with metadata (date, tags, read time)
 6. Interactive elements (cards, filters) provide hover feedback
 
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Implement fuzzy search with Fuse.js and debounced input
+- [ ] 03-02-PLAN.md — Add tag filtering (multi-select OR logic) and sort controls (date/read time)
+- [ ] 03-03-PLAN.md — Enhance card visuals (all tags, formatted dates, hover transforms)
 
 ---
 
