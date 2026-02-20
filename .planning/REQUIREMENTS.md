@@ -17,10 +17,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Portfolio Experience
 
-- [ ] **PORT-01**: Maintain flippable business card interaction (core identity preserved)
-- [ ] **PORT-02**: Refined visual treatment of card with new color palette and typography
-- [ ] **PORT-03**: Smooth, polished flip animations and transitions
-- [ ] **PORT-04**: Fully responsive card layout for all screen sizes
+- [x] **PORT-01**: Maintain flippable business card interaction (core identity preserved)
+- [x] **PORT-02**: Refined visual treatment of card with new color palette and typography
+- [x] **PORT-03**: Smooth, polished flip animations and transitions
+- [x] **PORT-04**: Fully responsive card layout for all screen sizes
 
 ### Blog Index
 
@@ -120,10 +120,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TYPE-03 | Phase 1 | Complete |
 | TYPE-04 | Phase 1 | Complete |
 | TYPE-05 | Phase 1 | Complete |
-| PORT-01 | Phase 2 | Pending |
-| PORT-02 | Phase 2 | Pending |
-| PORT-03 | Phase 2 | Pending |
-| PORT-04 | Phase 2 | Pending |
+| PORT-01 | Phase 2 | Complete |
+| PORT-02 | Phase 2 | Complete |
+| PORT-03 | Phase 2 | Complete |
+| PORT-04 | Phase 2 | Complete |
 | BLOG-01 | Phase 3 | Pending |
 | BLOG-02 | Phase 3 | Pending |
 | BLOG-03 | Phase 3 | Pending |
