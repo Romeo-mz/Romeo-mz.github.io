@@ -24,12 +24,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Blog Index
 
-- [ ] **BLOG-01**: Visually distinctive blog index with strong personality (inspired by references)
+- [x] **BLOG-01**: Visually distinctive blog index with strong personality (inspired by references)
 - [x] **BLOG-02**: Search functionality to find posts by title or content
 - [x] **BLOG-03**: Tag/category filtering system
 - [x] **BLOG-04**: Sorting options (date, read time)
-- [ ] **BLOG-05**: Blog post cards with improved visual hierarchy and metadata display
-- [ ] **BLOG-06**: Hover states and interactive feedback on post cards
+- [x] **BLOG-05**: Blog post cards with improved visual hierarchy and metadata display
+- [x] **BLOG-06**: Hover states and interactive feedback on post cards
 
 ### Blog Post Reading Experience
 
@@ -124,12 +124,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PORT-02 | Phase 2 | Complete |
 | PORT-03 | Phase 2 | Complete |
 | PORT-04 | Phase 2 | Complete |
-| BLOG-01 | Phase 3 | Pending |
+| BLOG-01 | Phase 3 | Complete |
 | BLOG-02 | Phase 3 | Complete |
 | BLOG-03 | Phase 3 | Complete |
 | BLOG-04 | Phase 3 | Complete |
-| BLOG-05 | Phase 3 | Pending |
-| BLOG-06 | Phase 3 | Pending |
+| BLOG-05 | Phase 3 | Complete |
+| BLOG-06 | Phase 3 | Complete |
 | READ-01 | Phase 4 | Pending |
 | READ-02 | Phase 4 | Pending |
 | READ-03 | Phase 4 | Pending |
