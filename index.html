@@ -197,6 +197,39 @@
     back.setAttribute('aria-hidden', 'true');
     setSoftSkillsVisible(false);
 
+    // Card 3D tilt tracking (hover only, disabled on mobile)
+    let cardHovering = false;
+    const supportsHover = window.matchMedia('(hover: hover)').matches;
+
+    if (supportsHover) {
+      card.addEventListener('mouseenter', () => {
+        cardHovering = true;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        cardHovering = false;
+        card.style.setProperty('--card-tilt-x', '0deg');
+        card.style.setProperty('--card-tilt-y', '0deg');
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        if (!cardHovering) return;
+
+        requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+
+          // Moderate rotation: -17.5 to +17.5 degrees
+          const rotateY = (x - 0.5) * 35;
+          const rotateX = (0.5 - y) * 35;
+
+          card.style.setProperty('--card-tilt-x', `${rotateX}deg`);
+          card.style.setProperty('--card-tilt-y', `${rotateY}deg`);
+        });
+      });
+    }
+
     // Click: toggle flip but ignore clicks on links
     card.addEventListener('click', function(e) {
       if (e.target.closest('a')) return; // don't flip when clicking links
@@ -394,8 +427,9 @@
     
     // Mouse tracking on canvas
     canvas.addEventListener('mousemove', (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
     });
     
     // Animation loop with delta time
