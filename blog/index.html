@@ -72,7 +72,67 @@
   </main>
 
   <script>
-    // Load posts from data/posts.json and render as full-width cards
+    // Module-level state for search
+    let allPosts = [];
+    let fuse = null;
+
+    // Debounce utility function
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Render posts to DOM
+    function renderPosts(posts) {
+      const container = document.getElementById('blogArticles');
+      
+      // Handle empty state
+      if (!posts || posts.length === 0) {
+        container.innerHTML = '<p class="no-results" style="text-align: center; color: rgba(0, 0, 0, 0.5); padding: 2em;">No posts found. Try adjusting your search.</p>';
+        return;
+      }
+
+      // Build HTML string for all posts
+      const htmlParts = posts.map(p => `
+        <article class="blog-article-card" tabindex="0" data-href="${p.href || '#'}">
+          <div class="blog-article-header">
+            <div class="blog-article-meta">
+              <span class="blog-tag">${(p.tags && p.tags[0]) || ''}</span>
+              <time class="blog-date" datetime="${p.date || ''}">${p.date || ''}</time>
+            </div>
+            <h2 class="blog-article-title">${p.title || ''}</h2>
+            <p class="blog-article-excerpt">${p.excerpt || ''}</p>
+          </div>
+          <footer class="blog-article-footer">
+            <span class="read-time">${p.readTime || ''}</span>
+            <a href="${p.href || '#'}" class="read-more">Read full article →</a>
+          </footer>
+        </article>
+      `);
+
+      // Set innerHTML once for performance
+      container.innerHTML = htmlParts.join('');
+
+      // Re-attach event handlers after innerHTML update
+      container.querySelectorAll('.blog-article-card').forEach(card => {
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          window.location = card.dataset.href;
+        });
+        card.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') window.location = card.dataset.href;
+        });
+      });
+    }
+
+    // Load posts from data/posts.json and initialize search
     async function loadBlogArticles() {
       try {
         const resp = await fetch('/data/posts.json');
@@ -83,38 +143,37 @@
         // Sort posts in reverse chronological order (newest first)
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        const container = document.getElementById('blogArticles');
-        container.innerHTML = '';
+        // Store posts for search
+        allPosts = posts;
 
-        posts.forEach(p => {
-          const article = document.createElement('article');
-          article.className = 'blog-article-card';
-          article.innerHTML = `
-            <div class="blog-article-header">
-              <div class="blog-article-meta">
-                <span class="blog-tag">${(p.tags && p.tags[0]) || ''}</span>
-                <time class="blog-date" datetime="${p.date || ''}">${p.date || ''}</time>
-              </div>
-              <h2 class="blog-article-title">${p.title || ''}</h2>
-              <p class="blog-article-excerpt">${p.excerpt || ''}</p>
-            </div>
-            <footer class="blog-article-footer">
-              <span class="read-time">${p.readTime || ''}</span>
-              <a href="${p.href || '#'}" class="read-more">Read full article →</a>
-            </footer>
-          `;
-          container.appendChild(article);
-
-          // Make card clickable
-          article.addEventListener('click', (e) => {
-            if (e.target.closest('a')) return;
-            window.location = p.href;
-          });
-          article.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') window.location = p.href;
-          });
-          article.setAttribute('tabindex', '0');
+        // Initialize Fuse.js for fuzzy search
+        fuse = new Fuse(posts, {
+          keys: [
+            { name: 'title', weight: 2 },
+            { name: 'excerpt', weight: 1 },
+            { name: 'tags', weight: 1.5 }
+          ],
+          threshold: 0.4,
+          ignoreLocation: true,
+          minMatchCharLength: 2
         });
+
+        // Initial render
+        renderPosts(posts);
+
+        // Setup search input listener
+        const searchInput = document.getElementById('blogSearch');
+        const debouncedSearch = debounce((query) => {
+          const trimmed = query.trim();
+          if (trimmed.length >= 2) {
+            const results = fuse.search(trimmed);
+            renderPosts(results.map(r => r.item));
+          } else {
+            renderPosts(allPosts); // Show all if search cleared
+          }
+        }, 300);
+        
+        searchInput.addEventListener('input', (e) => debouncedSearch(e.target.value));
       } catch (err) {
         console.error('Failed to load blog articles:', err);
       }
