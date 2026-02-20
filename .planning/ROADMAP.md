@@ -1,14 +1,15 @@
 # Roadmap: Portfolio & Blog Modernization
 
 **Created:** 2026-02-20
-**Depth:** Standard (6 phases)
-**Coverage:** 38/38 v1 requirements mapped ✓
+**Depth:** Extended (7 phases)
+**Coverage:** 43/43 requirements mapped ✓
 
 ## Phases
 
 - [x] **Phase 1: Design Foundation** - Build cohesive design system with color palette, typography, spacing, and CSS variables
 - [x] **Phase 2: Portfolio Transformation** - Refine flippable business card with new visual treatment and responsive layout (completed 2026-02-20)
 - [x] **Phase 3: Blog Index Experience** - Create distinctive blog discovery with search, filtering, sorting, and visual post cards (completed 2026-02-20)
+- [ ] **Phase 3.5: Artistic 3D Portfolio Experience** - Transform portfolio with 3D floating elements, particle effects, parallax depth, and interactive transformations
 - [ ] **Phase 4: Immersive Reading Experience** - Transform blog posts into narrative-driven content with chapter breaks and guided flow
 - [ ] **Phase 5: Interactions & Polish** - Layer scroll animations, transitions, and micro-interactions across site
 - [ ] **Phase 6: Technical Excellence** - Optimize performance, accessibility, and cross-browser compatibility
@@ -82,6 +83,41 @@ Plans:
 
 ---
 
+### Phase 3.5: Artistic 3D Portfolio Experience
+**Goal**: Portfolio becomes a unique, artistic experience with 3D depth, interactive elements, and captivating visual effects
+
+**Depends on**: Phase 1 (needs design system), Phase 2 (builds on business card)
+
+**Requirements**: PORT3D-01, PORT3D-02, PORT3D-03, PORT3D-04, PORT3D-05
+
+**Success Criteria** (what must be TRUE):
+1. Skills display as 3D floating cards that tilt and respond to mouse movement
+2. Background has animated particle system creating depth and movement
+3. Page sections use parallax scrolling with multiple depth layers
+4. Business card has enhanced 3D transformations beyond simple flip
+5. Interactive elements feel tactile and respond with 3D effects
+6. Effects remain performant (60fps) and work on mobile with reduced complexity
+7. Portfolio has distinctive artistic personality that stands out
+
+**Technical Stack:**
+- CSS 3D transforms (perspective, rotateX/Y/Z, translateZ)
+- Canvas API for particle effects
+- Vanilla JS for mouse tracking and interaction
+- RequestAnimationFrame for smooth 60fps animations
+- Intersection Observer for scroll-triggered effects
+
+**Plans**: TBD (to be planned)
+
+Potential features:
+- 3D skill cards with tilt.js-like mouse tracking
+- Particle constellation background (canvas)
+- Layered parallax sections (foreground/midground/background)
+- Enhanced business card with 3D depth and shadow effects
+- Floating navigation with depth
+- Scroll-triggered 3D reveals
+
+---
+
 ### Phase 4: Immersive Reading Experience
 **Goal**: Blog posts guide readers through technical content with narrative structure and visual storytelling
 
@@ -145,7 +181,8 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Design Foundation | 2/2 | Complete    | 2026-02-20 |
 | 2. Portfolio Transformation | 1/1 | Complete   | 2026-02-20 |
-| 3. Blog Index Experience | 1/3 | Complete    | 2026-02-20 |
+| 3. Blog Index Experience | 3/3 | Complete    | 2026-02-20 |
+| 3.5. Artistic 3D Portfolio | 0/? | Not started | - |
 | 4. Immersive Reading Experience | 0/? | Not started | - |
 | 5. Interactions & Polish | 0/? | Not started | - |
 | 6. Technical Excellence | 0/? | Not started | - |

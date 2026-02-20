@@ -22,6 +22,14 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **PORT-03**: Smooth, polished flip animations and transitions
 - [x] **PORT-04**: Fully responsive card layout for all screen sizes
 
+### Artistic 3D Portfolio Experience
+
+- [ ] **PORT3D-01**: 3D floating skill cards that tilt and respond to mouse/touch interaction
+- [ ] **PORT3D-02**: Animated particle background system creating depth and visual interest
+- [ ] **PORT3D-03**: Layered parallax scrolling with multiple depth planes
+- [ ] **PORT3D-04**: Enhanced 3D transformations on business card (beyond basic flip)
+- [ ] **PORT3D-05**: Performant animations (60fps) with mobile-optimized reduced effects
+
 ### Blog Index
 
 - [x] **BLOG-01**: Visually distinctive blog index with strong personality (inspired by references)
