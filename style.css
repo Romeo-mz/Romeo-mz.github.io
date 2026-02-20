@@ -637,8 +637,63 @@
       transform: translateX(5px);
     }
 
-    /* ========== RESPONSIVE ========== */
+    /* ========== RESPONSIVE DESIGN (DESKTOP-FIRST) ========== */
+
+    /* Laptop: 1024-1440px */
+    @media (max-width: 1440px) {
+      .page-container {
+        padding: 18px;
+      }
+      
+      .blog-grid {
+        gap: 1.2rem;
+      }
+    }
+
+    /* Tablet: 768-1024px */
+    @media (max-width: 1024px) {
+      .card {
+        width: 90%;
+      }
+      
+      .page-container {
+        padding: 16px;
+      }
+    }
+
+    /* Tablet portrait: 480-768px */
     @media (max-width: 768px) {
+      /* Reduce content spacing by ~33% on mobile per RESEARCH.md line 929 */
+      :root {
+        --space-content-xl: 2rem;   /* 3rem → 2rem */
+        --space-content-lg: 1.5rem; /* 2rem → 1.5rem */
+        --space-content-md: 1rem;   /* 1.5rem → 1rem */
+        --space-content-sm: 0.75rem; /* 1rem → 0.75rem */
+      }
+      
+      /* Headings smaller on tablet */
+      h1 {
+        font-size: clamp(1.75rem, 1.5rem + 1.25vw, 2rem);
+      }
+      
+      h2 {
+        font-size: clamp(1.4rem, 1.2rem + 1vw, 1.75rem);
+      }
+      
+      .page-container {
+        padding: 15px;
+      }
+      
+      .blog-grid {
+        grid-template-columns: 1fr;  /* Single column */
+        gap: 1.2rem;
+      }
+      
+      .card {
+        width: 95%;
+      }
+      
+      /* Existing tablet-specific card styles */
       body {
         padding: 15px;
       }
@@ -749,7 +804,39 @@
       }
     }
 
+    /* Mobile: < 480px */
     @media (max-width: 480px) {
+      /* Further reduce heading sizes on mobile */
+      h1 {
+        font-size: clamp(1.5rem, 1.4rem + 0.5vw, 1.75rem);
+      }
+      
+      h2 {
+        font-size: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+      }
+      
+      h3 {
+        font-size: clamp(1.1rem, 1.05rem + 0.25vw, 1.25rem);
+      }
+      
+      /* Reduce UI padding on mobile */
+      .nav-links a {
+        padding: var(--space-ui-xs) var(--space-ui-md);
+      }
+      
+      .page-container {
+        padding: 10px;
+      }
+      
+      .blog-grid {
+        gap: 1rem;
+      }
+      
+      .card {
+        width: 100%;
+      }
+      
+      /* Existing mobile-specific styles */
       body {
         padding: 10px;
       }
