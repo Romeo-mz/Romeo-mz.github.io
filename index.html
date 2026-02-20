@@ -454,5 +454,46 @@
     // Start animation loop
     requestAnimationFrame(animate);
   </script>
+
+  <script>
+    // Mouse tracking for 3D skill card tilt
+    const skillCards = document.querySelectorAll('.skill-card-3d');
+    
+    skillCards.forEach(card => {
+      let isHovering = false;
+      
+      card.addEventListener('mouseenter', () => {
+        isHovering = true;
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        isHovering = false;
+        // Reset tilt to flat position
+        card.style.setProperty('--tilt-x', '0deg');
+        card.style.setProperty('--tilt-y', '0deg');
+      });
+      
+      card.addEventListener('mousemove', (e) => {
+        if (!isHovering) return;
+        
+        // Wrap calculation in requestAnimationFrame for performance
+        requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          
+          // Calculate relative mouse position (0 to 1)
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+          
+          // Convert to rotation angles (-20 to +20 degrees)
+          const rotateY = (x - 0.5) * 40;
+          const rotateX = (0.5 - y) * 40; // Inverted for natural tilt
+          
+          // Set CSS custom properties
+          card.style.setProperty('--tilt-x', `${rotateX}deg`);
+          card.style.setProperty('--tilt-y', `${rotateY}deg`);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
