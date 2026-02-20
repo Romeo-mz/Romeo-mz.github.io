@@ -78,6 +78,17 @@
       box-sizing: border-box;
     }
 
+    /* ========== PARTICLE CANVAS BACKGROUND ========== */
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: auto;
+    }
+
     body {
       font-family: var(--font-body);
       color: var(--color-text);
@@ -646,6 +657,67 @@
     .skill-item:hover {
       background-color: rgba(0, 163, 108, 0.3);
       transform: translateX(5px);
+    }
+
+    /* ========== 3D FLOATING SKILL CARDS ========== */
+    .skills-section-3d {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: var(--space-content-xl);
+    }
+
+    .skills-section-3d h2 {
+      font-family: var(--font-heading);
+      font-size: var(--text-h2);
+      text-align: center;
+      margin-bottom: var(--space-content-lg);
+    }
+
+    .skills-container-3d {
+      perspective: 1000px;
+      perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-card-3d {
+      transform-style: preserve-3d;
+      transform: translateZ(0) rotateX(0deg) rotateY(0deg);
+      transition: transform 0.3s ease-out;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid var(--color-interactive);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      will-change: transform;
+      text-align: center;
+    }
+
+    .skill-card-3d h3 {
+      font-family: var(--font-heading);
+      font-size: var(--text-h3);
+      margin: 0;
+      color: var(--color-text);
+    }
+
+    /* Depth layers for floating effect */
+    .skill-card-3d[data-depth="1"] {
+      transform: translateZ(30px);
+    }
+
+    .skill-card-3d[data-depth="2"] {
+      transform: translateZ(60px);
+    }
+
+    .skill-card-3d[data-depth="3"] {
+      transform: translateZ(90px);
+    }
+
+    /* Hover: lift card and apply mouse-tracking tilt */
+    .skill-card-3d:hover {
+      transform: translateZ(100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
     }
 
     /* ========== RESPONSIVE DESIGN (DESKTOP-FIRST) ========== */

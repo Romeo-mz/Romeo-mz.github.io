@@ -12,6 +12,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Canvas for particle background -->
+  <canvas id="particles-canvas"></canvas>
+  
   <main class="page-container">
     <header class="page-header">
       <div class="header-content">
@@ -116,6 +119,48 @@
     </div>
   </div>
 
+  <!-- 3D Floating Skill Cards Section -->
+  <section class="skills-section-3d">
+    <h2>Tech Stack</h2>
+    <div class="skills-container-3d">
+      <div class="skill-card-3d" data-depth="1">
+        <h3>Docker</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="2">
+        <h3>Kubernetes</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="3">
+        <h3>GitLab CI</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="1">
+        <h3>Azure DevOps</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="2">
+        <h3>Ansible</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="3">
+        <h3>AWS & CDK</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="1">
+        <h3>.NET</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="2">
+        <h3>Python</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="3">
+        <h3>Terraform</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="1">
+        <h3>Linux</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="2">
+        <h3>CI/CD</h3>
+      </div>
+      <div class="skill-card-3d" data-depth="3">
+        <h3>Bash</h3>
+      </div>
+    </div>
+  </section>
 
   </main>
 
@@ -275,5 +320,105 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+
+  <!-- Particle System -->
+  <script>
+    // Canvas setup with device pixel ratio handling
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    
+    // Mouse tracking
+    const mouse = { x: 0, y: 0 };
+    
+    // Resize canvas to full viewport
+    function resizeCanvas() {
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(dpr, dpr);
+    }
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Particle class
+    class Particle {
+      constructor() {
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+        this.vx = (Math.random() - 0.5) * 0.5; // Medium energy drift
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 2 + 1; // 1-3px star-like points
+      }
+      
+      update(deltaTime) {
+        // Move particle with frame-rate independent speed
+        this.x += this.vx * deltaTime * 0.06;
+        this.y += this.vy * deltaTime * 0.06;
+        
+        // Wrap around edges for continuous motion
+        if (this.x < 0) this.x = window.innerWidth;
+        if (this.x > window.innerWidth) this.x = 0;
+        if (this.y < 0) this.y = window.innerHeight;
+        if (this.y > window.innerHeight) this.y = 0;
+      }
+      
+      draw() {
+        // Draw star-like constellation point
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fill();
+      }
+      
+      connectToMouse() {
+        const dist = Math.hypot(this.x - mouse.x, this.y - mouse.y);
+        if (dist < 150) { // Connection threshold
+          ctx.beginPath();
+          ctx.moveTo(this.x, this.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / 150})`; // Fade by distance
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    
+    // Create 60 particles (desktop default per user decision)
+    const particles = [];
+    for (let i = 0; i < 60; i++) {
+      particles.push(new Particle());
+    }
+    
+    // Mouse tracking on canvas
+    canvas.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    
+    // Animation loop with delta time
+    let lastTime = 0;
+    function animate(timestamp) {
+      const deltaTime = timestamp - lastTime;
+      lastTime = timestamp;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      
+      // Update and draw all particles
+      particles.forEach(particle => {
+        particle.update(deltaTime);
+        particle.draw();
+        particle.connectToMouse();
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    
+    // Start animation loop
+    requestAnimationFrame(animate);
+  </script>
 </body>
 </html>
