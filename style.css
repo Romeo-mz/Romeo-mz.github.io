@@ -1,3 +1,77 @@
+/* ========== DESIGN TOKENS ========== */
+:root {
+  /* Base Colors */
+  --color-pink-base: #fdc3c6;
+  --color-green-base: #00a36c;
+  --color-green-light: #00b57a;
+  --color-green-dark: #006b49;
+  
+  /* Semantic Colors */
+  --color-background: var(--color-pink-base);
+  --color-surface: #ffffff;
+  --color-interactive: var(--color-green-base);
+  --color-interactive-hover: var(--color-green-light);
+  --color-text: #333;
+  --color-text-muted: #555;
+  --color-border: rgba(0, 163, 108, 0.2);
+  
+  /* Syntax Highlighting Colors (vibrant for pink background) */
+  --color-syntax-keyword: #d946ef;      /* Vibrant magenta */
+  --color-syntax-string: #0ea5e9;       /* Bright blue */
+  --color-syntax-function: #f59e0b;     /* Orange */
+  --color-syntax-comment: #6b7280;      /* Muted gray */
+  --color-syntax-number: #8b5cf6;       /* Purple */
+  --color-syntax-operator: #10b981;     /* Emerald green */
+  --color-syntax-tag: #d946ef;          /* Magenta */
+  --color-syntax-attr: #06b6d4;         /* Cyan */
+  
+  /* Typography Tokens - Font Families */
+  --font-heading: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-code: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', 'Courier New', monospace;
+  
+  /* Typography Scale - Fluid with clamp() */
+  /* Headings: larger scaling for visual impact */
+  --text-h1: clamp(2rem, 1.7rem + 1.5vw, 2.5rem);
+  --text-h2: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --text-h3: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  
+  /* Body text: subtle scaling for readability */
+  --text-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-small: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  
+  /* UI elements: minimal scaling for consistency */
+  --text-ui: clamp(0.875rem, 0.85rem + 0.125vw, 0.95rem);
+  
+  /* Content Spacing (generous, base-8) */
+  --space-content-xs: 0.5rem;   /* 8px */
+  --space-content-sm: 1rem;     /* 16px */
+  --space-content-md: 1.5rem;   /* 24px */
+  --space-content-lg: 2rem;     /* 32px */
+  --space-content-xl: 3rem;     /* 48px */
+  --space-content-2xl: 4rem;    /* 64px */
+  
+  /* UI Spacing (tight, base-4) */
+  --space-ui-2xs: 0.125rem;  /* 2px */
+  --space-ui-xs: 0.25rem;    /* 4px */
+  --space-ui-sm: 0.5rem;     /* 8px */
+  --space-ui-md: 0.75rem;    /* 12px */
+  --space-ui-lg: 1rem;       /* 16px */
+  --space-ui-xl: 1.5rem;     /* 24px */
+  --space-ui-2xl: 2rem;      /* 32px */
+  
+  /* Layout Tokens */
+  --container-max: 900px;
+  --container-padding: 20px;
+  
+  /* Responsive Breakpoints (documented as comments, not CSS variables) */
+  /* Mobile: 480px */
+  /* Tablet: 768px */
+  /* Laptop: 1024px */
+  /* Desktop: 1440px */
+}
+
+/* ========== BASE STYLES ========== */
    * {
       margin: 0;
       padding: 0;
@@ -5,16 +79,16 @@
     }
 
     body {
-      font-family: 'Roboto Mono', monospace;
-      color: #333;
+      font-family: var(--font-body);
+      color: var(--color-text);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
       min-height: 100vh;
-      background-color: #fdc3c6;
+      background-color: var(--color-background);
       perspective: 1500px;
-      padding: 20px;
+      padding: var(--container-padding);
       overflow-x: hidden;
       width: 100%;
     }
@@ -31,8 +105,8 @@
     }
     .page-header {
       width: 100%;
-      max-width: 900px;
-      margin-bottom: 2rem;
+      max-width: var(--container-max);
+      margin-bottom: var(--space-content-lg);
       padding: 0;
     }
 
@@ -45,55 +119,70 @@
 
     .nav-links {
       display: flex;
-      gap: 1.5rem;
+      gap: var(--space-ui-xl);
       align-items: center;
     }
 
     .nav-links a {
-      color: #333;
+      color: var(--color-text);
+      font-size: var(--text-ui);
       font-weight: 600;
-      padding: 0.5rem 1rem;
+      padding: var(--space-ui-sm) var(--space-ui-lg);
       border-radius: 6px;
       transition: all 0.3s ease;
-      font-size: 0.95rem;
     }
 
     .nav-links a:hover {
-      background: rgba(0, 163, 108, 0.1);
-      color: #00a36c;
+      background: var(--color-border);
+      color: var(--color-interactive);
     }
 
     .nav-links a.active {
-      color: #00a36c;
-      border-bottom: 2px solid #00a36c;
+      color: var(--color-interactive);
+      border-bottom: 2px solid var(--color-interactive);
     }
 
     .page-container {
       width: 100%;
-      max-width: 900px;
+      max-width: var(--container-max);
       display: flex;
       flex-direction: column;
-      gap: 3rem;
+      gap: var(--space-content-xl);
       align-items: center;
     }
 
     h1, h2, h3 {
-      color: #333;
+      font-family: var(--font-heading);
+      color: var(--color-text);
     }
-
+    
+    h1 {
+      font-size: var(--text-h1);
+    }
+    
     h2 {
+      font-size: var(--text-h2);
       font-weight: 300;
+    }
+    
+    h3 {
+      font-size: var(--text-h3);
     }
 
     p {
-      line-height: 1.5;
-      color: #333;
+      font-size: var(--text-body);
+      line-height: 1.75;
+      color: var(--color-text);
     }
 
     a {
-      color: #00a36c;
+      color: var(--color-interactive);
       font-weight: bold;
       transition: all 0.3s ease;
+    }
+    
+    code, pre {
+      font-family: var(--font-code);
     }
 
     /* ========== CARD 3D FLIP ========== */
@@ -224,13 +313,13 @@
       width: 60px;
       height: 60px;
       border-radius: 50%;
-      background: white;
+      background: var(--color-surface);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.6em;
       font-weight: bold;
-      color: #00a36c;
+      color: var(--color-interactive);
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       flex-shrink: 0;
     }
