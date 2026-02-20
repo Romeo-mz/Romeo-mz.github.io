@@ -10,6 +10,34 @@
   <!-- PrismJS for syntax highlighting -->
   <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+  <style>
+    /* Blog search input - scoped to blog page */
+    .blog-search {
+      margin-bottom: 2.5em;
+    }
+    
+    .blog-search input {
+      width: 100%;
+      padding: 1em 1.5em;
+      border-radius: 2em;
+      border: 2px solid var(--color-interactive);
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      font-family: var(--text-body);
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+    
+    .blog-search input:focus {
+      outline: 3px solid rgba(0, 163, 108, 0.3);
+      border-color: var(--color-interactive);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+    
+    .blog-search input::placeholder {
+      color: rgba(0, 0, 0, 0.4);
+    }
+  </style>
 </head>
 <body>
   <main class="page-container">
@@ -27,6 +55,14 @@
       <div class="blog-hub-header">
         <h1>DevOps Notes</h1>
         <p class="subtitle">Sharing insights from the trenches</p>
+        <div class="blog-search">
+          <input 
+            type="text" 
+            id="blogSearch" 
+            placeholder="Search posts..." 
+            aria-label="Search blog posts"
+          />
+        </div>
       </div>
 
       <div class="blog-articles" id="blogArticles">
@@ -95,5 +131,8 @@
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  
+  <!-- Fuse.js for fuzzy search -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.1.0/dist/fuse.min.js"></script>
 </body>
 </html>
