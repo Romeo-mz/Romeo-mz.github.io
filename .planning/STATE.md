@@ -9,32 +9,41 @@
 The blog reading experience must feel immersive and narrative-driven — each post should guide readers through content with visual chapter breaks, refined typography, and deliberate pacing that makes technical DevOps content engaging and memorable.
 
 **Current Focus:**
-Phase 3 Plan 01 complete. Phase 3 (Blog Index Experience) execution in progress.
+Phase 3.5 Plan 02 complete. Phase 3.5 (Artistic 3D Portfolio Experience) execution in progress.
 
 ## Current Position
 
-**Phase:** Phase 3: Blog Index Experience
-**Plan:** 03-01 Complete
-**Status:** Milestone complete
-**Progress:** [███████░░░] 73%
+**Phase:** Phase 3.5: Artistic 3D Portfolio Experience
+**Plan:** 3.5-02 Complete
+**Status:** Execution in progress
+**Progress:** [████████░░] 82%
 
 ## Performance Metrics
 
 | Metric | Value | Notes |
 |--------|-------|-------|
 | Phases Complete | 2/6 | Phases 1-2 complete |
-| Plans Complete | 4/? (across Phases 1-3) | 01-01, 01-03, 02-01, 03-01 complete |
-| Current Velocity | ~11 min/plan | Based on 01-01 (3min), 01-03 (3min), 02-01 (35min), 03-01 (1min) |
+| Plans Complete | 6/? (across Phases 1-3.5) | 01-01, 01-03, 02-01, 03-01, 03-02, 03-03, 3.5-01, 3.5-02 complete |
+| Current Velocity | ~8 min/plan | Based on recent executions |
 | Blockers | 0 | - |
-| Latest Execution | 2026-02-20 | Plan 03-01 (1 min) |
+| Latest Execution | 2026-02-20 | Plan 3.5-02 (~25 min) |
 | Phase 03-blog-index-experience P01 | 1 min | 2 tasks | 1 files |
 | Phase 03-blog-index-experience P02 | 1 min | 2 tasks | 1 files |
 | Phase 03-blog-index-experience P03 | 12 min | 2 tasks | 2 files |
 | Phase 3.5-artistic-3d-portfolio-experience P01 | 2 min | 2 tasks | 2 files |
+| Phase 3.5-artistic-3d-portfolio-experience P02 | 25 min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
 ### Key Decisions Made
+
+**2026-02-20: Plan 3.5-02 Execution**
+- Used 20-degree rotation range (-20 to +20) for noticeable but not excessive 3D tilt effect
+- Inverted Y-axis calculation (0.5 - y) for natural top-tilts-up behavior
+- Separated hover state flag (isHovering) to prevent mousemove spam when not hovering
+- Used perspective: 1000px for moderate depth effect per user decision
+- CSS custom properties pattern (--tilt-x, --tilt-y) for JavaScript-driven CSS updates
+- RequestAnimationFrame wrapper for mouse-tracking performance optimization
 
 **2026-02-20: Plan 03-01 Execution**
 - Used Fuse.js v7.1.0 via CDN for fuzzy search (lightweight, battle-tested, no build tools)
@@ -151,23 +160,22 @@ None currently identified.
 
 **Last session:**
 
-2026-02-20T15:31:55.486Z
-- Implemented client-side fuzzy search with Fuse.js v7.1.0
-- Added search input UI with Phase 1 design tokens (green border, focus states)
-- Configured weighted search keys (title: 2x, tags: 1.5x, excerpt: 1x)
-- Implemented 300ms debounce for smooth typing experience
-- Refactored rendering into single renderPosts() function
-- Duration: 1 minute
-- Commits: 12721dd (search UI + Fuse.js CDN), b2203d0 (fuzzy search implementation)
+2026-02-20T15:49:16.465Z
+- Completed Plan 3.5-02: 3D Floating Skill Cards with mouse-tracking tilt
+- Implemented mouse tracking script with requestAnimationFrame optimization
+- Created 12 skill cards with 3D depth layers (30px, 60px, 90px translateZ)
+- CSS custom properties pattern (--tilt-x, --tilt-y) for dynamic JavaScript updates
+- Duration: ~25 minutes
+- Commits: f311d26 (Task 1 - HTML + CSS, mislabeled as 3.5-01), 1f8a6a4 (Task 2 - mouse tracking)
 
 **For next session:**
 
-1. **Resume point**: Phase 3 Plan 01 (Blog Search) complete
-2. **Context to load**: STATE.md, ROADMAP.md, 03-RESEARCH.md, 03-01-SUMMARY.md
-3. **Next plans**: Continue Phase 3 Plan 02 (Tag filtering and sort controls) or Plan 03 (Enhanced card visuals)
-4. **Command to run**: `/gsd-execute-phase 3` (continue Phase 3 execution)
+1. **Resume point**: Phase 3.5 Plan 02 complete
+2. **Context to load**: STATE.md, ROADMAP.md, 3.5-CONTEXT.md, 3.5-02-SUMMARY.md
+3. **Next plans**: Continue Phase 3.5 Plan 03 (parallax layers - already WIP in working directory)
+4. **Command to run**: `/gsd-execute-phase 3.5` (continue Phase 3.5 execution)
 
-**Stopped at:** Completed 3.5-01-PLAN.md
+**Stopped at:** Completed 3.5-02-PLAN.md
 
 ---
 

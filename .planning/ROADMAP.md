@@ -109,8 +109,8 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 3.5-01-PLAN.md — Particle constellation background with cursor interaction (60 particles, Canvas API, requestAnimationFrame)
-- [ ] 3.5-02-PLAN.md — 3D floating skill cards with mouse-tracking tilt (12 cards, hover-triggered 15-20deg rotation)
+- [x] 3.5-01-PLAN.md — Particle constellation background with cursor interaction (60 particles, Canvas API, requestAnimationFrame)
+- [x] 3.5-02-PLAN.md — 3D floating skill cards with mouse-tracking tilt (12 cards, hover-triggered 15-20deg rotation)
 - [ ] 3.5-03-PLAN.md — Enhanced business card 3D tracking + 3-layer parallax scrolling (card tilt, scroll-based depth)
 - [ ] 3.5-04-PLAN.md — Mobile optimization & performance (reduced particles, disabled tracking, prefers-reduced-motion)
 
