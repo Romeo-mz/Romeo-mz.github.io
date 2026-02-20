@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Cyber Resilience Act, SBOM, and Why DevOps Becomes Mandatory — Romeo M.</title>
   <meta name="description" content="What the EU Cyber Resilience Act changes for product teams, why SBOM matters, and why DevOps becomes mandatory to stay compliant.">
+  <!-- PrismJS for syntax highlighting -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -109,6 +111,17 @@
 
         <p>Tools like Syft make this workflow practical in CI by producing SPDX/CycloneDX formats and enabling machine-readable handoff into security and governance tooling.</p>
 
+        <p>Example pipeline integration:</p>
+        <pre><code class="language-bash"># Generate SBOM during CI build
+syft packages docker:myapp:latest -o spdx-json > sbom.json
+
+# Scan for vulnerabilities
+grype sbom:./sbom.json
+
+# Attach SBOM to artifact in registry
+cosign attach sbom --sbom sbom.json myregistry/myapp:latest
+</code></pre>
+
         <h2>A practical rollout strategy</h2>
         <ul>
           <li>Start with one product line and one pipeline template.</li>
@@ -140,5 +153,13 @@
       </footer>
     </article>
   </main>
+
+  <!-- PrismJS core and languages -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
 </body>
 </html>

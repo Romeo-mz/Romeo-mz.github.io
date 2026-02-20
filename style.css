@@ -205,8 +205,39 @@
 
     a {
       color: var(--color-interactive);
-      font-weight: bold;
-      transition: all 0.3s ease;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--color-interactive-hover);
+      background-color: rgba(0, 163, 108, 0.1);
+      text-decoration-style: solid;
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--color-interactive);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    ul, ol {
+      margin: var(--space-content-sm) 0;
+      padding-left: 1.4rem;  /* Indentation per RESEARCH.md */
+    }
+
+    li {
+      margin-bottom: 0.55rem;  /* Item spacing per RESEARCH.md */
+      line-height: 1.6;
+    }
+
+    /* Nested lists */
+    ul ul, ol ol, ul ol, ol ul {
+      margin-top: 0.3rem;
+      margin-bottom: 0.3rem;
     }
     
     code, pre {
@@ -223,6 +254,82 @@
     pre {
       line-height: 1.5;
       overflow-x: auto;
+    }
+
+    /* ========== CODE SYNTAX HIGHLIGHTING ========== */
+
+    /* Override PrismJS for pink background */
+    pre[class*="language-"],
+    code[class*="language-"] {
+      background: transparent !important;
+      color: var(--color-text);
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      text-align: left;
+      white-space: pre;
+      word-spacing: normal;
+      tab-size: 4;
+    }
+
+    /* Block code: green border, transparent bg */
+    pre[class*="language-"] {
+      background: transparent !important;
+      border: 2px solid var(--color-interactive);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: var(--space-content-sm) 0;
+      overflow: auto;
+    }
+
+    /* Inline code: vibrant color, no bg */
+    :not(pre) > code[class*="language-"] {
+      background: transparent;
+      color: var(--color-interactive);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+    }
+
+    /* Vibrant syntax highlighting for pink background */
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      color: #6b7280;  /* Muted gray - still visible */
+    }
+
+    .token.punctuation {
+      color: #333;
+    }
+
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.constant {
+      color: #d946ef;  /* Vibrant magenta */
+    }
+
+    .token.string,
+    .token.attr-value {
+      color: #0ea5e9;  /* Bright blue */
+    }
+
+    .token.keyword,
+    .token.selector {
+      color: #8b5cf6;  /* Purple */
+    }
+
+    .token.function {
+      color: #f59e0b;  /* Orange */
+    }
+
+    .token.number {
+      color: #10b981;  /* Emerald green */
+    }
+
+    .token.attr-name,
+    .token.class-name {
+      color: #06b6d4;  /* Cyan */
     }
 
     /* ========== CARD 3D FLIP ========== */
@@ -1146,12 +1253,16 @@
 
     .post-content ul,
     .post-content ol {
-      margin: 0 0 1rem 1.4rem;
-      max-width: 70ch;
+      margin: var(--space-content-sm) 0;
+      padding-left: 1.4rem;
+      max-width: 70ch;  /* Align with paragraph width */
     }
 
     .post-content li {
+      font-size: var(--text-body);
+      color: var(--color-text);
       margin-bottom: 0.55rem;
+      line-height: 1.6;
     }
 
     .post-content li p {
@@ -1179,13 +1290,18 @@
       line-height: 1.5;
     }
 
+    .post-content a {
+      color: var(--color-interactive);
+      font-weight: 600;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+      text-underline-offset: 3px;
+    }
+
     .post-content a:hover {
       background: rgba(0, 163, 108, 0.1);
-      color: #00a36c;
-    }
-    .post-content a {
-      text-decoration: underline dotted;
-      text-underline-offset: 2px;
+      color: var(--color-interactive-hover);
+      text-decoration-style: solid;
     }
     .post-content img {
       max-width: 100%;
