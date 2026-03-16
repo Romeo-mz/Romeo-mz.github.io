@@ -4,17 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Roméo Martinez | DevOps Engineer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <!-- PrismJS for syntax highlighting -->
-  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Canvas for particle background -->
-  <canvas id="particles-canvas"></canvas>
-  
   <main class="page-container">
     <header class="page-header">
       <div class="header-content">
@@ -25,14 +18,6 @@
         </nav>
       </div>
     </header>
-
-    <!-- Background parallax layer (slowest) -->
-    <div class="parallax-layer" data-depth="-1">
-      <div class="parallax-bg-decoration"></div>
-    </div>
-
-    <!-- Midground parallax layer (medium speed) -->
-    <div class="parallax-layer" data-depth="0">
   <div class="card noselect" id="businessCard">
     <!-- FRONT SIDE -->
     <div class="card__side card__front">
@@ -126,53 +111,7 @@
       </div>
     </div>
   </div>
-    </div><!-- End midground parallax layer -->
 
-    <!-- Foreground parallax layer (fastest) -->
-    <div class="parallax-layer" data-depth="1">
-  <!-- 3D Floating Skill Cards Section -->
-  <section class="skills-section-3d">
-    <h2>Tech Stack</h2>
-    <div class="skills-container-3d">
-      <div class="skill-card-3d" data-depth="1">
-        <h3>Docker</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="2">
-        <h3>Kubernetes</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="3">
-        <h3>GitLab CI</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="1">
-        <h3>Azure DevOps</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="2">
-        <h3>Ansible</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="3">
-        <h3>AWS & CDK</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="1">
-        <h3>.NET</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="2">
-        <h3>Python</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="3">
-        <h3>Terraform</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="1">
-        <h3>Linux</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="2">
-        <h3>CI/CD</h3>
-      </div>
-      <div class="skill-card-3d" data-depth="3">
-        <h3>Bash</h3>
-      </div>
-    </div>
-  </section>
-    </div><!-- End foreground parallax layer -->
 
   </main>
 
@@ -208,10 +147,6 @@
     front.setAttribute('aria-hidden', 'false');
     back.setAttribute('aria-hidden', 'true');
     setSoftSkillsVisible(false);
-
-    // Card now has STATIC 3D depth (no mouse tracking tilt animation)
-    // The card is positioned in 3D space with translateZ(40px) in CSS
-    // and has a 3D shadow effect via filter: drop-shadow layers
 
     // Click: toggle flip but ignore clicks on links
     card.addEventListener('click', function(e) {
@@ -327,172 +262,6 @@
     // Blog post loading now uses the static `data/posts.json` file only. If you want
     // dynamic updates, add or update `data/posts.json` and static files under `/posts/`.
     // (Context7 integration removed — site is fully static HTML.)
-  </script>
-
-  <!-- PrismJS core and languages -->
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
-
-  <!-- Particle System -->
-  <script>
-    // Canvas setup with device pixel ratio handling
-    const canvas = document.getElementById('particles-canvas');
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-    
-    // Mobile detection and feature reduction
-    const isTouchDevice = window.matchMedia('(hover: none)').matches;
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    const particleCount = isMobile ? 25 : 450; // Reduced from 450 to 25 on mobile
-    
-    // Mouse tracking
-    const mouse = { x: 0, y: 0 };
-    
-    // Resize canvas to full viewport
-    function resizeCanvas() {
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + 'px';
-      canvas.style.height = window.innerHeight + 'px';
-      ctx.scale(dpr, dpr);
-    }
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    
-    // Particle class
-    class Particle {
-      constructor() {
-        this.x = Math.random() * window.innerWidth;
-        this.y = Math.random() * window.innerHeight;
-        this.vx = (Math.random() - 0.5) * 0.5; // Medium energy drift
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 2 + 1; // 1-3px star-like points
-      }
-      
-      update(deltaTime) {
-        // Move particle with frame-rate independent speed
-        this.x += this.vx * deltaTime * 0.06;
-        this.y += this.vy * deltaTime * 0.06;
-        
-        // Wrap around edges for continuous motion
-        if (this.x < 0) this.x = window.innerWidth;
-        if (this.x > window.innerWidth) this.x = 0;
-        if (this.y < 0) this.y = window.innerHeight;
-        if (this.y > window.innerHeight) this.y = 0;
-      }
-      
-      draw() {
-        // Draw star-like constellation point
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.fill();
-      }
-      
-      connectToMouse() {
-        const dist = Math.hypot(this.x - mouse.x, this.y - mouse.y);
-        if (dist < 150) { // Connection threshold
-          ctx.beginPath();
-          ctx.moveTo(this.x, this.y);
-          ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / 150})`; // Fade by distance
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    
-    // Create particles dynamically based on device (25 mobile, 450 desktop)
-    const particles = [];
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
-    }
-    
-    // Mouse tracking on canvas (disabled on touch devices)
-    if (!isTouchDevice) {
-      canvas.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        mouse.x = e.clientX - rect.left;
-        mouse.y = e.clientY - rect.top;
-      });
-    }
-    
-    // Animation loop with delta time
-    let lastTime = 0;
-    function animate(timestamp) {
-      const deltaTime = timestamp - lastTime;
-      lastTime = timestamp;
-      
-      // Clear canvas
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      
-      // Update and draw all particles
-      particles.forEach(particle => {
-        particle.update(deltaTime);
-        particle.draw();
-        // Only connect to mouse on non-touch devices
-        if (!isTouchDevice) {
-          particle.connectToMouse();
-        }
-      });
-      
-      requestAnimationFrame(animate);
-    }
-    
-    // Start animation loop
-    requestAnimationFrame(animate);
-  </script>
-
-  <script>
-    // Mouse tracking for 3D skill card tilt
-    const skillCards = document.querySelectorAll('.skill-card-3d');
-    
-    // Detect touch device and disable mouse tracking per user decision
-    const isTouchDevice = window.matchMedia('(hover: none)').matches;
-    
-    // Only enable mouse tracking on non-touch devices
-    if (!isTouchDevice) {
-      skillCards.forEach(card => {
-        let isHovering = false;
-        
-        card.addEventListener('mouseenter', () => {
-          isHovering = true;
-        });
-        
-        card.addEventListener('mouseleave', () => {
-          isHovering = false;
-          // Reset tilt to flat position
-          card.style.setProperty('--tilt-x', '0deg');
-          card.style.setProperty('--tilt-y', '0deg');
-        });
-        
-        card.addEventListener('mousemove', (e) => {
-          if (!isHovering) return;
-          
-          // Wrap calculation in requestAnimationFrame for performance
-          requestAnimationFrame(() => {
-            const rect = card.getBoundingClientRect();
-            
-            // Calculate relative mouse position (0 to 1)
-            const x = (e.clientX - rect.left) / rect.width;
-            const y = (e.clientY - rect.top) / rect.height;
-            
-            // Convert to rotation angles (-20 to +20 degrees)
-            const rotateY = (x - 0.5) * 40;
-            const rotateX = (0.5 - y) * 40; // Inverted for natural tilt
-            
-            // Set CSS custom properties
-            card.style.setProperty('--tilt-x', `${rotateX}deg`);
-            card.style.setProperty('--tilt-y', `${rotateY}deg`);
-          });
-        });
-      });
-    }
   </script>
 </body>
 </html>
