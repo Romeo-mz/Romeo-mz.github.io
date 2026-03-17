@@ -3,264 +3,170 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Roméo Martinez | DevOps Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+  <title>Romeo Martinez | DevOps Engineer</title>
+  <meta name="description" content="Romeo Martinez -- DevOps Engineer at Viseo, founder of Devminds. Cloud infrastructure, CI/CD, and container orchestration.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="page-container">
-    <header class="page-header">
-      <div class="header-content">
-        <div class="logo">RM</div>
-        <nav class="nav-links">
-          <a href="/" class="active">Portfolio</a>
-          <a href="/blog/">Blog</a>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="page-header" id="siteNav">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/" class="active">Portfolio</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" aria-label="Introduction">
+      <div class="hero-content">
+        <h1 class="hero-name" data-reveal>Romeo Martinez</h1>
+        <p class="hero-role" data-reveal>DevOps Engineer <span class="hero-at">@ Viseo</span></p>
+        <p class="hero-tagline" data-reveal>Founder of <a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a></p>
+        <div class="hero-actions" data-reveal>
+          <a href="mailto:romeo.martinez@orange.fr" class="btn-primary">Email me</a>
+        </div>
+      </div>
+      <div class="scroll-indicator" aria-hidden="true">
+        <span class="scroll-line"></span>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-label="About me">
+      <div class="section-inner">
+        <div class="about-block" data-reveal>
+          <h2 class="section-heading">What I Do</h2>
+          <p class="about-text">I build cloud infrastructure and automate deployment pipelines so teams ship faster with reliable, repeatable releases.</p>
+        </div>
+        <div class="about-block" data-reveal>
+          <h2 class="section-heading">My Focus</h2>
+          <p class="about-text">Infrastructure as code, container orchestration, and scalable cloud-native systems.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="skills" id="skills" aria-label="Skills">
+      <div class="section-inner">
+        <div class="skills-column" data-reveal>
+          <h2 class="section-heading">Tech Stack</h2>
+          <ul class="skills-list" role="list">
+            <li>Docker</li>
+            <li>Kubernetes</li>
+            <li>GitLab CI</li>
+            <li>Azure DevOps</li>
+            <li>Ansible</li>
+            <li>AWS &amp; CDK</li>
+            <li>.NET</li>
+            <li>Python</li>
+            <li>Terraform</li>
+            <li>Linux</li>
+            <li>CI/CD</li>
+            <li>Bash</li>
+          </ul>
+        </div>
+        <div class="skills-column" data-reveal>
+          <h2 class="section-heading">Soft Skills</h2>
+          <ul class="skills-list" role="list">
+            <li>Adaptability</li>
+            <li>Communication</li>
+            <li>Emotional Intelligence</li>
+            <li>Curiosity</li>
+            <li>Problem-Solving</li>
+            <li>Collaboration</li>
+            <li>Time Management</li>
+            <li>Resilience</li>
+            <li>Creativity</li>
+            <li>Growth Mindset</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-label="Contact">
+      <div class="contact-inner" data-reveal>
+        <h2 class="contact-heading">Let's connect</h2>
+        <a href="mailto:romeo.martinez@orange.fr" class="btn-primary btn-lg">Email me</a>
+        <nav class="contact-links" aria-label="Social links">
+          <a href="https://github.com/Romeo-mz" target="_blank" rel="noopener" title="Open GitHub profile">GitHub</a>
+          <a href="https://www.linkedin.com/in/rom%C3%A9o-m-656686210/" target="_blank" rel="noopener" title="Open LinkedIn profile">LinkedIn</a>
+          <a href="https://devminds.fr" target="_blank" rel="noopener" title="Open Devminds website">Devminds</a>
         </nav>
       </div>
-    </header>
-  <div class="card noselect" id="businessCard">
-    <!-- FRONT SIDE -->
-    <div class="card__side card__front">
-      <div class="card-content">
-        <div class="header">
-          <div class="logo">RM</div>
-          <a href="mailto:romeo.martinez@orange.fr" class="contact-btn">Contact Me</a>
-        </div>
-
-        <div class="content">
-          <div class="intro">
-            <h1>Roméo Martinez</h1>
-            <h2>DevOps Engineer @ Viseo</h2>
-            <p>Founder of <span class="highlight"><a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a></span></p>
-          </div>
-
-          <div class="info-grid">
-            <div class="info-box">
-              <h3>What I Do</h3>
-              <p>Building cloud infrastructure and automating deployment pipelines for faster, reliable software delivery.</p>
-            </div>
-
-            <div class="info-box">
-              <h3>My Focus</h3>
-              <p>Infrastructure as code, container orchestration, and creating scalable cloud-native solutions.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer">
-          <div class="social-links">
-            <a href="https://github.com/Romeo-mz" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a>
-          </div>
-          <div class="flip-hint">Click to see tech stack →</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BACK SIDE -->
-    <div class="card__side card__back">
-      <div class="card-content">
-        <div class="back-slider-viewport" id="skillsSlider">
-          <div class="back-slider-track">
-            <section class="skills-wrapper skills-panel" aria-label="Tech stack">
-              <h3 class="skills-title">Tech Stack</h3>
-
-              <div class="skills-grid">
-                <div class="skill-item">Docker</div>
-                <div class="skill-item">Kubernetes</div>
-                <div class="skill-item">GitLab CI</div>
-                <div class="skill-item">Azure DevOps</div>
-                <div class="skill-item">Ansible</div>
-                <div class="skill-item">AWS & CDK</div>
-                <div class="skill-item">.NET</div>
-                <div class="skill-item">Python</div>
-                <div class="skill-item">Terraform</div>
-                <div class="skill-item">Linux</div>
-                <div class="skill-item">CI/CD</div>
-                <div class="skill-item">Bash</div>
-              </div>
-            </section>
-
-            <section class="skills-wrapper skills-panel" aria-label="Soft skills">
-              <h3 class="skills-title">Soft Skills</h3>
-
-              <div class="skills-grid">
-                <div class="skill-item">Adaptability</div>
-                <div class="skill-item">Communication</div>
-                <div class="skill-item">Emotional Intelligence</div>
-                <div class="skill-item">Curiosity</div>
-                <div class="skill-item">Problem-Solving</div>
-                <div class="skill-item">Collaboration</div>
-                <div class="skill-item">Time Management</div>
-                <div class="skill-item">Resilience</div>
-                <div class="skill-item">Creativity</div>
-                <div class="skill-item">Growth Mindset</div>
-              </div>
-            </section>
-          </div>
-        </div>
-        <div class="footer">
-          <div class="social-links">
-            <a href="https://github.com/Romeo-mz" target="_blank" rel="noopener">GitHub</a>
-            <a href="https://www.linkedin.com/in/roméo-m-656686210/" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://devminds.fr" target="_blank" rel="noopener">Devminds</a>
-          </div>
-          <div class="flip-hint back-hint slide-toggle" role="button" tabindex="0" aria-label="Show soft skills">Swipe left to see soft skills ←</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
+    </section>
   </main>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
-    const card = document.getElementById('businessCard');
-    const front = card.querySelector('.card__front');
-    const back = card.querySelector('.card__back');
-    const skillsSlider = document.getElementById('skillsSlider');
-    const backHint = card.querySelector('.back-hint');
-    const slideToggle = card.querySelector('.slide-toggle');
-
-    function setSoftSkillsVisible(visible) {
-      card.classList.toggle('show-soft-skills', visible);
-      if (!backHint) return;
-      if (visible) {
-        backHint.textContent = 'Swipe right to see tech stack →';
-        backHint.setAttribute('aria-label', 'Show tech stack');
-      } else {
-        backHint.textContent = 'Swipe left to see soft skills ←';
-        backHint.setAttribute('aria-label', 'Show soft skills');
-      }
-    }
-
-    function toggleFlip() {
-      card.classList.toggle('is-flipped');
-      const flipped = card.classList.contains('is-flipped');
-      front.setAttribute('aria-hidden', flipped);
-      back.setAttribute('aria-hidden', !flipped);
-      if (flipped) setSoftSkillsVisible(false);
-    }
-
-    // Initialize accessibility attrs
-    front.setAttribute('aria-hidden', 'false');
-    back.setAttribute('aria-hidden', 'true');
-    setSoftSkillsVisible(false);
-
-    // Click: toggle flip but ignore clicks on links
-    card.addEventListener('click', function(e) {
-      if (e.target.closest('a')) return; // don't flip when clicking links
-
-      if (e.target.closest('.slide-toggle')) {
-        const isSoftVisible = this.classList.contains('show-soft-skills');
-        setSoftSkillsVisible(!isSoftVisible);
+    (function () {
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || prefersReduced) {
         return;
       }
 
-      if (this.classList.contains('is-flipped') && e.target.closest('.back-slider-viewport')) {
-        return;
-      }
+      gsap.registerPlugin(ScrollTrigger);
 
-      toggleFlip();
-    });
-
-    // Keyboard accessibility
-    card.setAttribute('tabindex', '0');
-    card.addEventListener('keydown', function(e) {
-      if (e.target.closest('a')) return;
-
-      if (this.classList.contains('is-flipped') && e.key === 'ArrowLeft') {
-        e.preventDefault();
-        setSoftSkillsVisible(false);
-        return;
-      }
-
-      if (this.classList.contains('is-flipped') && e.key === 'ArrowRight') {
-        e.preventDefault();
-        setSoftSkillsVisible(true);
-        return;
-      }
-
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (e.target.closest('.slide-toggle') && this.classList.contains('is-flipped')) {
-          const isSoftVisible = this.classList.contains('show-soft-skills');
-          setSoftSkillsVisible(!isSoftVisible);
-          return;
-        }
-        toggleFlip();
-      }
-    });
-
-    if (skillsSlider) {
-      let pointerStartX = null;
-
-      skillsSlider.addEventListener('pointerdown', (e) => {
-        if (!card.classList.contains('is-flipped')) return;
-        pointerStartX = e.clientX;
+      var heroEls = document.querySelectorAll('.hero [data-reveal]');
+      gsap.set(heroEls, { opacity: 0, y: 32 });
+      gsap.to(heroEls, {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.14,
+        ease: 'power3.out',
+        delay: 0.2
       });
 
-      skillsSlider.addEventListener('pointerup', (e) => {
-        if (pointerStartX === null || !card.classList.contains('is-flipped')) return;
-        const deltaX = e.clientX - pointerStartX;
-        pointerStartX = null;
-
-        if (deltaX < -40) setSoftSkillsVisible(true);
-        if (deltaX > 40) setSoftSkillsVisible(false);
-      });
-
-      skillsSlider.addEventListener('pointercancel', () => {
-        pointerStartX = null;
-      });
-    }
-
-    if (slideToggle) {
-      slideToggle.addEventListener('keydown', (e) => {
-        if ((e.key === 'Enter' || e.key === ' ') && card.classList.contains('is-flipped')) {
-          e.preventDefault();
-          const isSoftVisible = card.classList.contains('show-soft-skills');
-          setSoftSkillsVisible(!isSoftVisible);
-        }
-      });
-    }
-
-    // Initialize blog-card interactions (call after new cards are added too)
-    function initBlogCards() {
-      document.querySelectorAll('.blog-card').forEach(card => {
-        const readLink = card.querySelector('.read-link');
-        const isDraft = card.classList.contains('blog-card-draft');
-
-        // make focusable
-        if (!card.hasAttribute('tabindex')) card.setAttribute('tabindex', '0');
-
-        // click -> go to the read link (unless draft or href is '#')
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('a')) return; // let links handle themselves
-          if (isDraft) return; // drafts not navigable
-          if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
-            window.location = readLink.href;
-          }
-        });
-
-        // keyboard: Enter or Space opens the post
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            if (isDraft) return;
-            if (readLink && readLink.getAttribute('href') && readLink.getAttribute('href') !== '#') {
-              window.location = readLink.href;
-            }
+      document.querySelectorAll('.about [data-reveal], .skills [data-reveal], .contact [data-reveal]').forEach(function (el) {
+        gsap.set(el, { opacity: 0, y: 40 });
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true
           }
         });
       });
-    }
 
-    // Call once for existing static/cards
-    initBlogCards();
+      document.querySelectorAll('.skills-list').forEach(function (list) {
+        var items = list.querySelectorAll('li');
+        gsap.set(items, { opacity: 0, y: 12 });
+        ScrollTrigger.create({
+          trigger: list,
+          start: 'top 82%',
+          once: true,
+          onEnter: function () {
+            gsap.to(items, {
+              opacity: 1,
+              y: 0,
+              duration: 0.45,
+              stagger: 0.04,
+              ease: 'power2.out'
+            });
+          }
+        });
+      });
 
-    // Blog post loading now uses the static `data/posts.json` file only. If you want
-    // dynamic updates, add or update `data/posts.json` and static files under `/posts/`.
+      var nav = document.getElementById('siteNav');
+      if (nav) {
+        ScrollTrigger.create({
+          start: 'top -60',
+          onUpdate: function (self) {
+            nav.classList.toggle('scrolled', self.progress > 0);
+          }
+        });
+      }
+    })();
   </script>
 </body>
 </html>
