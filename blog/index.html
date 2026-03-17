@@ -7,38 +7,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <!-- PrismJS for syntax highlighting -->
-  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <style>
-    /* Blog search input - scoped to blog page */
-    .blog-search {
-      margin-bottom: 2.5em;
-    }
-    
+    .blog-search { margin-bottom: 2.5em; }
     .blog-search input {
       width: 100%;
       padding: 1em 1.5em;
       border-radius: 2em;
       border: 2px solid var(--color-interactive);
-      background: white;
+      background: var(--color-bg-input);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       font-family: var(--text-body);
       font-size: 1rem;
-      transition: all 0.2s ease;
+      transition: border-color 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out);
     }
-    
     .blog-search input:focus {
-      outline: 3px solid rgba(0, 163, 108, 0.3);
+      outline: 3px solid var(--color-interactive-focus);
       border-color: var(--color-interactive);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     }
-    
-    .blog-search input::placeholder {
-      color: rgba(0, 0, 0, 0.4);
-    }
-    
-    /* Filter controls - scoped to blog page */
     .blog-filters {
       display: flex;
       gap: 2em;
@@ -46,70 +33,43 @@
       flex-wrap: wrap;
       align-items: center;
     }
-    
-    .filter-section {
-      display: flex;
-      align-items: center;
-      gap: 1em;
-    }
-    
+    .filter-section { display: flex; align-items: center; gap: 1em; }
     .filter-label {
       font-family: var(--text-ui);
       font-weight: 600;
       color: var(--color-text-muted);
     }
-    
-    .tag-filters {
-      display: flex;
-      gap: 0.8em;
-      flex-wrap: wrap;
-    }
-    
+    .tag-filters { display: flex; gap: 0.8em; flex-wrap: wrap; }
     .tag-filter-btn {
       padding: 0.5em 1.2em;
       border-radius: 1.5em;
       border: 2px solid var(--color-interactive);
-      background: white;
+      background: var(--color-bg-input);
       font-family: var(--text-ui);
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: background-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
     }
-    
     .tag-filter-btn:hover {
       background: rgba(0, 163, 108, 0.1);
       transform: translateY(-2px);
     }
-    
     .tag-filter-btn.active {
       background: var(--color-interactive);
       color: white;
       font-weight: 600;
     }
-    
     .sort-select {
       padding: 0.6em 1em;
       border-radius: 0.5em;
       border: 2px solid var(--color-interactive);
       font-family: var(--text-ui);
       cursor: pointer;
-      background: white;
+      background: var(--color-bg-input);
     }
-    
-    /* Responsive: stack filters vertically on mobile */
     @media (max-width: 768px) {
-      .blog-filters {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+      .blog-filters { flex-direction: column; align-items: flex-start; }
     }
-    
-    /* Tag pills styling for blog cards */
-    .blog-tags {
-      display: flex;
-      gap: 0.6em;
-      flex-wrap: wrap;
-    }
-    
+    .blog-tags { display: flex; gap: 0.6em; flex-wrap: wrap; }
     .blog-tag {
       display: inline-block;
       padding: 0.3em 0.8em;
@@ -120,7 +80,6 @@
       font-size: 0.85em;
       font-weight: 600;
     }
-    
     .blog-article-meta {
       display: flex;
       justify-content: space-between;
@@ -129,10 +88,32 @@
       gap: 0.8em;
       margin-bottom: 1em;
     }
+    .blog-error {
+      text-align: center;
+      padding: 2em 1em;
+      color: var(--color-text-muted);
+      background: rgba(0,0,0,0.03);
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .blog-error button {
+      margin-top: 1rem;
+      padding: 0.5em 1.2em;
+      min-height: 44px;
+      border: 2px solid var(--color-interactive);
+      background: var(--color-bg-input);
+      color: var(--color-interactive);
+      font-family: var(--text-ui);
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .blog-error button:hover { background: rgba(0, 163, 108, 0.1); }
   </style>
 </head>
 <body class="blog-page">
-  <main class="page-container">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <main id="main-content" class="page-container">
     <header class="page-header">
       <div class="header-content">
         <div class="logo">RM</div>
@@ -176,9 +157,11 @@
         </div>
       </div>
 
+      <div id="blogError" class="blog-error" role="alert" aria-live="assertive" hidden></div>
       <div class="blog-articles" id="blogArticles">
         <!-- Blog cards will be injected here by JavaScript -->
       </div>
+      <p id="blogResultsStatus" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
     </section>
   </main>
 
@@ -306,66 +289,95 @@
       renderPosts(filtered);
     }
 
-    // Render posts to DOM
+    function showBlogError(message) {
+      const el = document.getElementById('blogError');
+      if (!el) return;
+      el.hidden = false;
+      el.innerHTML = '<p>' + escapeHtml(message) + '</p><button type="button" id="blogRetryBtn">Try again</button>';
+      document.getElementById('blogRetryBtn').addEventListener('click', function() {
+        clearBlogError();
+        loadBlogArticles();
+      });
+    }
+
+    function clearBlogError() {
+      const el = document.getElementById('blogError');
+      if (el) { el.hidden = true; el.innerHTML = ''; }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function announceResults(count) {
+      const status = document.getElementById('blogResultsStatus');
+      if (!status) return;
+      status.textContent = count === 0 ? 'No posts found.' : count + ' post' + (count === 1 ? '' : 's') + ' shown.';
+    }
+
+    // Render posts to DOM (single focus per card: whole card is one link)
     function renderPosts(posts) {
       const container = document.getElementById('blogArticles');
-      
-      // Handle empty state
+      clearBlogError();
+
       if (!posts || posts.length === 0) {
-        container.innerHTML = '<p class="no-results" style="text-align: center; color: rgba(0, 0, 0, 0.5); padding: 2em;">No posts found. Try adjusting your search.</p>';
+        container.innerHTML = '<p class="no-results">No posts found. Try adjusting your search.</p>';
+        announceResults(0);
         return;
       }
 
-      // Build HTML string for all posts
-      const htmlParts = posts.map(p => `
-        <article class="blog-article-card" tabindex="0" data-href="${p.href || '#'}">
-          <div class="blog-article-header">
-            <div class="blog-article-meta">
-              <div class="blog-tags">
-                ${(p.tags && Array.isArray(p.tags)) ? p.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('') : ''}
-              </div>
-              <time class="blog-date" datetime="${p.date || ''}">${p.date ? formatDate(p.date) : ''}</time>
-            </div>
-            <h2 class="blog-article-title">${p.title || ''}</h2>
-            <p class="blog-article-excerpt">${p.excerpt || ''}</p>
-          </div>
-          <footer class="blog-article-footer">
-            <span class="read-time">${p.readTime || ''}</span>
-            <a href="${p.href || '#'}" class="read-more">Read full article →</a>
-          </footer>
-        </article>
-      `);
-
-      // Set innerHTML once for performance
-      container.innerHTML = htmlParts.join('');
-
-      // Re-attach event handlers after innerHTML update
-      container.querySelectorAll('.blog-article-card').forEach(card => {
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('a')) return;
-          window.location = card.dataset.href;
-        });
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') window.location = card.dataset.href;
-        });
+      const href = (p) => (p.href && p.href !== '#') ? p.href : '#';
+      const htmlParts = posts.map(p => {
+        const url = href(p);
+        const title = escapeHtml(p.title || '');
+        const excerpt = escapeHtml(p.excerpt || '');
+        const tagsHtml = (p.tags && Array.isArray(p.tags)) ? p.tags.map(tag => '<span class="blog-tag">' + escapeHtml(tag) + '</span>').join('') : '';
+        const dateStr = p.date ? formatDate(p.date) : '';
+        const readTime = escapeHtml(p.readTime || '');
+        return '<a class="blog-article-card" href="' + url + '">' +
+          '<div class="blog-article-header">' +
+            '<div class="blog-article-meta">' +
+              '<div class="blog-tags">' + tagsHtml + '</div>' +
+              '<time class="blog-date" datetime="' + escapeHtml(p.date || '') + '">' + dateStr + '</time>' +
+            '</div>' +
+            '<h2 class="blog-article-title">' + title + '</h2>' +
+            '<p class="blog-article-excerpt">' + excerpt + '</p>' +
+          '</div>' +
+          '<footer class="blog-article-footer">' +
+            '<span class="read-time">' + readTime + '</span>' +
+            '<span class="read-more">Read full article →</span>' +
+          '</footer>' +
+        '</a>';
       });
+
+      container.innerHTML = htmlParts.join('');
+      announceResults(posts.length);
     }
 
     // Load posts from data/posts.json and initialize search
     async function loadBlogArticles() {
+      clearBlogError();
+      if (typeof Fuse === 'undefined') {
+        showBlogError('Search is unavailable. Please refresh the page or try again later.');
+        return;
+      }
       try {
         const resp = await fetch('/data/posts.json');
-        if (!resp.ok) return;
+        if (!resp.ok) {
+          showBlogError('Unable to load posts. Please check your connection and try again.');
+          return;
+        }
         const posts = await resp.json();
-        if (!Array.isArray(posts)) return;
+        if (!Array.isArray(posts)) {
+          showBlogError('Unable to load posts. Please try again later.');
+          return;
+        }
 
-        // Sort posts in reverse chronological order (newest first)
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-        // Store posts for search
         allPosts = posts;
 
-        // Initialize Fuse.js for fuzzy search
         fuse = new Fuse(posts, {
           keys: [
             { name: 'title', weight: 2 },
@@ -377,45 +389,29 @@
           minMatchCharLength: 2
         });
 
-        // Setup tag filters and sort controls
         setupTagFilters(allPosts);
         setupSortControl();
-        
-        // Initial render with all posts
         applyFiltersAndSort();
 
-        // Setup search input listener
         const searchInput = document.getElementById('blogSearch');
-        const debouncedSearch = debounce(() => {
-          applyFiltersAndSort();
-        }, 300);
-        
-        searchInput.addEventListener('input', (e) => debouncedSearch());
+        if (searchInput) {
+          const debouncedSearch = debounce(applyFiltersAndSort, 300);
+          searchInput.addEventListener('input', debouncedSearch);
+        }
       } catch (err) {
         console.error('Failed to load blog articles:', err);
+        showBlogError('Unable to load posts. Please check your connection and try again.');
       }
     }
 
   </script>
 
-  <!-- PrismJS core and languages -->
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
-  
-  <!-- Fuse.js for fuzzy search - load before using it -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.1.0/dist/fuse.min.js"></script>
-  
-  <!-- Initialize blog after all dependencies loaded -->
   <script>
-    // Load blog articles after Fuse.js is available
     if (typeof Fuse !== 'undefined') {
       loadBlogArticles();
     } else {
-      console.error('Fuse.js failed to load');
+      showBlogError('Search is unavailable. Please refresh the page or try again later.');
     }
   </script>
 </body>
