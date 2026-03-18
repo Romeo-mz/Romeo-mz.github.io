@@ -5,22 +5,26 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Cyber Resilience Act, SBOM, and Why DevOps Becomes Mandatory — Romeo M.</title>
   <meta name="description" content="What the EU Cyber Resilience Act changes for product teams, why SBOM matters, and why DevOps becomes mandatory to stay compliant.">
-  <!-- PrismJS for syntax highlighting -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body class="blog-page">
-  <main id="main-content" class="page-container">
-    <header class="page-header">
-      <div class="header-content">
-        <div class="logo">RM</div>
-        <nav class="nav-links">
-          <a href="/">Portfolio</a>
-          <a href="/blog/" class="active">Blog</a>
-        </nav>
-      </div>
-    </header>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <header class="page-header">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Portfolio</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-container">
     <article class="post">
       <header>
         <h1>Cyber Resilience Act, SBOM, and Why DevOps Becomes Mandatory</h1>
@@ -28,7 +32,7 @@
       </header>
 
       <section class="post-content">
-        <p>The Cyber Resilience Act (CRA) is a turning point for software and connected products in Europe. For years, teams could treat cybersecurity as “important but negotiable.” With CRA, that changes: cybersecurity becomes a baseline legal requirement for products with digital elements sold on the EU market.</p>
+        <p>The Cyber Resilience Act (CRA) is a turning point for software and connected products in Europe. For years, teams could treat cybersecurity as "important but negotiable." With CRA, that changes: cybersecurity becomes a baseline legal requirement for products with digital elements sold on the EU market.</p>
 
         <p>This article explains what the CRA changes, where SBOM fits in, and why this is not only a security topic anymore. It is now a delivery topic, a lifecycle topic, and a DevOps topic.</p>
 
@@ -39,7 +43,7 @@
           src="https://excalidraw.com/#json=IngAALGvzt8MGFzyJYuL1,6j_XBE2krx-d_JRzZtQOYw"
           title="Cyber Resilience Act infographic"
           loading="lazy"
-          style="width:100%; height:520px; border:1px solid rgba(0,163,108,0.2); border-radius:8px; background:#fff;">
+          style="width:100%; height:520px; border:1px solid var(--color-border-light); background:#fff;">
         </iframe>
         <p><a href="../images/infographie.png" target="_blank" rel="noopener noreferrer">Open the infographic in full resolution ↗</a></p>
 
@@ -58,7 +62,7 @@
         <h2>Timeline: why teams must start now</h2>
         <p>The CRA enters into force shortly after publication in the Official Journal, with staged implementation. A practical planning assumption for engineering organizations is that products newly placed on the market must comply by the end of 2027.</p>
 
-        <p>If your roadmap still treats compliance work as “later,” that is risky. Security lifecycle work (architecture, SBOM quality, vulnerability handling, release governance) cannot be done in one quarter at the end.</p>
+        <p>If your roadmap still treats compliance work as "later," that is risky. Security lifecycle work (architecture, SBOM quality, vulnerability handling, release governance) cannot be done in one quarter at the end.</p>
 
         <h2>What manufacturers must do</h2>
 
@@ -128,7 +132,7 @@ cosign attach sbom --sbom sbom.json myregistry/myapp:latest
           <li>Standardize SBOM format and naming conventions early.</li>
           <li>Attach SBOM metadata to release artifacts in your registry.</li>
           <li>Define owners for vulnerability triage and remediation SLAs.</li>
-          <li>Track “time to identify impacted artifacts” as a KPI.</li>
+          <li>Track "time to identify impacted artifacts" as a KPI.</li>
         </ul>
 
         <p>The target state is simple to describe: any time a vulnerability is published, you can identify impact, decide action, and ship remediation quickly with proof.</p>
@@ -149,17 +153,17 @@ cosign attach sbom --sbom sbom.json myregistry/myapp:latest
       </section>
 
       <footer class="post-footer">
-        <a href="/blog/" class="read-link">Back to blog</a>
+        <a href="/blog/" class="read-link">← Back to blog</a>
       </footer>
     </article>
   </main>
 
-  <!-- PrismJS core and languages -->
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-bash.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-yaml.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
+  <script src="/main.js"></script>
 </body>
 </html>

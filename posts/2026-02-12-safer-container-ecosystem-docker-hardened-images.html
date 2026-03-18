@@ -5,21 +5,25 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>A Safer Container Ecosystem with Docker: Free Docker Hardened Images — Romeo M.</title>
   <meta name="description" content="A practical take on Docker Hardened Images: what is great, what is not plug-and-play yet, and how to adopt DHI in custom Dockerfiles.">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body class="blog-page">
-  <main id="main-content" class="page-container">
-    <header class="page-header">
-      <div class="header-content">
-        <div class="logo">RM</div>
-        <nav class="nav-links">
-          <a href="/">Portfolio</a>
-          <a href="/blog/" class="active">Blog</a>
-        </nav>
-      </div>
-    </header>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <header class="page-header">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Portfolio</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-container">
     <article class="post">
       <header>
         <h1>A Safer Container Ecosystem with Docker: Free Docker Hardened Images</h1>
@@ -29,7 +33,7 @@
       <section class="post-content">
         <p>Docker Hardened Images (DHI) are one of the most interesting moves I have seen lately for safer-by-default container bases. Cleaner attack surface, tighter posture, and a stronger answer to what teams are looking for in modern supply chain security.</p>
 
-        <p>My first reaction was simple: I can’t wait to open a <code>feat: getting hard</code> PR.</p>
+        <p>My first reaction was simple: I can't wait to open a <code>feat: getting hard</code> PR.</p>
 
         <h2>Why this is an excellent initiative</h2>
         <p>I genuinely see this as a strong response to both community pressure and the momentum of security-first image providers like Chainguard. The best part is that DHI is practical for day-to-day engineering teams, not only for enterprise audit checklists.</p>
@@ -38,13 +42,13 @@
 
         <h2>Real-world caveats I hit quickly</h2>
 
-        <h3>1) Version availability can feel “latest-first”</h3>
+        <h3>1) Version availability can feel "latest-first"</h3>
         <p>In practice, catalog availability can bias toward newer majors. For example, if your stack is still tied to older major versions, migration may not be straightforward:</p>
         <ul>
           <li>.NET: you may find current major tracks first (for example .NET 8), while older expectations can be missing.</li>
           <li>Node.js: same story when teams are pinned below newer majors (for example below Node 20).</li>
         </ul>
-        <p>So the migration path is not always “switch image tag and done.”</p>
+        <p>So the migration path is not always "switch image tag and done."</p>
 
         <h3>2) Pull behavior and limits depend on where you pull from</h3>
         <p>Docker docs state DHI on <code>dhi.io</code> is free to use. But if your workflow mirrors or pulls heavily through Docker Hub, Hub pull limits and subscription tiers can still become relevant for high-volume CI usage.</p>
@@ -77,9 +81,11 @@
       </section>
 
       <footer class="post-footer">
-        <a href="/blog/" class="read-link">Back to blog</a>
+        <a href="/blog/" class="read-link">← Back to blog</a>
       </footer>
     </article>
   </main>
+
+  <script src="/main.js"></script>
 </body>
 </html>
