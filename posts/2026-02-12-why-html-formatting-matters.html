@@ -5,21 +5,25 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Why HTML Formatting Matters for Blog Posts — Romeo M.</title>
   <meta name="description" content="A practical, human guide to HTML formatting for blog posts, with clean humor and examples of hyperbole, incongruity, and irony.">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body class="blog-page">
-  <main class="page-container">
-    <header class="page-header">
-      <div class="header-content">
-        <div class="logo">RM</div>
-        <nav class="nav-links">
-          <a href="/">Portfolio</a>
-          <a href="/blog/" class="active">Blog</a>
-        </nav>
-      </div>
-    </header>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <header class="page-header">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Portfolio</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-container">
     <article class="post">
       <header>
         <h1>Why HTML Formatting Matters for Blog Posts</h1>
@@ -65,17 +69,17 @@
 
           <h3>Exaggeration (Hyperbole)</h3>
           <p>Make the point bigger than life for a quick laugh.</p>
-          <p><em>Example:</em> “I skipped headings once, and readers needed GPS, trail mix, and emergency flares to find the conclusion.”</p>
+          <p><em>Example:</em> "I skipped headings once, and readers needed GPS, trail mix, and emergency flares to find the conclusion."</p>
 
           <h3>Incongruity</h3>
           <p>Put two things together that do not normally fit.</p>
-          <p><em>Example:</em> “A blog post with no structure is like a cat wearing sunglasses and driving a car: confident, memorable, and not ideal for navigation.”</p>
+          <p><em>Example:</em> "A blog post with no structure is like a cat wearing sunglasses and driving a car: confident, memorable, and not ideal for navigation."</p>
 
           <h3>Irony</h3>
           <p>Show the opposite of what people expect.</p>
-          <p><em>Example:</em> “A post about clarity written as one endless paragraph is the writing equivalent of a fire station burning down.”</p>
+          <p><em>Example:</em> "A post about clarity written as one endless paragraph is the writing equivalent of a fire station burning down."</p>
 
-          <p>Many New Yorker cartoons do this beautifully: one odd detail reveals a familiar truth. I also grew up around Stephen Leacock’s legacy, and his museum was a reminder that wit works best when it sharpens meaning.</p>
+          <p>Many New Yorker cartoons do this beautifully: one odd detail reveals a familiar truth. I also grew up around Stephen Leacock's legacy, and his museum was a reminder that wit works best when it sharpens meaning.</p>
         </section>
 
         <section aria-labelledby="conclusion-title">
@@ -85,9 +89,11 @@
       </section>
 
       <footer class="post-footer">
-        <a href="/blog/" class="read-link">← Back to home</a>
+        <a href="/blog/" class="read-link">← Back to blog</a>
       </footer>
     </article>
   </main>
+
+  <script src="/main.js"></script>
 </body>
 </html>

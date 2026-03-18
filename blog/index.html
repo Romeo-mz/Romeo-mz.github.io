@@ -3,85 +3,264 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — Roméo Martinez | DevOps Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Blog — Romeo Martinez | DevOps Engineer</title>
+  <meta name="description" content="DevOps notes — sharing insights on cloud infrastructure, CI/CD, containers, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body class="blog-page">
-  <main class="page-container">
-    <header class="page-header">
-      <div class="header-content">
-        <div class="logo">RM</div>
-        <nav class="nav-links">
-          <a href="/">Portfolio</a>
-          <a href="/blog/" class="active">Blog</a>
-        </nav>
-      </div>
-    </header>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
 
+  <header class="page-header">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Portfolio</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-container">
     <section class="blog-hub">
       <div class="blog-hub-header">
         <h1>DevOps Notes</h1>
         <p class="subtitle">Sharing insights from the trenches</p>
+        <div class="blog-search">
+          <input
+            type="text"
+            id="blogSearch"
+            placeholder="Search posts..."
+            aria-label="Search blog posts"
+          >
+        </div>
       </div>
 
-      <div class="blog-articles" id="blogArticles">
-        <!-- Blog cards will be injected here by JavaScript -->
+      <div class="blog-filters">
+        <div class="filter-section">
+          <label class="filter-label">Filter</label>
+          <div id="tagFilters" class="tag-filters" role="group" aria-label="Filter posts by tag"></div>
+        </div>
+        <div class="filter-section">
+          <label for="sortBy" class="filter-label">Sort</label>
+          <select id="sortBy" class="sort-select">
+            <option value="date-desc">Newest First</option>
+            <option value="date-asc">Oldest First</option>
+            <option value="readTime-asc">Quick Reads First</option>
+            <option value="readTime-desc">Long Reads First</option>
+          </select>
+        </div>
       </div>
+
+      <div id="blogError" class="blog-error" role="alert" aria-live="assertive" hidden></div>
+      <div class="blog-articles" id="blogArticles"></div>
+      <p id="blogResultsStatus" class="visually-hidden" aria-live="polite" aria-atomic="true"></p>
     </section>
   </main>
 
+  <footer class="portfolio-footer" aria-label="Footer">
+    <p>Designed &amp; built by Romeo Martinez</p>
+  </footer>
+
   <script>
-    // Load posts from data/posts.json and render as full-width cards
-    async function loadBlogArticles() {
-      try {
-        const resp = await fetch('/data/posts.json');
-        if (!resp.ok) return;
-        const posts = await resp.json();
-        if (!Array.isArray(posts)) return;
+    let allPosts = [];
+    let fuse = null;
 
-        // Sort posts in reverse chronological order (newest first)
-        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const state = {
+      activeTags: [],
+      sortBy: 'date-desc'
+    };
 
-        const container = document.getElementById('blogArticles');
-        container.innerHTML = '';
+    function formatDate(dateString) {
+      return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric', month: 'short', day: 'numeric'
+      });
+    }
 
-        posts.forEach(p => {
-          const article = document.createElement('article');
-          article.className = 'blog-article-card';
-          article.innerHTML = `
-            <div class="blog-article-header">
-              <div class="blog-article-meta">
-                <span class="blog-tag">${(p.tags && p.tags[0]) || ''}</span>
-                <time class="blog-date" datetime="${p.date || ''}">${p.date || ''}</time>
-              </div>
-              <h2 class="blog-article-title">${p.title || ''}</h2>
-              <p class="blog-article-excerpt">${p.excerpt || ''}</p>
-            </div>
-            <footer class="blog-article-footer">
-              <span class="read-time">${p.readTime || ''}</span>
-              <a href="${p.href || '#'}" class="read-more">Read full article →</a>
-            </footer>
-          `;
-          container.appendChild(article);
+    function debounce(func, wait) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func(...args), wait);
+      };
+    }
 
-          // Make card clickable
-          article.addEventListener('click', (e) => {
-            if (e.target.closest('a')) return;
-            window.location = p.href;
-          });
-          article.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') window.location = p.href;
-          });
-          article.setAttribute('tabindex', '0');
-        });
-      } catch (err) {
-        console.error('Failed to load blog articles:', err);
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function getAllTags(posts) {
+      const tagSet = new Set();
+      posts.forEach(p => (p.tags || []).forEach(t => tagSet.add(t)));
+      return Array.from(tagSet).sort();
+    }
+
+    function toggleTag(tag, button) {
+      const i = state.activeTags.indexOf(tag);
+      if (i > -1) {
+        state.activeTags.splice(i, 1);
+        button.classList.remove('active');
+        button.setAttribute('aria-pressed', 'false');
+      } else {
+        state.activeTags.push(tag);
+        button.classList.add('active');
+        button.setAttribute('aria-pressed', 'true');
       }
     }
 
-    // Load on page load
-    loadBlogArticles();
+    function setupTagFilters(posts) {
+      const tags = getAllTags(posts);
+      const container = document.getElementById('tagFilters');
+      container.innerHTML = '';
+      tags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.textContent = tag;
+        btn.className = 'tag-filter-btn';
+        btn.dataset.tag = tag;
+        btn.setAttribute('aria-pressed', 'false');
+        btn.addEventListener('click', () => { toggleTag(tag, btn); applyFiltersAndSort(); });
+        container.appendChild(btn);
+      });
+    }
+
+    function setupSortControl() {
+      document.getElementById('sortBy').addEventListener('change', e => {
+        state.sortBy = e.target.value;
+        applyFiltersAndSort();
+      });
+    }
+
+    function applyFiltersAndSort() {
+      let filtered = [...allPosts];
+
+      const searchInput = document.getElementById('blogSearch');
+      if (searchInput && searchInput.value.trim().length >= 2 && fuse) {
+        filtered = fuse.search(searchInput.value.trim()).map(r => r.item);
+      }
+
+      if (state.activeTags.length > 0) {
+        filtered = filtered.filter(p => state.activeTags.some(t => p.tags.includes(t)));
+      }
+
+      const [sortBy, sortOrder] = state.sortBy.split('-');
+      filtered.sort((a, b) => {
+        let cmp = 0;
+        if (sortBy === 'date') {
+          cmp = new Date(b.date) - new Date(a.date);
+        } else if (sortBy === 'readTime') {
+          const at = parseInt((/(\d+)/.exec(a.readTime) || ['0', '0'])[1]);
+          const bt = parseInt((/(\d+)/.exec(b.readTime) || ['0', '0'])[1]);
+          cmp = bt - at;
+        }
+        return sortOrder === 'desc' ? cmp : -cmp;
+      });
+
+      renderPosts(filtered);
+    }
+
+    function showBlogError(msg) {
+      const el = document.getElementById('blogError');
+      if (!el) return;
+      el.hidden = false;
+      el.innerHTML = '<p>' + escapeHtml(msg) + '</p><button type="button" id="blogRetryBtn">Try again</button>';
+      document.getElementById('blogRetryBtn').addEventListener('click', () => { clearBlogError(); loadBlogArticles(); });
+    }
+
+    function clearBlogError() {
+      const el = document.getElementById('blogError');
+      if (el) { el.hidden = true; el.innerHTML = ''; }
+    }
+
+    function announceResults(count) {
+      const s = document.getElementById('blogResultsStatus');
+      if (s) s.textContent = count === 0 ? 'No posts found.' : count + ' post' + (count === 1 ? '' : 's') + ' shown.';
+    }
+
+    function renderPosts(posts) {
+      const container = document.getElementById('blogArticles');
+      clearBlogError();
+
+      if (!posts || posts.length === 0) {
+        container.innerHTML = '<p class="no-results">No posts found. Try adjusting your search.</p>';
+        announceResults(0);
+        return;
+      }
+
+      container.innerHTML = posts.map(p => {
+        const url = (p.href && p.href !== '#') ? p.href : '#';
+        const title = escapeHtml(p.title || '');
+        const excerpt = escapeHtml(p.excerpt || '');
+        const tagsHtml = (p.tags || []).map(t => '<span class="blog-tag">' + escapeHtml(t) + '</span>').join(' ');
+        const dateStr = p.date ? formatDate(p.date) : '';
+        const readTime = escapeHtml(p.readTime || '');
+        return '<a class="blog-article-card" href="' + url + '">' +
+          '<div class="blog-article-header">' +
+            '<div class="blog-article-meta">' +
+              '<div class="blog-tags">' + tagsHtml + '</div>' +
+              '<time class="blog-date" datetime="' + escapeHtml(p.date || '') + '">' + dateStr + '</time>' +
+            '</div>' +
+            '<h2 class="blog-article-title">' + title + '</h2>' +
+            '<p class="blog-article-excerpt">' + excerpt + '</p>' +
+          '</div>' +
+          '<footer class="blog-article-footer">' +
+            '<span class="read-time">' + readTime + '</span>' +
+            '<span class="read-more">Read →</span>' +
+          '</footer>' +
+        '</a>';
+      }).join('');
+
+      announceResults(posts.length);
+    }
+
+    async function loadBlogArticles() {
+      clearBlogError();
+      if (typeof Fuse === 'undefined') {
+        showBlogError('Search is unavailable. Please refresh the page.');
+        return;
+      }
+      try {
+        const resp = await fetch('/data/posts.json');
+        if (!resp.ok) { showBlogError('Unable to load posts. Please try again.'); return; }
+        const posts = await resp.json();
+        if (!Array.isArray(posts)) { showBlogError('Unable to load posts.'); return; }
+
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        allPosts = posts;
+
+        fuse = new Fuse(posts, {
+          keys: [{ name: 'title', weight: 2 }, { name: 'excerpt', weight: 1 }, { name: 'tags', weight: 1.5 }],
+          threshold: 0.4,
+          ignoreLocation: true,
+          minMatchCharLength: 2
+        });
+
+        setupTagFilters(allPosts);
+        setupSortControl();
+        applyFiltersAndSort();
+
+        const searchInput = document.getElementById('blogSearch');
+        if (searchInput) {
+          searchInput.addEventListener('input', debounce(applyFiltersAndSort, 300));
+        }
+      } catch (err) {
+        console.error('Failed to load blog articles:', err);
+        showBlogError('Unable to load posts. Please check your connection.');
+      }
+    }
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.1.0/dist/fuse.min.js"></script>
+  <script>
+    if (typeof Fuse !== 'undefined') {
+      loadBlogArticles();
+    } else {
+      showBlogError('Search is unavailable. Please refresh the page.');
+    }
+  </script>
+  <script src="/main.js"></script>
 </body>
 </html>
