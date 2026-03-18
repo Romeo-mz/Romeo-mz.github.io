@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Lokai: A CLI That Recommends AI Models Based on Your Hardware — Romeo M.</title>
+  <meta name="description" content="I built Lokai, a Go CLI tool that detects your hardware and recommends the best local AI models from a 100+ curated catalog — then installs them via Ollama.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="blog-page">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="page-header">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Portfolio</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-container">
+    <article class="post">
+      <header>
+        <h1>Lokai: A CLI That Recommends AI Models Based on Your Hardware</h1>
+        <p class="post-meta">Feb 25, 2026 · Go · AI · Open Source · 6 min read</p>
+      </header>
+
+      <section class="post-content">
+        <p>The local AI space has exploded. Between Ollama, LM Studio, and a growing catalog of quantized models, there are now hundreds of viable options for running inference on a personal machine. The problem is that choosing the right model is genuinely painful.</p>
+
+        <p>You need to know your available VRAM, understand what quantization levels fit in memory, and then map that against use case requirements — do you need speed for code completion, or quality for long-form reasoning? Most people either run into OOM errors after blindly downloading a model, or they default to whatever the latest Reddit thread recommends regardless of their hardware.</p>
+
+        <p>I built <a href="https://github.com/Romeo-mz/lokai" target="_blank" rel="noopener noreferrer">Lokai</a> to solve exactly this. It is a Go CLI that detects your hardware, asks what you want to do, and recommends the best local AI models from a curated catalog — then installs them via Ollama in one step.</p>
+
+        <h2>The core problem: model selection friction</h2>
+
+        <p>When you want to run a model locally, the path looks roughly like this: figure out your GPU VRAM, find a model that fits, check whether the quantization level is acceptable for your use case, install Ollama if you haven't, then run <code>ollama pull</code>. Each step has friction. The VRAM math is non-obvious. The relationship between quantization and quality is opaque. And the catalog of available models changes fast.</p>
+
+        <p>Lokai collapses all of this into a single guided flow. Run <code>lokai</code>, answer a few questions, pick from a ranked list, done.</p>
+
+        <h2>How hardware detection works</h2>
+
+        <p>The first thing Lokai does is detect your hardware. It uses three different strategies depending on the platform:</p>
+
+        <ul>
+          <li><strong>NVIDIA GPUs</strong>: Lokai uses the NVML library (via <code>go-nvml</code>) to query VRAM directly. This gives exact available memory, not just total VRAM.</li>
+          <li><strong>Apple Silicon</strong>: Uses <code>sysctl hw.memsize</code> to read the total unified memory, then reserves 4 GB for the OS. The rest is treated as usable VRAM since M-series chips share memory between CPU and GPU.</li>
+          <li><strong>CPU-only or unknown GPU</strong>: Falls back to 70% of available system RAM as a conservative estimate for what can be used for inference.</li>
+        </ul>
+
+        <p>From there, the detected VRAM gets mapped to one of five hardware tiers: Edge (&lt;4 GB), Low-end (4–8 GB), Consumer (8–16 GB), Mid-range (16–40 GB), and High-end (≥40 GB). Models in the catalog are tagged with the minimum tier they require, so the recommendation engine can filter immediately.</p>
+
+        <p>You can check what Lokai detects about your machine without doing anything else:</p>
+
+        <pre><code>lokai --scan-only</code></pre>
+
+        <p>This outputs a table with your OS, CPU, total RAM, GPU model, available VRAM, and the resulting tier classification. No Ollama required at this step.</p>
+
+        <h2>The model catalog</h2>
+
+        <p>The catalog is the heart of Lokai. It currently holds 100+ hand-curated models across 9 use cases:</p>
+
+        <ul>
+          <li><strong>Chat</strong> (18 models) — conversational assistants</li>
+          <li><strong>Code</strong> (13 models) — completion, refactoring, generation</li>
+          <li><strong>Vision</strong> (10 models) — image understanding and captioning</li>
+          <li><strong>Reasoning</strong> (7 models) — chain-of-thought, logic, math</li>
+          <li><strong>Embedding</strong> (5 models) — vector representations for RAG or search</li>
+          <li><strong>Image Generation</strong> (6 models) — Stable Diffusion and FLUX via ComfyUI</li>
+          <li><strong>Video Generation</strong> (5 models) — short video synthesis</li>
+          <li><strong>Audio</strong> (6 models) — speech-to-text via whisper.cpp, TTS via Piper</li>
+          <li><strong>Uncensored</strong> (6 models) — uncensored models for research or creative use</li>
+        </ul>
+
+        <p>Each entry in the catalog includes the Ollama tag, the exact VRAM requirement, quality and speed ratings, and whether the model can be pulled directly via Ollama or requires an external pipeline (like ComfyUI for image generation). The catalog also supplements itself dynamically by querying the Ollama Registry API with a 24-hour TTL cache, so new community models surface automatically without needing to update the binary.</p>
+
+        <h2>The recommendation engine</h2>
+
+        <p>After hardware detection, Lokai runs a questionnaire. It asks for your use case, optionally a sub-task (e.g., "code review" within the code category), and your priority — speed, balanced, or quality. If you have models already installed, it also asks whether you want to prefer remote models you're already running.</p>
+
+        <p>The engine then scores every eligible model against your inputs. Hardware compatibility is a hard filter: models that don't fit in your VRAM are excluded entirely. From the remaining candidates, scores account for priority alignment (speed-optimized models score higher if you picked "speed"), quality ratings, VRAM efficiency, and any cached benchmark data from previous runs.</p>
+
+        <p>Results are displayed in a TUI table built with <a href="https://github.com/charmbracelet/bubbletea" target="_blank" rel="noopener noreferrer">Charmbracelet/bubbletea</a> and lipgloss, showing rank, model name, VRAM needed, estimated tokens per second, and a quality rating. If you've previously benchmarked models on your machine, measured values replace estimates and are marked with a <code>✓</code> prefix. Estimated values show as <code>~X tok/s</code> with a tilde.</p>
+
+        <h2>Installation and cleanup</h2>
+
+        <p>Once you select a model from the TUI, Lokai gives you two options: download it now via Ollama, or show manual installation instructions. For standard Ollama models, the download triggers <code>ollama pull &lt;tag&gt;</code> through the Ollama REST API with a live progress bar. For external pipelines (ComfyUI, whisper.cpp, Piper), Lokai displays step-by-step setup instructions instead since those can't be automated the same way.</p>
+
+        <p>Cleanup is equally simple:</p>
+
+        <pre><code>lokai --clean</code></pre>
+
+        <p>This removes all Ollama models currently installed. Useful if you've been experimenting and want a clean slate.</p>
+
+        <h2>Non-interactive mode for automation</h2>
+
+        <p>For CI/CD pipelines or automated environment setup, Lokai has a JSON output mode:</p>
+
+        <pre><code>lokai --json --use-case code --priority speed</code></pre>
+
+        <p>This outputs structured JSON with the hardware detection results and the full ranked recommendation list. Each recommendation includes the Ollama tag, VRAM requirement, quality, score, and estimated performance. You can pipe this into <code>jq</code> to extract the top model tag and automate the install step:</p>
+
+        <pre><code>lokai --json --use-case chat | jq -r '.recommendations[0].ollama_tag' | xargs ollama pull</code></pre>
+
+        <h2>Benchmarking for accurate recommendations</h2>
+
+        <p>VRAM requirements and speed estimates in the catalog are based on standard hardware profiles. But actual performance varies significantly depending on your CPU, RAM speed, and thermal state. Lokai solves this with a built-in benchmarking mode:</p>
+
+        <pre><code>lokai --benchmark</code></pre>
+
+        <p>This generates test prompts for each installed model, measures real tokens per second, and caches the results with a 6-hour TTL. In subsequent interactive sessions, if Lokai detects installed models without benchmark data, it offers to run a quick speed test before showing recommendations. Once benchmarks exist, the TUI shows measured values instead of estimates, making comparisons much more reliable.</p>
+
+        <h2>Architecture notes</h2>
+
+        <p>Lokai follows a strict layered architecture with no circular dependencies: CLI entry point → Presentation (TUI/UI) → Domain Logic (recommendation engine, catalog) → Hardware Detection → Ollama Integration. This makes the core logic testable in isolation and keeps the CLI layer thin.</p>
+
+        <p>The project requires CGO for the NVML integration on Linux/Windows (NVIDIA GPU detection). Cross-compilation is handled via Docker Compose in the dev environment, and GitHub Actions takes care of multi-platform releases. If CGO is unavailable or NVML isn't present, the code falls back gracefully to the CPU/RAM-based estimation.</p>
+
+        <h2>Where this goes next</h2>
+
+        <p>The catalog is the main thing I keep updating. Adding new models is low-friction — each entry is a struct with well-defined fields. The bigger open questions are around multi-GPU setups (current detection treats GPUs independently), better sub-task granularity within use cases, and possibly a homebrew tap for easier macOS installation.</p>
+
+        <p>The repo is at <a href="https://github.com/Romeo-mz/lokai" target="_blank" rel="noopener noreferrer">github.com/Romeo-mz/lokai</a>. Contributions and catalog additions are welcome — the bar to add a model is intentionally low if you've tested it and have VRAM requirements handy.</p>
+
+        <p><em>References:</em></p>
+        <ul>
+          <li><a href="https://github.com/Romeo-mz/lokai" target="_blank" rel="noopener noreferrer">Lokai — source code (GitHub)</a></li>
+          <li><a href="https://deepwiki.com/Romeo-mz/lokai" target="_blank" rel="noopener noreferrer">Lokai — architecture documentation (DeepWiki)</a></li>
+          <li><a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama — local model runtime</a></li>
+          <li><a href="https://github.com/charmbracelet/bubbletea" target="_blank" rel="noopener noreferrer">Charmbracelet/bubbletea — Go TUI framework</a></li>
+          <li><a href="https://github.com/NVIDIA/go-nvml" target="_blank" rel="noopener noreferrer">go-nvml — NVIDIA Management Library bindings for Go</a></li>
+        </ul>
+      </section>
+
+      <footer class="post-footer">
+        <a href="/blog/" class="read-link">← Back to blog</a>
+      </footer>
+    </article>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>

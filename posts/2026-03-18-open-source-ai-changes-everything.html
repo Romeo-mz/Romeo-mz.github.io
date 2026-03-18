@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Is Changing Open Source, and Not in the Way You Think — Romeo M.</title>
+  <meta name="description" content="AI is reshaping open source from every angle: contribution patterns, maintainer workload, licensing debates, and the tools themselves. Here's where things actually stand.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="blog-page">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="page-header">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Portfolio</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-container">
+    <article class="post">
+      <header>
+        <h1>AI Is Changing Open Source, and Not in the Way You Think</h1>
+        <p class="post-meta">Mar 18, 2026 · Open Source · AI · 8 min read</p>
+      </header>
+
+      <section class="post-content">
+        <p>The story most people tell about AI and open source goes like this: AI tools make developers more productive, so open source projects move faster, get more contributions, and grow healthier. Copilot and Cursor write boilerplate. Maintainers ship faster. Everyone wins.</p>
+
+        <p>The reality is messier, more interesting, and harder to resolve. AI is simultaneously helping open source and stressing it at the seams.</p>
+
+        <h2>The contribution surge nobody asked for</h2>
+
+        <p>One of the first signals was the change in pull request volume. In 2024 and 2025, maintainers of mid-sized open source projects started noticing a pattern: more PRs, more issues, more "drive-by" contributions — and a significant portion of them had the fingerprints of AI generation. Not because the code was bad (sometimes it was fine), but because it was generic, lacked context, and often addressed non-issues or introduced subtle regressions that only showed up in edge cases.</p>
+
+        <p>The <a href="https://github.com/curl/curl" target="_blank" rel="noopener noreferrer">curl project</a> started tagging issues as "AI slop" to track the pattern. The Django project saw an uptick in PRs that technically passed CI but misunderstood the library's design philosophy entirely. The problem isn't that AI-generated code is always wrong — it's that reviewing it costs maintainer time regardless.</p>
+
+        <p>For a solo maintainer already burning out on triage, receiving 30 PRs that need careful review instead of 10 is not a net positive, even if those 30 PRs contain more correct code than the original 10.</p>
+
+        <h2>The maintainer bottleneck is real</h2>
+
+        <p>Open source has always had a sustainability problem. A tiny number of people maintain the packages that underpin most of the software industry, and they mostly do it for free. This was already a well-documented issue before AI arrived — see the <a href="https://xkcd.com/2347/" target="_blank" rel="noopener noreferrer">xkcd 2347 problem</a>, the Log4Shell wake-up call, the continued underfunding of critical infrastructure libraries.</p>
+
+        <p>AI tools amplify this asymmetry. Consumption of open source remains easy — generating a project with AI assistance takes minutes. But the maintenance chain that keeps those dependencies secure, correct, and evolving still depends on the same limited pool of volunteer hours. More users, more downstream projects, more attack surface, same number of maintainers.</p>
+
+        <p>Some projects are experimenting with automated triage (using AI to label and sort incoming issues, or to check whether a bug report already exists). This works reasonably well as a filter. But the judgment calls — what to fix, what to defer, what the library should become — still need human decisions, and AI doesn't change that.</p>
+
+        <h2>Licensing and training data: an unresolved conflict</h2>
+
+        <p>The other major tension is around training data. Most commercial AI code models were trained on public repositories, including code under GPL, LGPL, AGPL, and other copyleft licenses. The legal question of whether this constitutes fair use or derivative work is still live in multiple jurisdictions.</p>
+
+        <p>This matters for open source in a few ways. First, if models are trained on GPL-licensed code and then output code that resembles that code closely enough, users may be generating code with license obligations they don't know about. Second, it creates a genuine philosophical problem: the open source ecosystem produced a commons that LLM training benefited from enormously, and that value didn't flow back to the contributors who created it.</p>
+
+        <p>The response from the OSS community has been varied. Some projects added machine learning training opt-outs to their licenses. The OSI has been working on a definition of "Open Source AI" that tries to clarify what disclosure and openness requirements should apply to models — but it's slow work, and the legal landscape is still unsettled. Meanwhile, more projects are moving to licenses like the SSPL or BSL, in part as a reaction to concerns about commercial exploitation.</p>
+
+        <h2>Where AI is genuinely helping</h2>
+
+        <p>The picture isn't all negative. AI is meaningfully improving parts of the open source workflow that were genuinely painful.</p>
+
+        <p><strong>Security scanning.</strong> AI-assisted tools are getting better at finding vulnerabilities in open source code. Models trained on vulnerability databases can scan pull requests and flag patterns that match known issue classes — buffer overflows, injection vectors, unsafe deserialization. This isn't a replacement for a full audit, but it catches a class of issues that standard static analysis misses. Projects like <a href="https://github.com/ossf/scorecard" target="_blank" rel="noopener noreferrer">OpenSSF Scorecard</a> are already integrating these capabilities.</p>
+
+        <p><strong>Documentation.</strong> Generating API docs, updating changelogs, summarizing what a function does — this is exactly the kind of work that AI does well and that maintainers consistently deprioritize. A tool that can produce a first-draft docstring for a new method is a genuine time save, and the quality is usually good enough that it just needs a quick review rather than a full rewrite.</p>
+
+        <p><strong>Issue triage.</strong> Automatically categorizing issues, detecting duplicates, and suggesting relevant labels is low-stakes and high-volume work that AI handles well. Several GitHub Actions bots already do this at scale, and the failure mode (a mis-categorized issue) is low-cost.</p>
+
+        <p><strong>Onboarding new contributors.</strong> AI tools lower the bar to making a first contribution. If someone new to Go can use an AI pair programmer to understand an unfamiliar codebase and produce a meaningful first PR, that's a genuine expansion of who can participate. Some projects have started using AI to generate "good first issue" guides that walk through the relevant code sections — significantly lowering the time from "I want to contribute" to "I have something to submit."</p>
+
+        <h2>The local model angle</h2>
+
+        <p>One trend worth watching specifically: the shift toward local, open-weight AI models. In 2024, most AI-assisted development ran through closed APIs — OpenAI, Anthropic, Google. In 2025 and into 2026, there's a meaningful shift toward running models locally with tools like Ollama, LM Studio, and Jan. This matters for open source in a few ways.</p>
+
+        <p>It democratizes access. A contributor who can't or won't send their code to an external API can now run capable models on their own hardware. It also reduces dependency on commercial providers, which aligns with the broader open source value of self-sufficiency. Projects like Codestral, Qwen2.5-Coder, and DeepSeek-R1 are genuinely competitive with commercial alternatives for code-related tasks, and they run locally on mid-range hardware.</p>
+
+        <p>Tooling in this space is still catching up. Knowing which model to run on which hardware is still non-trivial (which is partly why I built Lokai). But the gap between local and cloud model quality is narrowing faster than most people expected a year ago.</p>
+
+        <h2>What this means for maintainers and contributors</h2>
+
+        <p>A few things seem clear from where we are now:</p>
+
+        <p><strong>AI doesn't reduce the need for humans at the top of the knowledge stack.</strong> The bottleneck in open source has never been raw code volume — it's judgment, architecture decisions, and domain expertise. AI produces code quickly, but someone still has to decide if a PR improves the project or degrades it. That judgment gets harder, not easier, when the volume of code being reviewed increases.</p>
+
+        <p><strong>Good contribution guidelines matter more than ever.</strong> Projects with clear contributing docs, well-defined scope, and explicit expectations about what gets merged have a much easier time filtering AI-generated submissions. When the bar is clear, reviewers can apply it mechanically. Without clear standards, every PR becomes a judgment call, and AI makes that expensive.</p>
+
+        <p><strong>The licensing space will see more movement.</strong> Whether through court decisions, new license frameworks, or OSI standards for AI models, the current ambiguity isn't going to last. Projects and companies with significant open source footprints should be thinking about their position now rather than waiting for clarity to arrive.</p>
+
+        <p><strong>Local models will be part of the OSS infrastructure story.</strong> As more development tooling moves toward local inference, open source model weights become infrastructure — similar to how Linux or Postgres are infrastructure. The norms around governance, contribution, and licensing for these models are still being established, and open source communities have more influence over that process than they might realize.</p>
+
+        <h2>The bottom line</h2>
+
+        <p>Open source isn't going to be superseded by AI, and AI isn't going to fix open source's sustainability problems on its own. What's actually happening is more mundane and more interesting: two complex systems are colliding and adapting to each other, with friction in some places and genuine improvement in others.</p>
+
+        <p>The projects and communities that will do best are the ones that are deliberate about which AI capabilities they adopt, set clear boundaries around contribution quality, and treat the licensing and governance questions as real problems worth engaging with rather than noise to be ignored until forced to act.</p>
+
+        <p>That's not a dramatic conclusion, but it's the honest one.</p>
+
+        <p><em>References:</em></p>
+        <ul>
+          <li><a href="https://github.com/curl/curl" target="_blank" rel="noopener noreferrer">curl — open source project (GitHub)</a></li>
+          <li><a href="https://xkcd.com/2347/" target="_blank" rel="noopener noreferrer">xkcd 2347 — "Dependency" (the OSS sustainability problem)</a></li>
+          <li><a href="https://github.com/ossf/scorecard" target="_blank" rel="noopener noreferrer">OpenSSF Scorecard — supply chain security for open source</a></li>
+          <li><a href="https://opensource.org/deepdive/drafts/the-open-source-ai-definition" target="_blank" rel="noopener noreferrer">OSI — Open Source AI Definition (draft)</a></li>
+          <li><a href="https://www.linuxfoundation.org/research/open-source-sustainability-2024" target="_blank" rel="noopener noreferrer">Linux Foundation — Open Source Sustainability Report 2024</a></li>
+          <li><a href="https://ollama.com" target="_blank" rel="noopener noreferrer">Ollama — local model runtime</a></li>
+        </ul>
+      </section>
+
+      <footer class="post-footer">
+        <a href="/blog/" class="read-link">← Back to blog</a>
+      </footer>
+    </article>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>

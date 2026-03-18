@@ -1,5 +1,21 @@
 [
   {
+    "title": "AI Is Changing Open Source, and Not in the Way You Think",
+    "excerpt": "AI is reshaping open source from every angle: contribution patterns, maintainer workload, licensing debates, and the tools themselves. Here's where things actually stand.",
+    "date": "2026-03-18",
+    "tags": ["Open Source", "AI"],
+    "readTime": "8 min read",
+    "href": "/posts/2026-03-18-open-source-ai-changes-everything.html"
+  },
+  {
+    "title": "Lokai: A CLI That Recommends AI Models Based on Your Hardware",
+    "excerpt": "I built Lokai, a Go CLI that detects your hardware and recommends the best local AI models from a 100+ curated catalog — then installs them via Ollama in one step.",
+    "date": "2026-02-25",
+    "tags": ["Go", "AI", "Open Source"],
+    "readTime": "6 min read",
+    "href": "/posts/2026-02-25-lokai-ai-model-recommender.html"
+  },
+  {
     "title": "Cyber Resilience Act, SBOM, and Why DevOps Becomes Mandatory",
     "excerpt": "A practical guide to CRA obligations, SBOM expectations, and why DevOps automation is now essential for compliance.",
     "date": "2026-02-18",
