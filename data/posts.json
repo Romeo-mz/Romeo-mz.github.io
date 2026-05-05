@@ -1,5 +1,13 @@
 [
   {
+    "title": "6,970 Requests Served, All Garbage: Running iocaine Against AI Crawlers",
+    "excerpt": "I ran iocaine against a simulated AI crawler swarm. Every request got garbage. The backend never saw one. Here's the setup, the config, and what the Grafana dashboard shows.",
+    "date": "2026-05-05",
+    "tags": ["Security", "AI", "DevOps"],
+    "readTime": "6 min read",
+    "href": "/posts/2026-05-05-poisoning-ai-crawlers-iocaine.html"
+  },
+  {
     "title": "AI Is Changing Open Source, and Not in the Way You Think",
     "excerpt": "AI is reshaping open source from every angle: contribution patterns, maintainer workload, licensing debates, and the tools themselves. Here's where things actually stand.",
     "date": "2026-03-18",

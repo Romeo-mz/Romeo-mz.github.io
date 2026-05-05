@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>6,970 Requests Served, All Garbage: Running iocaine Against AI Crawlers — Romeo M.</title>
+  <meta name="description" content="I ran iocaine against a simulated AI crawler swarm for 24 hours. Every single request got garbage. The backend never saw one. Here's the setup.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="blog-page">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="page-header">
+    <div class="header-content">
+      <a href="/" class="logo" aria-label="Homepage">RM</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="/">Portfolio</a>
+        <a href="/blog/" class="active">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-container">
+    <article class="post">
+      <header>
+        <h1>6,970 Requests Served, All Garbage: Running iocaine Against AI Crawlers</h1>
+        <p class="post-meta">May 5, 2026 · Security · AI · DevOps · 6 min read</p>
+      </header>
+
+      <section class="post-content">
+        <p>Every request in that dashboard got the same response: garbage. That's <a href="https://iocaine.madhouse-project.org/" target="_blank" rel="noopener noreferrer">iocaine</a> doing exactly what it promises — and it cost the backend zero requests to do it.</p>
+
+        <p>I ran iocaine against a simulated AI crawler swarm and watched 6,970 requests produce 8.46 MiB of plausible-looking nonsense. The crawler followed every link. The links led nowhere real. The backend stayed quiet the entire time.</p>
+
+        <h2>What iocaine is</h2>
+
+        <p>Iocaine is a tarpit for AI scrapers. It sits between your reverse proxy and your backend. When it identifies an unwanted visitor, it routes that visitor into an infinite maze of garbage pages, each filled with garbage links that lead to more garbage.</p>
+
+        <p>The key design decision is that iocaine doesn't block crawlers — it welcomes them. Blocking teaches bots to evade. Trapping them wastes their resources while yours stay intact. Generating a garbage response costs roughly as much as serving a static file.</p>
+
+        <p>Iocaine also poisons the URLs it serves. A crawler that later returns disguised as a real browser can still be identified, because its queue is full of URLs only iocaine hands out.</p>
+
+        <h2>The setup</h2>
+
+        <p>Three containers: iocaine 3, Prometheus, and Grafana. Configuration uses KDL, which reads like structured prose and stays out of the way.</p>
+
+        <p>The garbage handler loads <a href="https://github.com/algae-disco/ai.robots.txt" target="_blank" rel="noopener noreferrer">ai.robots.txt</a> to respect declared opt-outs, then remixes a training corpus into responses:</p>
+
+        <pre><code>sources {
+  training-corpus "/data/corpus/1984.txt" \
+                  "/data/corpus/brave-new-world.txt"
+  wordlists "/data/corpus/words.txt"
+}</code></pre>
+
+        <p>The corpus is <em>1984</em> and <em>Brave New World</em>. The choice is deliberate. The garbage looks coherent enough to pass a quick scan but is semantically hollow — exactly the kind of material that degrades a training dataset.</p>
+
+        <p>Metrics bind to a separate port (42042), keeping Prometheus scrape traffic off the main garbage-serving path on 42069.</p>
+
+        <h2>The crawler simulator</h2>
+
+        <p>To stress-test the setup, I wrote a Python crawler that impersonates real AI bots. It rotates through 27 User-Agent strings — GPTBot, ClaudeBot, CCBot, Bytespider, Applebot-Extended, and the rest — using five concurrent workers with a 0.5-second delay between requests. It follows every link iocaine hands it.</p>
+
+        <p>This is the worst case for a tarpit: a persistent, multithreaded crawler that faithfully chases every URL it receives. It doesn't back off. It doesn't time out. It just keeps crawling.</p>
+
+        <p>The simulator also exposes its own Prometheus metrics — requests per bot type, response sizes, links discovered, active threads — so Grafana can show both sides of the exchange.</p>
+
+        <h2>Results</h2>
+
+        <figure>
+          <img src="/images/iocaine-grafana-dashboard.png" alt="Grafana dashboard showing iocaine metrics: 6.97K total requests, 8.46 MiB garbage generated, 6.97K garbage outcomes over 24 hours, with throughput peaking at 10.3 kB/s">
+          <figcaption>Grafana dashboard after one crawler session. Total requests: 6.97K. Garbage outcomes: 6.97K. Backend requests: 0.</figcaption>
+        </figure>
+
+        <p>The throughput graph tells a clean story. The crawler starts slow, fills its queue with garbage links, then saturates — climbing from zero to a mean of 8.56 kB/s with a peak of 10.3 kB/s. Once it's in the maze, it never finds its way out.</p>
+
+        <p>The 127.0.0.1 host (direct access, bypassing the tarpit) flatlines at 0 B/s throughout. The backend was never reached. 8.46 MiB of garbage generated, zero legitimate responses served.</p>
+
+        <p>Garbage outcomes matches total requests exactly. A 100% hit rate.</p>
+
+        <h2>Why this matters beyond a personal blog</h2>
+
+        <p>AI crawlers largely disregard <code>robots.txt</code>. They hit sites relentlessly, scrape content for training datasets, and are often indifferent to the server load they cause. IP blocking is a losing game — subnets rotate, and browser-based scrapers piggyback on clean IPs.</p>
+
+        <p>Iocaine takes the opposite approach. The longer a crawler runs against it, the more garbage fills the crawler's training queue. The crawler's own persistence works against it.</p>
+
+        <p>The same Docker Compose stack that protects a blog scales to a production service. Iocaine's firewall module (added in 3.3.0) can enforce blocks at the nftables level for persistent offenders, without any external tooling. The ai.robots.txt integration handles legitimate bots that declare opt-out support, so real visitors and well-behaved crawlers pass through cleanly.</p>
+
+        <p>The setup here took an afternoon. The crawler simulator took a morning. Together they give a clear picture of what iocaine does and how much it costs — which is almost nothing.</p>
+
+        <p><em>References:</em></p>
+        <ul>
+          <li><a href="https://iocaine.madhouse-project.org/" target="_blank" rel="noopener noreferrer">iocaine — official documentation</a></li>
+          <li><a href="https://git.madhouse-project.org/iocaine/iocaine" target="_blank" rel="noopener noreferrer">iocaine — source repository</a></li>
+          <li><a href="https://github.com/algae-disco/ai.robots.txt" target="_blank" rel="noopener noreferrer">ai.robots.txt — AI crawler opt-out standard</a></li>
+        </ul>
+      </section>
+
+      <footer class="post-footer">
+        <a href="/blog/" class="read-link">← Back to blog</a>
+      </footer>
+    </article>
+  </main>
+
+  <script src="/main.js"></script>
+</body>
+</html>
