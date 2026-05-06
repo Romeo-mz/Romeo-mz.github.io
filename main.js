@@ -39,4 +39,15 @@
     });
     navObserver.observe(sentinel);
   }
-})();
+
+  /* Change highlight color */
+    var root = document.documentElement;
+    var hue = 340;
+    function animateHue() {
+      hue = (hue + 1) % 360;
+      root.style.setProperty('--changing-color', 'hsl(' + hue + 'deg, 80%, 70%)');
+      requestAnimationFrame(animateHue);
+    }
+    requestAnimationFrame(animateHue);
+  }
+)();

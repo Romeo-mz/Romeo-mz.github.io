@@ -15,7 +15,8 @@
   --color-bg-alt: #F5F5F5;
   --color-text: #111111;
   --color-text-muted: #555555;
-  --color-accent: #D14D72;
+  --changing-color: hsl(340deg, 80%, 70%);
+  --color-accent: var(--changing-color, #D14D72);
   --color-accent-hover: #B83D5E;
   --color-accent-subtle: rgba(209, 77, 114, 0.08);
   --color-border: #111111;
